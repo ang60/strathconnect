@@ -85,6 +85,16 @@ export class UsersController {
   @ApiBearerAuth('JWT-auth')
   @ApiResponse({ status: 200, description: 'Profile retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getCurrentUser(@CurrentUser() user: User) {
+    return this.usersService.findById(user._id.toString());
+  }
+
+  @ApiOperation({ summary: 'Get current user profile', description: 'Get the current authenticated user profile' })
+  @ApiBearerAuth('JWT-auth')
+  @ApiResponse({ status: 200, description: 'Profile retrieved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   async getProfile(@CurrentUser() user: User) {

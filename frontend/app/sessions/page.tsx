@@ -32,6 +32,9 @@ import {
   Pause,
   Award
 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Mock data
 const upcomingSessions = [
@@ -122,6 +125,18 @@ const actionItems = [
 export default function SessionsPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [sessionData, setSessionData] = useState({
+    title: "",
+    mentor: "",
+    mentee: "",
+    date: "",
+    time: "",
+    duration: "",
+    type: "",
+    topic: "",
+    notes: "",
+    isVirtual: false
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -153,6 +168,25 @@ export default function SessionsPage() {
       );
     }
     return stars;
+  };
+
+  const handleCreateSession = () => {
+    // Simulate API call
+    console.log("Creating session:", sessionData);
+    setShowCreateModal(false);
+    // Reset form
+    setSessionData({
+      title: "",
+      mentor: "",
+      mentee: "",
+      date: "",
+      time: "",
+      duration: "",
+      type: "",
+      topic: "",
+      notes: "",
+      isVirtual: false
+    });
   };
 
   return (
@@ -501,6 +535,151 @@ export default function SessionsPage() {
           </div>
         </div>
       </div>
+
+      {/* Session Creation Modal */}
+      <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Schedule New Session</DialogTitle>
+            <DialogDescription>
+              Create a new mentorship session with all the necessary details.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">Session Title</Label>
+                <Input
+                  id="title"
+                  placeholder="Enter session title"
+                  value={sessionData.title}
+                  onChange={(e) => setSessionData(prev => ({ ...prev, title: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="type">Session Type</Label>
+                <Select value={sessionData.type} onValueChange={(value) => setSessionData(prev => ({ ...prev, type: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select session type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="mentorship">Mentorship</SelectItem>
+                    <SelectItem value="coaching">Coaching</SelectItem>
+                    <SelectItem value="training">Training</SelectItem>
+                    <SelectItem value="consultation">Consultation</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="mentor">Mentor</Label>
+                <Select value={sessionData.mentor} onValueChange={(value) => setSessionData(prev => ({ ...prev, mentor: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select mentor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sarah-muthoni">Sarah Muthoni</SelectItem>
+                    <SelectItem value="grace-wanjiku">Grace Wanjiku</SelectItem>
+                    <SelectItem value="alice-wilson">Alice Wilson</SelectItem>
+                    <SelectItem value="robert-ochieng">Robert Ochieng</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mentee">Mentee</Label>
+                <Select value={sessionData.mentee} onValueChange={(value) => setSessionData(prev => ({ ...prev, mentee: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select mentee" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="david-kimani">David Kimani</SelectItem>
+                    <SelectItem value="john-kamau">John Kamau</SelectItem>
+                    <SelectItem value="mary-njeri">Mary Njeri</SelectItem>
+                    <SelectItem value="peter-mwangi">Peter Mwangi</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="date">Date</Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={sessionData.date}
+                  onChange={(e) => setSessionData(prev => ({ ...prev, date: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="time">Time</Label>
+                <Input
+                  id="time"
+                  type="time"
+                  value={sessionData.time}
+                  onChange={(e) => setSessionData(prev => ({ ...prev, time: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="duration">Duration (minutes)</Label>
+                <Select value={sessionData.duration} onValueChange={(value) => setSessionData(prev => ({ ...prev, duration: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select duration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="30">30 minutes</SelectItem>
+                    <SelectItem value="45">45 minutes</SelectItem>
+                    <SelectItem value="60">1 hour</SelectItem>
+                    <SelectItem value="90">1.5 hours</SelectItem>
+                    <SelectItem value="120">2 hours</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="topic">Session Topic</Label>
+              <Input
+                id="topic"
+                placeholder="What will this session focus on?"
+                value={sessionData.topic}
+                onChange={(e) => setSessionData(prev => ({ ...prev, topic: e.target.value }))}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes</Label>
+              <Textarea
+                id="notes"
+                placeholder="Additional notes or agenda items"
+                value={sessionData.notes}
+                onChange={(e) => setSessionData(prev => ({ ...prev, notes: e.target.value }))}
+                rows={3}
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="isVirtual"
+                checked={sessionData.isVirtual}
+                onCheckedChange={(checked) => setSessionData(prev => ({ ...prev, isVirtual: checked as boolean }))}
+              />
+              <Label htmlFor="isVirtual">Virtual/Online Session</Label>
+            </div>
+
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleCreateSession}>
+                Schedule Session
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </MainLayout>
   );
 }

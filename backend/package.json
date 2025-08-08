@@ -17,7 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "setup": "./start.sh setup",
+    "dev": "./start.sh dev",
+    "prod": "./start.sh prod",
+    "db:seed": "ts-node scripts/seed.js",
+    "db:reset": "ts-node scripts/reset.js",
+    "docs:generate": "npm run build && swagger-codegen generate -i http://localhost:3000/api-json -l typescript-fetch -o ../frontend/src/api",
+    "health": "curl -f http://localhost:3000/health || echo 'Server not running'"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

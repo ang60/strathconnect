@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +26,8 @@ import {
   UserCheck
 } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/auth-context";
+import { apiService } from "@/lib/api";
 
 const roles = [
   {
@@ -88,6 +91,9 @@ export default function RegisterPage() {
     agreeToPrivacy: false,
   });
 
+  const { login } = useAuth();
+  const router = useRouter();
+
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -135,11 +141,33 @@ export default function RegisterPage() {
     }
     
     setIsLoading(true);
-    // Placeholder for registration
-    setTimeout(() => {
-      toast.success("Registration functionality will be implemented with backend integration");
+    
+    try {
+      // Register the user
+      const response = await apiService.register({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        department: formData.department,
+      });
+
+      // Log the user in after successful registration
+      await login({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      toast.success("Account created successfully! Welcome to StrathConnect.");
+      
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error(error instanceof Error ? error.message : "Registration failed. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

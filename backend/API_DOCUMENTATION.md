@@ -1,20 +1,47 @@
-# StrathConnect Backend API Documentation
+# StrathConnect API Documentation
 
-## Overview
-The StrathConnect backend is a NestJS application that provides a comprehensive API for the mentorship and coaching platform. It includes authentication, user management, program management, goal tracking, session scheduling, and communication features.
+This document provides comprehensive documentation for the StrathConnect Backend API.
 
 ## Base URL
-```
-http://localhost:3000
-```
+
+- **Development**: `http://localhost:3000`
+- **Production**: `https://your-domain.com`
 
 ## Authentication
-The API uses JWT-based authentication with refresh tokens. All protected endpoints require a valid JWT token in the Authorization header or as an HTTP-only cookie.
 
-### Headers
+The API uses JWT (JSON Web Tokens) for authentication. Most endpoints require authentication.
+
+### Getting a Token
+
+1. **Login with email/password**:
+   ```http
+   POST /auth/login
+   Content-Type: application/json
+
+   {
+     "email": "user@example.com",
+     "password": "password123"
+   }
+   ```
+
+2. **Google OAuth**:
+   ```http
+   GET /auth/google
+   ```
+
+### Using the Token
+
+Include the token in the Authorization header:
+```http
+Authorization: Bearer <your-jwt-token>
 ```
-Authorization: Bearer <jwt-token>
-Content-Type: application/json
+
+### Token Refresh
+
+When your access token expires, use the refresh token:
+```http
+POST /auth/refresh
+Authorization: Bearer <refresh-token>
 ```
 
 ## API Endpoints
@@ -22,7 +49,9 @@ Content-Type: application/json
 ### Authentication
 
 #### POST /auth/login
-Login with email and password
+Authenticate user with email and password.
+
+**Request Body:**
 ```json
 {
   "email": "user@example.com",
@@ -30,190 +59,335 @@ Login with email and password
 }
 ```
 
+**Response:**
+```json
+{
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "role": "mentor",
+    "department": "Computer Science"
+  },
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
 #### POST /auth/logout
-Logout and clear tokens
+Logout user and invalidate tokens.
+
+**Headers:**
+```http
+Authorization: Bearer <access-token>
+```
+
+**Response:**
+```json
+{
+  "message": "Logged out successfully"
+}
+```
 
 #### POST /auth/refresh
-Refresh access token using refresh token
+Refresh access token using refresh token.
+
+**Headers:**
+```http
+Authorization: Bearer <refresh-token>
+```
+
+**Response:**
+```json
+{
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "role": "mentor",
+    "department": "Computer Science"
+  },
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
 
 #### GET /auth/google
-Initiate Google OAuth login
+Initiate Google OAuth login.
 
 #### GET /auth/google/callback
-Google OAuth callback
+Google OAuth callback endpoint.
 
 ### Users
 
 #### POST /users
-Create a new user
+Create a new user account.
+
+**Request Body:**
 ```json
 {
-  "email": "user@example.com",
-  "password": "password123",
   "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
   "role": "mentor",
-  "department": "Business Administration",
-  "position": "Senior Manager",
-  "bio": "Experienced business leader",
-  "skills": ["Leadership", "Strategy"],
-  "interests": ["Technology", "Innovation"],
-  "expertise": ["Business Development"]
+  "department": "Computer Science",
+  "avatar": "https://example.com/avatar.jpg",
+  "bio": "Experienced software engineer"
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "role": "mentor",
+  "department": "Computer Science",
+  "avatar": "https://example.com/avatar.jpg",
+  "bio": "Experienced software engineer",
+  "status": "active",
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
 #### GET /users
-Get all users (with optional filters)
+Get all users with optional filtering.
+
+**Query Parameters:**
+- `role` (optional): Filter by user role (mentor, mentee, admin)
+- `department` (optional): Filter by department
+- `status` (optional): Filter by status (active, inactive, suspended)
+
+**Headers:**
+```http
+Authorization: Bearer <access-token>
 ```
-/users?role=mentor&department=Business&status=active
+
+**Response:**
+```json
+[
+  {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "mentor",
+    "department": "Computer Science",
+    "avatar": "https://example.com/avatar.jpg",
+    "status": "active"
+  }
+]
 ```
 
 #### GET /users/mentors
-Get all mentors
+Get all mentors.
+
+**Response:**
+```json
+[
+  {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "mentor",
+    "department": "Computer Science",
+    "avatar": "https://example.com/avatar.jpg",
+    "bio": "Experienced software engineer"
+  }
+]
+```
 
 #### GET /users/mentees
-Get all mentees
-
-#### GET /users/search?q=searchterm
-Search users
+Get all mentees.
 
 #### GET /users/profile
-Get current user's profile
+Get current user's profile.
+
+**Headers:**
+```http
+Authorization: Bearer <access-token>
+```
 
 #### PUT /users/profile
-Update current user's profile
+Update current user's profile.
+
+**Request Body:**
+```json
+{
+  "name": "John Doe Updated",
+  "bio": "Updated bio",
+  "avatar": "https://example.com/new-avatar.jpg"
+}
+```
 
 #### GET /users/:id
-Get user by ID
+Get user by ID.
 
 #### PUT /users/:id
-Update user
+Update user by ID.
 
 #### DELETE /users/:id
-Delete user
+Delete user by ID.
 
 ### Programs
 
 #### POST /programs
-Create a new program
+Create a new mentorship program.
+
+**Request Body:**
 ```json
 {
-  "name": "Leadership Development Program",
-  "description": "Comprehensive leadership training",
-  "type": "leadership",
+  "name": "Software Engineering Mentorship",
+  "description": "A comprehensive mentorship program for software engineering students",
+  "type": "career",
   "status": "active",
-  "tags": ["leadership", "management"],
-  "skills": ["Communication", "Decision Making"],
-  "requirements": ["2+ years experience"],
+  "tags": ["Software Engineering", "Career Development"],
+  "skills": ["JavaScript", "React", "Node.js"],
+  "requirements": ["Basic programming knowledge", "Commitment to learning"],
   "duration": 12,
-  "maxParticipants": 20,
-  "startDate": "2024-01-01",
-  "endDate": "2024-12-31",
-  "phases": [
+  "maxParticipants": 50,
+  "mentors": ["507f1f77bcf86cd799439011"],
+  "coordinators": ["507f1f77bcf86cd799439012"],
+  "startDate": "2024-01-15",
+  "endDate": "2024-04-15",
+  "departments": ["Computer Science", "Engineering"]
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439013",
+  "name": "Software Engineering Mentorship",
+  "description": "A comprehensive mentorship program for software engineering students",
+  "type": "career",
+  "status": "active",
+  "currentParticipants": 0,
+  "mentors": [
     {
-      "name": "Foundation",
-      "description": "Basic leadership concepts",
-      "startDate": "2024-01-01",
-      "endDate": "2024-03-31",
-      "objectives": ["Understand leadership principles"],
-      "deliverables": ["Leadership assessment"]
+      "_id": "507f1f77bcf86cd799439011",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "avatar": "https://example.com/avatar.jpg"
     }
-  ]
+  ],
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
 #### GET /programs
-Get all programs (with optional filters)
-```
-/programs?status=active&type=leadership&department=Business
-```
+Get all programs with optional filtering.
+
+**Query Parameters:**
+- `status` (optional): Filter by program status
+- `type` (optional): Filter by program type
+- `department` (optional): Filter by department
 
 #### GET /programs/active
-Get active programs
-
-#### GET /programs/search?q=searchterm
-Search programs
+Get all active programs.
 
 #### GET /programs/:id
-Get program by ID
+Get program by ID.
 
 #### PUT /programs/:id
-Update program
+Update program by ID.
 
 #### DELETE /programs/:id
-Delete program
+Delete program by ID.
 
 #### POST /programs/:id/participants
-Add participant to program
+Add participant to program.
+
+**Request Body:**
 ```json
 {
-  "userId": "user-id-here"
+  "userId": "507f1f77bcf86cd799439014"
 }
 ```
 
 #### DELETE /programs/:id/participants/:userId
-Remove participant from program
+Remove participant from program.
 
 #### POST /programs/:id/mentors
-Add mentor to program
-```json
-{
-  "userId": "mentor-id-here"
-}
-```
+Add mentor to program.
 
 #### DELETE /programs/:id/mentors/:userId
-Remove mentor from program
+Remove mentor from program.
 
 ### Goals
 
 #### POST /goals
-Create a new goal
+Create a new goal.
+
+**Request Body:**
 ```json
 {
-  "title": "Improve Leadership Skills",
-  "description": "Develop effective leadership capabilities",
-  "status": "pending",
+  "title": "Learn React Fundamentals",
+  "description": "Master React basics including components, state, and props",
   "priority": "high",
-  "tags": ["leadership", "growth"],
-  "mentor": "mentor-id-here",
-  "program": "program-id-here",
-  "startDate": "2024-01-01",
-  "targetDate": "2024-06-30",
+  "deadline": "2024-03-15",
   "milestones": [
     {
-      "title": "Complete leadership assessment",
-      "description": "Take initial leadership assessment",
+      "title": "Complete React Tutorial",
+      "description": "Finish the official React tutorial",
       "dueDate": "2024-02-01"
+    },
+    {
+      "title": "Build First App",
+      "description": "Create a simple React application",
+      "dueDate": "2024-02-15"
     }
   ],
-  "objectives": ["Improve communication", "Build team management skills"],
-  "deliverables": ["Leadership portfolio", "Team project"]
+  "tags": ["React", "Frontend", "Learning"]
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439015",
+  "title": "Learn React Fundamentals",
+  "description": "Master React basics including components, state, and props",
+  "priority": "high",
+  "status": "in_progress",
+  "progress": 0,
+  "mentee": "507f1f77bcf86cd799439014",
+  "milestones": [
+    {
+      "title": "Complete React Tutorial",
+      "description": "Finish the official React tutorial",
+      "dueDate": "2024-02-01",
+      "completed": false
+    }
+  ],
+  "createdAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
 #### GET /goals
-Get goals (filtered by user role)
-```
-/goals?status=in_progress&priority=high
-```
+Get goals with optional filtering.
+
+**Query Parameters:**
+- `status` (optional): Filter by goal status
+- `priority` (optional): Filter by priority
+- `mentorId` (optional): Filter by mentor ID
 
 #### GET /goals/my-goals
-Get current user's goals
-
-#### GET /goals/search?q=searchterm
-Search goals
+Get current user's goals.
 
 #### GET /goals/:id
-Get goal by ID
+Get goal by ID.
 
 #### PUT /goals/:id
-Update goal
+Update goal by ID.
 
 #### DELETE /goals/:id
-Delete goal
+Delete goal by ID.
 
 #### PUT /goals/:id/progress
-Update goal progress
+Update goal progress.
+
+**Request Body:**
 ```json
 {
   "progress": 75
@@ -221,14 +395,15 @@ Update goal progress
 ```
 
 #### PUT /goals/:id/milestones/:milestoneIndex/complete
-Complete a milestone
+Complete a milestone.
 
 #### PUT /goals/:id/feedback
-Add feedback to goal
+Add feedback to goal.
+
+**Request Body:**
 ```json
 {
-  "mentor": "Great progress on communication skills",
-  "mentee": "Feeling more confident in team settings",
+  "mentor": "Great progress! Keep it up.",
   "rating": 4
 }
 ```
@@ -236,56 +411,92 @@ Add feedback to goal
 ### Sessions
 
 #### POST /sessions
-Create a new session
+Create a new session.
+
+**Request Body:**
 ```json
 {
-  "title": "Leadership Strategy Session",
-  "description": "Discuss strategic leadership approaches",
+  "title": "React Fundamentals Review",
+  "description": "Review of React fundamentals and component lifecycle",
   "status": "scheduled",
   "type": "virtual",
-  "mentee": "mentee-id-here",
-  "program": "program-id-here",
-  "goal": "goal-id-here",
-  "startTime": "2024-01-20T10:00:00Z",
-  "endTime": "2024-01-20T11:00:00Z",
+  "mentee": "507f1f77bcf86cd799439014",
+  "program": "507f1f77bcf86cd799439013",
+  "goal": "507f1f77bcf86cd799439015",
+  "startTime": "2024-01-15T10:00:00Z",
+  "endTime": "2024-01-15T11:00:00Z",
   "duration": 60,
-  "location": "Zoom Meeting",
-  "meetingLink": "https://zoom.us/j/123456789",
-  "topics": ["Strategic thinking", "Decision making"],
-  "objectives": ["Understand strategic frameworks", "Practice decision making"],
-  "agenda": ["Introduction", "Case study discussion", "Action planning"]
+  "location": "Room 101, Building A",
+  "meetingLink": "https://meet.google.com/abc-defg-hij",
+  "topics": ["React Hooks", "State Management", "Component Lifecycle"],
+  "objectives": ["Understand React Hooks", "Learn state management patterns"]
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439016",
+  "title": "React Fundamentals Review",
+  "description": "Review of React fundamentals and component lifecycle",
+  "status": "scheduled",
+  "type": "virtual",
+  "mentor": "507f1f77bcf86cd799439011",
+  "mentee": {
+    "_id": "507f1f77bcf86cd799439014",
+    "name": "Jane Smith",
+    "email": "jane@example.com"
+  },
+  "startTime": "2024-01-15T10:00:00.000Z",
+  "endTime": "2024-01-15T11:00:00.000Z",
+  "duration": 60,
+  "createdAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
 #### GET /sessions
-Get sessions (filtered by user role)
-```
-/sessions?status=confirmed&type=virtual&startDate=2024-01-01&endDate=2024-01-31
-```
+Get sessions with optional filtering.
+
+**Query Parameters:**
+- `status` (optional): Filter by session status
+- `type` (optional): Filter by session type
+- `menteeId` (optional): Filter by mentee ID
+- `startDate` (optional): Filter by start date
+- `endDate` (optional): Filter by end date
 
 #### GET /sessions/upcoming
-Get upcoming sessions
+Get upcoming sessions for current user.
 
 #### GET /sessions/past
-Get past sessions
+Get past sessions for current user.
 
 #### GET /sessions/stats
-Get session statistics
+Get session statistics for current user.
 
-#### GET /sessions/search?q=searchterm
-Search sessions
+**Response:**
+```json
+{
+  "total": 25,
+  "completed": 20,
+  "upcoming": 3,
+  "cancelled": 2,
+  "completionRate": 80
+}
+```
 
 #### GET /sessions/:id
-Get session by ID
+Get session by ID.
 
 #### PUT /sessions/:id
-Update session
+Update session by ID.
 
 #### DELETE /sessions/:id
-Delete session
+Delete session by ID.
 
 #### PUT /sessions/:id/status
-Update session status
+Update session status.
+
+**Request Body:**
 ```json
 {
   "status": "completed"
@@ -293,230 +504,277 @@ Update session status
 ```
 
 #### PUT /sessions/:id/feedback
-Add session feedback
+Add feedback to session.
+
+**Request Body:**
 ```json
 {
-  "mentor": {
-    "rating": 4,
-    "comments": "Excellent engagement",
-    "menteeEngagement": 5,
-    "goalProgress": 4
-  },
-  "mentee": {
-    "rating": 5,
-    "comments": "Very helpful session",
-    "mentorEffectiveness": 5,
-    "sessionValue": 5
-  }
+  "rating": 5,
+  "comments": "Excellent session, very helpful!",
+  "menteeEngagement": 4,
+  "goalProgress": 3
 }
 ```
 
 #### PUT /sessions/:id/notes
-Add session notes
+Add notes to session.
+
+**Request Body:**
 ```json
 {
-  "notes": ["Key takeaway: Strategic thinking requires systematic approach"]
+  "notes": ["Discussed React Hooks", "Covered useState and useEffect", "Next session: Context API"]
 }
 ```
 
 ### Communication
 
 #### POST /communication/conversations
-Create a new conversation
+Create a new conversation.
+
+**Request Body:**
 ```json
 {
   "type": "direct",
-  "participants": ["user1-id", "user2-id"],
-  "name": "Mentorship Chat",
-  "description": "Direct communication between mentor and mentee"
+  "participants": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439014"],
+  "name": "John & Jane",
+  "description": "Direct conversation between mentor and mentee"
+}
+```
+
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439017",
+  "type": "direct",
+  "participants": [
+    {
+      "_id": "507f1f77bcf86cd799439011",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "avatar": "https://example.com/avatar.jpg"
+    },
+    {
+      "_id": "507f1f77bcf86cd799439014",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "avatar": "https://example.com/avatar2.jpg"
+    }
+  ],
+  "isActive": true,
+  "createdAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
 #### GET /communication/conversations
-Get user's conversations
+Get user's conversations.
 
 #### GET /communication/conversations/:id
-Get conversation by ID
+Get conversation by ID.
 
 #### POST /communication/conversations/:id/messages
-Send a message
+Send a message in conversation.
+
+**Request Body:**
 ```json
 {
-  "recipient": "recipient-id",
-  "content": "Hello! How are you doing with your goals?",
+  "recipient": "507f1f77bcf86cd799439014",
+  "content": "Hello! How are you doing with the React tutorial?",
   "type": "text"
 }
 ```
 
+**Response:**
+```json
+{
+  "_id": "507f1f77bcf86cd799439018",
+  "conversationId": "507f1f77bcf86cd799439017",
+  "sender": {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com"
+  },
+  "recipient": {
+    "_id": "507f1f77bcf86cd799439014",
+    "name": "Jane Smith",
+    "email": "jane@example.com"
+  },
+  "content": "Hello! How are you doing with the React tutorial?",
+  "type": "text",
+  "read": false,
+  "createdAt": "2024-01-15T10:30:00.000Z"
+}
+```
+
 #### GET /communication/conversations/:id/messages
-Get conversation messages
-```
-/conversations/:id/messages?limit=50&offset=0
-```
+Get messages in conversation.
+
+**Query Parameters:**
+- `limit` (optional): Number of messages to return (default: 50)
+- `offset` (optional): Number of messages to skip (default: 0)
 
 #### PUT /communication/messages/:id/read
-Mark message as read
+Mark message as read.
 
 #### PUT /communication/conversations/:id/read
-Mark conversation as read
+Mark all messages in conversation as read.
 
 #### GET /communication/unread-count
-Get unread message count
+Get unread message count.
+
+**Response:**
+```json
+{
+  "count": 5
+}
+```
 
 #### DELETE /communication/messages/:id
-Delete message
+Delete message.
 
 #### PUT /communication/messages/:id
-Edit message
+Edit message.
+
+**Request Body:**
 ```json
 {
   "content": "Updated message content"
 }
 ```
 
-#### GET /communication/search?q=searchterm
-Search messages
+#### GET /communication/search
+Search messages.
+
+**Query Parameters:**
+- `q` (required): Search term
 
 #### GET /communication/direct/:userId
-Get direct conversation with user
-
-#### PUT /communication/conversations/:id/archive
-Archive conversation
-
-#### PUT /communication/conversations/:id/unarchive
-Unarchive conversation
-
-#### PUT /communication/conversations/:id/mute
-Mute conversation
-
-#### PUT /communication/conversations/:id/unmute
-Unmute conversation
-
-## Data Models
-
-### User Roles
-- `admin`: System administrator
-- `coordinator`: Program coordinator
-- `mentor`: Mentor/coach
-- `mentee`: Mentee/learner
-
-### User Status
-- `active`: Active user
-- `inactive`: Inactive user
-- `pending`: Pending approval
-- `suspended`: Suspended user
-
-### Program Status
-- `draft`: Draft program
-- `active`: Active program
-- `paused`: Paused program
-- `completed`: Completed program
-- `archived`: Archived program
-
-### Program Types
-- `leadership`: Leadership development
-- `career`: Career development
-- `skills`: Skills development
-- `personal`: Personal development
-- `technical`: Technical skills
-
-### Goal Status
-- `pending`: Pending goal
-- `in_progress`: Goal in progress
-- `completed`: Completed goal
-- `cancelled`: Cancelled goal
-
-### Goal Priority
-- `low`: Low priority
-- `medium`: Medium priority
-- `high`: High priority
-- `urgent`: Urgent priority
-
-### Session Status
-- `scheduled`: Scheduled session
-- `confirmed`: Confirmed session
-- `in_progress`: Session in progress
-- `completed`: Completed session
-- `cancelled`: Cancelled session
-- `no_show`: No show
-
-### Session Types
-- `virtual`: Virtual session
-- `in_person`: In-person session
-- `hybrid`: Hybrid session
-
-### Message Types
-- `text`: Text message
-- `file`: File message
-- `image`: Image message
-- `system`: System message
-
-### Conversation Types
-- `direct`: Direct conversation
-- `group`: Group conversation
-- `program`: Program conversation
+Get or create direct conversation with user.
 
 ## Error Responses
 
-The API returns standard HTTP status codes and error messages:
-
+### Standard Error Format
 ```json
 {
   "statusCode": 400,
-  "message": "Validation failed",
-  "error": "Bad Request"
+  "message": "Error description",
+  "error": "Bad Request",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "path": "/api/users"
 }
 ```
 
-Common status codes:
-- `200`: Success
-- `201`: Created
-- `400`: Bad Request
-- `401`: Unauthorized
-- `403`: Forbidden
-- `404`: Not Found
-- `409`: Conflict
-- `500`: Internal Server Error
+### Common HTTP Status Codes
 
-## Environment Variables
+- `200` - Success
+- `201` - Created
+- `400` - Bad Request
+- `401` - Unauthorized
+- `403` - Forbidden
+- `404` - Not Found
+- `409` - Conflict
+- `422` - Validation Error
+- `500` - Internal Server Error
 
-Create a `.env` file with the following variables:
-
-```env
-# Database Configuration
-MONGODB_URI=mongodb://localhost:27017/strathconnect
-
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-here
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-here
-
-# Google OAuth Configuration
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
-
-# Application Configuration
-PORT=3000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:3001
+### Validation Errors
+```json
+{
+  "statusCode": 422,
+  "message": [
+    "email must be an email",
+    "password must be longer than or equal to 6 characters"
+  ],
+  "error": "Unprocessable Entity"
+}
 ```
 
-## Running the Application
+## Rate Limiting
 
-1. Install dependencies:
+The API implements rate limiting to prevent abuse:
+- 100 requests per minute per IP address
+- 1000 requests per hour per authenticated user
+
+## Pagination
+
+For endpoints that return lists, pagination is supported:
+
+**Query Parameters:**
+- `page` (optional): Page number (default: 1)
+- `limit` (optional): Items per page (default: 10, max: 100)
+
+**Response Headers:**
+```http
+X-Total-Count: 150
+X-Page: 1
+X-Limit: 10
+X-Total-Pages: 15
+```
+
+## File Upload
+
+File upload endpoints support:
+- Maximum file size: 5MB
+- Supported formats: JPG, PNG, PDF, DOC, DOCX
+- Files are stored securely and served via CDN
+
+## WebSocket Support
+
+Real-time features are available via WebSocket connections:
+- Live messaging
+- Session notifications
+- Goal progress updates
+
+**WebSocket URL:** `ws://localhost:3000/ws`
+
+## SDKs and Libraries
+
+### JavaScript/TypeScript
 ```bash
-npm install
+npm install @strathconnect/api-client
 ```
 
-2. Set up environment variables:
+### Python
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+pip install strathconnect-api
 ```
 
-3. Start the development server:
+### PHP
 ```bash
-npm run start:dev
+composer require strathconnect/api-client
 ```
 
-The API will be available at `http://localhost:3000`
+## Testing
+
+### Test Environment
+- Base URL: `http://localhost:3000`
+- Test database: `strathconnect_test`
+- Test user credentials available in test suite
+
+### Running Tests
+```bash
+# Unit tests
+npm run test
+
+# Integration tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## Support
+
+For API support:
+- Email: api-support@strathconnect.com
+- Documentation: https://docs.strathconnect.com
+- GitHub Issues: https://github.com/strathconnect/api/issues
+
+## Changelog
+
+### v1.0.0 (2024-01-15)
+- Initial API release
+- Authentication system
+- User management
+- Program management
+- Goal tracking
+- Session scheduling
+- Communication system

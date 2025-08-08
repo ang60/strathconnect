@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GraduationCap, Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/auth-context";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +21,9 @@ export default function LoginPage() {
     password: "",
     rememberMe: false,
   });
+
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -37,11 +42,22 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     
-    // Placeholder for email login
-    setTimeout(() => {
-      toast.success("Login functionality will be implemented with backend integration");
+    try {
+      await login({
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      toast.success("Login successful! Welcome back.");
+      
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error instanceof Error ? error.message : "Login failed. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

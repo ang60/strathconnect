@@ -16,7 +16,7 @@ export class CreateSessionRequest {
   @IsEnum(SessionStatus)
   status: SessionStatus;
 
-  @ApiProperty({ description: 'Session type', enum: SessionType, example: SessionType.ONE_ON_ONE })
+  @ApiProperty({ description: 'Session type', enum: SessionType, example: SessionType.VIRTUAL })
   @IsEnum(SessionType)
   type: SessionType;
 

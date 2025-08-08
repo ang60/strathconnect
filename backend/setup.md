@@ -1,97 +1,153 @@
 # StrathConnect Backend Setup Guide
 
+This guide will help you set up the StrathConnect backend API for development and production.
+
 ## Prerequisites
 
-- Node.js (v18 or higher)
-- MongoDB (v5 or higher)
-- npm or yarn
+Before you begin, ensure you have the following installed:
 
-## Installation Steps
+- **Node.js** (v18 or higher)
+- **MongoDB** (v5 or higher)
+- **npm** or **yarn**
 
-### 1. Install Dependencies
+## Step 1: Clone and Install
 
 ```bash
+# Navigate to the backend directory
 cd backend
+
+# Install dependencies
 npm install
 ```
 
-### 2. Environment Configuration
+## Step 2: Environment Configuration
 
-Create a `.env` file in the backend directory:
+1. **Copy the environment template**
+   ```bash
+   cp env.example .env
+   ```
 
-```env
-# Database Configuration
-MONGODB_URI=mongodb://localhost:27017/strathconnect
+2. **Edit the `.env` file** with your configuration:
 
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-here-make-it-long-and-random
+   ```env
+   # Database Configuration
+   MONGODB_URI=mongodb://localhost:27017/strathconnect
+   
+   # JWT Configuration (Generate secure secrets)
+   JWT_SECRET=your-super-secret-jwt-key-here
+   JWT_REFRESH_SECRET=your-super-secret-refresh-key-here
+   
+   # Google OAuth Configuration (Optional for development)
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+   
+   # Application Configuration
+   PORT=3000
+   NODE_ENV=development
+   FRONTEND_URL=http://localhost:3001
+   ```
 
-# Google OAuth Configuration (optional for now)
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+## Step 3: Database Setup
 
-# Application Configuration
-PORT=3000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:3001
-```
+1. **Start MongoDB**
+   ```bash
+   # On macOS with Homebrew
+   brew services start mongodb-community
+   
+   # On Ubuntu/Debian
+   sudo systemctl start mongod
+   
+   # On Windows
+   net start MongoDB
+   
+   # Or run directly
+   mongod
+   ```
 
-### 3. Database Setup
+2. **Verify MongoDB is running**
+   ```bash
+   # Connect to MongoDB shell
+   mongosh
+   
+   # List databases
+   show dbs
+   
+   # Exit
+   exit
+   ```
 
-Make sure MongoDB is running on your system. The application will automatically create the necessary collections when it starts.
+## Step 4: Generate JWT Secrets
 
-### 4. Start the Development Server
+For production, generate secure JWT secrets:
 
 ```bash
+# Generate random strings (use these as your JWT secrets)
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
+## Step 5: Google OAuth Setup (Optional)
+
+If you want to enable Google OAuth:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URIs:
+   - `http://localhost:3000/auth/google/callback` (development)
+   - `https://yourdomain.com/auth/google/callback` (production)
+6. Copy Client ID and Client Secret to your `.env` file
+
+## Step 6: Run the Application
+
+### Development Mode
+```bash
+# Start in development mode with hot reload
 npm run start:dev
 ```
 
-The backend will be available at `http://localhost:3000`
-
-### 5. Verify Installation
-
-Test the health endpoint:
+### Production Mode
 ```bash
-curl http://localhost:3000/health
+# Build the application
+npm run build
+
+# Start in production mode
+npm run start:prod
 ```
 
-You should see:
-```json
-{
-  "status": "ok",
-  "timestamp": "2024-01-15T10:30:00.000Z"
-}
+## Step 7: Verify Installation
+
+1. **Check if the server is running**
+   ```bash
+   curl http://localhost:3000
+   ```
+
+2. **Access Swagger API Documentation**
+   Open your browser and go to: `http://localhost:3000/api`
+
+3. **Test the health endpoint**
+   ```bash
+   curl http://localhost:3000/health
+   ```
+
+## Step 8: Create Initial Data (Optional)
+
+You can create some initial data for testing:
+
+```bash
+# Create a test user
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "password123",
+    "role": "mentor",
+    "department": "Computer Science"
+  }'
 ```
-
-## API Testing
-
-You can test the API endpoints using tools like:
-- Postman
-- Insomnia
-- curl
-- Thunder Client (VS Code extension)
-
-## Available Scripts
-
-- `npm run start:dev` - Start development server with hot reload
-- `npm run build` - Build the application
-- `npm run start` - Start production server
-- `npm run test` - Run tests
-- `npm run test:e2e` - Run end-to-end tests
-- `npm run lint` - Run linting
-- `npm run format` - Format code with Prettier
-
-## Database Collections
-
-The application will create the following collections in MongoDB:
-- `users` - User accounts and profiles
-- `programs` - Mentorship programs
-- `goals` - User goals and milestones
-- `sessions` - Mentorship sessions
-- `messages` - Communication messages
-- `conversations` - Chat conversations
 
 ## Troubleshooting
 
@@ -99,29 +155,111 @@ The application will create the following collections in MongoDB:
 
 1. **MongoDB Connection Error**
    - Ensure MongoDB is running
-   - Check the MONGODB_URI in your .env file
-   - Verify network connectivity
+   - Check the connection string in `.env`
+   - Verify MongoDB port (default: 27017)
 
-2. **JWT Errors**
+2. **Port Already in Use**
+   - Change the PORT in `.env` file
+   - Or kill the process using the port:
+     ```bash
+     lsof -ti:3000 | xargs kill -9
+     ```
+
+3. **JWT Secret Issues**
    - Ensure JWT_SECRET and JWT_REFRESH_SECRET are set
-   - Make sure the secrets are long and random
+   - Use different secrets for each environment
 
-3. **CORS Errors**
-   - Check that FRONTEND_URL is correctly set
-   - Ensure the frontend is running on the expected port
+4. **CORS Issues**
+   - Check FRONTEND_URL in `.env`
+   - Ensure it matches your frontend URL
 
-4. **Port Already in Use**
-   - Change the PORT in .env file
-   - Or kill the process using the current port
+### Development Tips
 
-### Logs
+1. **Enable Debug Logging**
+   ```bash
+   DEBUG=* npm run start:dev
+   ```
 
-Check the console output for detailed error messages and logs.
+2. **Monitor Database**
+   ```bash
+   # Connect to MongoDB shell
+   mongosh strathconnect
+   
+   # View collections
+   show collections
+   
+   # Query data
+   db.users.find()
+   ```
+
+3. **Reset Database**
+   ```bash
+   # Drop the database
+   mongosh --eval "use strathconnect; db.dropDatabase()"
+   ```
+
+## Production Deployment
+
+### Environment Variables for Production
+
+```env
+NODE_ENV=production
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/strathconnect
+JWT_SECRET=your-production-jwt-secret
+JWT_REFRESH_SECRET=your-production-refresh-secret
+FRONTEND_URL=https://yourdomain.com
+```
+
+### Security Checklist
+
+- [ ] Use strong JWT secrets
+- [ ] Enable HTTPS
+- [ ] Set up proper CORS
+- [ ] Use environment variables
+- [ ] Set up monitoring and logging
+- [ ] Configure rate limiting
+- [ ] Set up backup strategy
+
+## API Testing
+
+### Using Swagger UI
+1. Go to `http://localhost:3000/api`
+2. Click "Authorize" and enter your JWT token
+3. Test endpoints directly from the UI
+
+### Using curl
+```bash
+# Login and get token
+TOKEN=$(curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"password123"}' \
+  | jq -r '.accessToken')
+
+# Use token for authenticated requests
+curl -H "Authorization: Bearer $TOKEN" \
+  http://localhost:3000/users/profile
+```
 
 ## Next Steps
 
-1. Set up the frontend application
-2. Configure Google OAuth (optional)
-3. Set up email notifications (future enhancement)
-4. Configure production environment variables
-5. Set up monitoring and logging (future enhancement)
+1. **Set up your frontend** to connect to this API
+2. **Configure your IDE** for TypeScript development
+3. **Set up testing** with Jest
+4. **Configure CI/CD** pipeline
+5. **Set up monitoring** and logging
+
+## Support
+
+If you encounter any issues:
+
+1. Check the troubleshooting section above
+2. Review the logs for error messages
+3. Check the API documentation at `/api`
+4. Create an issue in the repository
+
+## Additional Resources
+
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [JWT.io](https://jwt.io/) - JWT debugging
+- [Swagger Documentation](https://swagger.io/docs/)

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,6 +59,7 @@ const steps = [
 ];
 
 export default function CreateProgramPage() {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [programData, setProgramData] = useState({
     name: "",
@@ -619,26 +622,27 @@ export default function CreateProgramPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <GraduationCap className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold">Create Program</h1>
-                <p className="text-sm text-muted-foreground">Set up a new mentorship or coaching program</p>
-              </div>
-            </div>
+    <MainLayout showSidebar={true}>
+      <div className="container mx-auto p-6 space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Create Program</h1>
+            <p className="text-muted-foreground">
+              Set up a new mentorship or coaching program
+            </p>
           </div>
+          <Button 
+            variant="outline" 
+            onClick={() => router.push('/programs')}
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Programs</span>
+          </Button>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+        {/* Main Content */}
         <div className="max-w-4xl mx-auto">
           {/* Stepper */}
           <div className="mb-8">
@@ -721,7 +725,7 @@ export default function CreateProgramPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

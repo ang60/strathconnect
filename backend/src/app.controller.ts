@@ -11,10 +11,11 @@ export class AppController {
   }
 
   @Get('health')
-  getHealth(): { status: string; timestamp: string } {
+  getHealth() {
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),
+      message: 'StrathConnect API is running'
     };
   }
 }

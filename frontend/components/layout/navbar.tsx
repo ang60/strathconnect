@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
@@ -14,6 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useAuth } from "@/lib/auth-context";
+import { toast } from "sonner";
 import { 
   User, 
   Settings, 
@@ -21,21 +24,30 @@ import {
   Menu
 } from "lucide-react";
 
-// Mock user data
-const currentUser = {
-  name: "Alice Wilson",
-  email: "alice.wilson@strathmore.edu",
-  role: "Mentor",
-  avatar: "/avatars/alice.jpg",
-  department: "Business Administration"
-};
-
 interface NavbarProps {
   onMenuClick?: () => void;
   showMenuButton?: boolean;
 }
 
 export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Logged out successfully");
+      router.push("/auth/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to logout. Please try again.");
+    }
+  };
+
+  if (!user) {
+    return null; // Don't render navbar if user is not authenticated
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -61,9 +73,9 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                  <AvatarImage src="/avatars/default.jpg" alt={user.name} />
                   <AvatarFallback>
-                    {currentUser.name.split(' ').map(n => n[0]).join('')}
+                    {user.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -71,17 +83,19 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{currentUser.name}</p>
+                  <p className="text-sm font-medium leading-none">{user.name}</p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    {currentUser.email}
+                    {user.email}
                   </p>
                   <div className="flex items-center space-x-2 mt-1">
                     <Badge variant="secondary" className="text-xs">
-                      {currentUser.role}
+                      {user.role}
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      {currentUser.department}
-                    </Badge>
+                    {user.department && (
+                      <Badge variant="outline" className="text-xs">
+                        {user.department}
+                      </Badge>
+                    )}
                   </div>
                 </div>
               </DropdownMenuLabel>
@@ -99,7 +113,10 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="flex items-center text-red-600">
+              <DropdownMenuItem 
+                className="flex items-center text-red-600"
+                onClick={handleLogout}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

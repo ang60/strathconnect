@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/lib/auth-context";
 import { 
   Users, 
   Target, 
@@ -19,14 +21,6 @@ import {
   CheckCircle,
   AlertCircle
 } from "lucide-react";
-
-// Mock user data
-const currentUser = {
-  name: "Alice Wilson",
-  role: "Mentor",
-  department: "Business Administration",
-  avatar: "/avatars/alice.jpg"
-};
 
 // Mock dashboard data
 const dashboardData = {
@@ -77,7 +71,9 @@ const dashboardData = {
   ]
 };
 
-export default function DashboardPage() {
+function DashboardContent() {
+  const { user } = useAuth();
+
   return (
     <MainLayout showSidebar={true}>
       <div className="container mx-auto p-6 space-y-6">
@@ -85,12 +81,12 @@ export default function DashboardPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {currentUser.name}! Here's what's happening with your mentorship programs.
+              Welcome back, {user?.name}! Here's what's happening with your mentorship programs.
             </p>
           </div>
           <Badge variant="outline" className="flex items-center space-x-1">
             <Users className="w-3 h-3" />
-            <span>{currentUser.role}</span>
+            <span>{user?.role}</span>
           </Badge>
         </div>
 
@@ -254,5 +250,13 @@ export default function DashboardPage() {
         </Card>
       </div>
     </MainLayout>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <AuthGuard>
+      <DashboardContent />
+    </AuthGuard>
   );
 }

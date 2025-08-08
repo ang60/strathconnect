@@ -66,3 +66,4 @@ export class UpdateGoalRequest {
     checkIns?: number;
   };
 }
+

@@ -1,98 +1,265 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# StrathConnect Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive NestJS backend API for the StrathConnect mentorship platform, providing authentication, user management, program management, goal tracking, session scheduling, and communication features.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Authentication & Authorization**
+  - JWT-based authentication
+  - Google OAuth integration
+  - Role-based access control (Mentor, Mentee, Admin)
+  - Refresh token mechanism
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **User Management**
+  - User registration and profile management
+  - Role assignment and department management
+  - User search and filtering
 
-## Project setup
+- **Program Management**
+  - Create and manage mentorship programs
+  - Program phases and milestones
+  - Participant and mentor assignment
+  - Program metrics and analytics
 
-```bash
-$ pnpm install
+- **Goal Tracking**
+  - Goal creation and management
+  - Milestone tracking
+  - Progress monitoring
+  - Feedback system
+
+- **Session Management**
+  - Session scheduling and booking
+  - Virtual and in-person session support
+  - Session feedback and notes
+  - Calendar integration
+
+- **Communication**
+  - Real-time messaging
+  - Direct and group conversations
+  - Message search and history
+  - File sharing support
+
+## Tech Stack
+
+- **Framework**: NestJS
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT, Passport.js, Google OAuth
+- **Validation**: class-validator, class-transformer
+- **Documentation**: Swagger/OpenAPI
+- **Testing**: Jest
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- MongoDB (v5 or higher)
+- npm or yarn
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd strathconnect/backend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+   ```bash
+   cp env.example .env
+   ```
+   
+   Edit `.env` file with your configuration:
+   - Set up MongoDB connection string
+   - Configure JWT secrets
+   - Add Google OAuth credentials
+   - Set frontend URL
+
+4. **Database Setup**
+   ```bash
+   # Start MongoDB (if not running)
+   mongod
+   
+   # The application will create collections automatically
+   ```
+
+5. **Run the application**
+   ```bash
+   # Development mode
+   npm run start:dev
+   
+   # Production mode
+   npm run build
+   npm run start:prod
+   ```
+
+## API Documentation
+
+Once the application is running, you can access the Swagger API documentation at:
+```
+http://localhost:3000/api
 ```
 
-## Compile and run the project
+## API Endpoints
+
+### Authentication
+- `POST /auth/login` - User login
+- `POST /auth/logout` - User logout
+- `POST /auth/refresh` - Refresh access token
+- `GET /auth/google` - Google OAuth login
+- `GET /auth/google/callback` - Google OAuth callback
+
+### Users
+- `POST /users` - Create user
+- `GET /users` - Get all users (with filters)
+- `GET /users/mentors` - Get all mentors
+- `GET /users/mentees` - Get all mentees
+- `GET /users/profile` - Get current user profile
+- `PUT /users/profile` - Update current user profile
+- `GET /users/:id` - Get user by ID
+- `PUT /users/:id` - Update user
+- `DELETE /users/:id` - Delete user
+
+### Programs
+- `POST /programs` - Create program
+- `GET /programs` - Get all programs (with filters)
+- `GET /programs/active` - Get active programs
+- `GET /programs/:id` - Get program by ID
+- `PUT /programs/:id` - Update program
+- `DELETE /programs/:id` - Delete program
+- `POST /programs/:id/participants` - Add participant
+- `DELETE /programs/:id/participants/:userId` - Remove participant
+- `POST /programs/:id/mentors` - Add mentor
+- `DELETE /programs/:id/mentors/:userId` - Remove mentor
+
+### Goals
+- `POST /goals` - Create goal
+- `GET /goals` - Get goals (with filters)
+- `GET /goals/my-goals` - Get user's goals
+- `GET /goals/:id` - Get goal by ID
+- `PUT /goals/:id` - Update goal
+- `DELETE /goals/:id` - Delete goal
+- `PUT /goals/:id/progress` - Update goal progress
+- `PUT /goals/:id/milestones/:milestoneIndex/complete` - Complete milestone
+- `PUT /goals/:id/feedback` - Add feedback
+
+### Sessions
+- `POST /sessions` - Create session
+- `GET /sessions` - Get sessions (with filters)
+- `GET /sessions/upcoming` - Get upcoming sessions
+- `GET /sessions/past` - Get past sessions
+- `GET /sessions/stats` - Get session statistics
+- `GET /sessions/:id` - Get session by ID
+- `PUT /sessions/:id` - Update session
+- `DELETE /sessions/:id` - Delete session
+- `PUT /sessions/:id/status` - Update session status
+- `PUT /sessions/:id/feedback` - Add session feedback
+- `PUT /sessions/:id/notes` - Add session notes
+
+### Communication
+- `POST /communication/conversations` - Create conversation
+- `GET /communication/conversations` - Get user conversations
+- `GET /communication/conversations/:id` - Get conversation
+- `POST /communication/conversations/:id/messages` - Send message
+- `GET /communication/conversations/:id/messages` - Get messages
+- `PUT /communication/messages/:id/read` - Mark message as read
+- `PUT /communication/conversations/:id/read` - Mark conversation as read
+- `GET /communication/unread-count` - Get unread message count
+- `DELETE /communication/messages/:id` - Delete message
+- `PUT /communication/messages/:id` - Edit message
+- `GET /communication/search` - Search messages
+- `GET /communication/direct/:userId` - Get direct conversation
+
+## Data Models
+
+### User
+- Basic info (name, email, password)
+- Role (Mentor, Mentee, Admin)
+- Department and profile information
+- Authentication tokens
+
+### Program
+- Program details (name, description, type)
+- Phases and milestones
+- Participants and mentors
+- Settings and requirements
+
+### Goal
+- Goal details (title, description, priority)
+- Milestones and progress tracking
+- Associated mentor and mentee
+- Feedback and metrics
+
+### Session
+- Session details (title, description, type)
+- Scheduling information
+- Participants and program association
+- Feedback and notes
+
+### Conversation & Message
+- Conversation management
+- Message history and search
+- Read status and notifications
+
+## Testing
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ pnpm run test
+# Unit tests
+npm run test
 
 # e2e tests
-$ pnpm run test:e2e
+npm run test:e2e
 
-# test coverage
-$ pnpm run test:cov
+# Test coverage
+npm run test:cov
 ```
+
+## Development
+
+### Code Style
+```bash
+# Format code
+npm run format
+
+# Lint code
+npm run lint
+```
+
+### Database Migrations
+The application uses Mongoose schemas that automatically create collections and indexes. For production, consider using a migration tool.
+
+### Environment Variables
+See `env.example` for all required environment variables.
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. **Set production environment variables**
+   - Update MongoDB connection string
+   - Set secure JWT secrets
+   - Configure production URLs
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+3. **Deploy to your preferred platform**
+   - Heroku
+   - AWS
+   - DigitalOcean
+   - Vercel
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Contributing
 
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.

@@ -2,6 +2,7 @@
 
 import { MainLayout } from "@/components/layout/main-layout";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -115,6 +116,7 @@ const programs = [
 ];
 
 export default function ProgramsPage() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -158,7 +160,10 @@ export default function ProgramsPage() {
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <Button className="flex items-center space-x-2">
+            <Button 
+              className="flex items-center space-x-2"
+              onClick={() => router.push('/programs/create')}
+            >
               <Plus className="w-4 h-4" />
               <span>Create Program</span>
             </Button>
@@ -377,11 +382,18 @@ export default function ProgramsPage() {
                     </div>
 
                     <div className="flex space-x-2">
-                      <Button className="flex-1">
+                      <Button 
+                        className="flex-1"
+                        onClick={() => router.push(`/programs/${program.id}`)}
+                      >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => router.push(`/programs/${program.id}/edit`)}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
                     </div>

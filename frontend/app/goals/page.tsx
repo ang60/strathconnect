@@ -31,6 +31,9 @@ import {
   Eye,
   Share2
 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Mock data
 const goals = [
@@ -117,6 +120,24 @@ export default function GoalsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [goalData, setGoalData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    targetDate: "",
+    status: "planning",
+    milestones: [] as Array<{
+      title: string;
+      dueDate: string;
+      completed: false;
+    }>,
+    sharedWith: [] as string[],
+    notes: ""
+  });
+  const [newMilestone, setNewMilestone] = useState({
+    title: "",
+    dueDate: ""
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -138,6 +159,44 @@ export default function GoalsPage() {
     if (progress >= 60) return "bg-blue-500";
     if (progress >= 40) return "bg-yellow-500";
     return "bg-red-500";
+  };
+
+  const addMilestone = () => {
+    if (newMilestone.title.trim() && newMilestone.dueDate) {
+      setGoalData(prev => ({
+        ...prev,
+        milestones: [...prev.milestones, { 
+          title: newMilestone.title.trim(), 
+          dueDate: newMilestone.dueDate,
+          completed: false 
+        }]
+      }));
+      setNewMilestone({ title: "", dueDate: "" });
+    }
+  };
+
+  const removeMilestone = (index: number) => {
+    setGoalData(prev => ({
+      ...prev,
+      milestones: prev.milestones.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleCreateGoal = () => {
+    // Simulate API call
+    console.log("Creating goal:", goalData);
+    setShowCreateModal(false);
+    // Reset form
+    setGoalData({
+      title: "",
+      description: "",
+      category: "",
+      targetDate: "",
+      status: "planning",
+      milestones: [],
+      sharedWith: [],
+      notes: ""
+    });
   };
 
   return (
@@ -495,6 +554,154 @@ export default function GoalsPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Goal Creation Modal */}
+      <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Create New Goal</DialogTitle>
+            <DialogDescription>
+              Set a new personal or professional goal with milestones and tracking.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">Goal Title</Label>
+                <Input
+                  id="title"
+                  placeholder="Enter goal title"
+                  value={goalData.title}
+                  onChange={(e) => setGoalData(prev => ({ ...prev, title: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <Select value={goalData.category} onValueChange={(value) => setGoalData(prev => ({ ...prev, category: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Professional Growth">Professional Growth</SelectItem>
+                    <SelectItem value="Skills Development">Skills Development</SelectItem>
+                    <SelectItem value="Career Change">Career Change</SelectItem>
+                    <SelectItem value="Personal Development">Personal Development</SelectItem>
+                    <SelectItem value="Health & Wellness">Health & Wellness</SelectItem>
+                    <SelectItem value="Financial Goals">Financial Goals</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Describe your goal and what you want to achieve"
+                value={goalData.description}
+                onChange={(e) => setGoalData(prev => ({ ...prev, description: e.target.value }))}
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="targetDate">Target Date</Label>
+                <Input
+                  id="targetDate"
+                  type="date"
+                  value={goalData.targetDate}
+                  onChange={(e) => setGoalData(prev => ({ ...prev, targetDate: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="status">Status</Label>
+                <Select value={goalData.status} onValueChange={(value) => setGoalData(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="planning">Planning</SelectItem>
+                    <SelectItem value="in-progress">In Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="paused">Paused</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Label>Milestones</Label>
+                <Button onClick={addMilestone} size="sm" variant="outline">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Milestone
+                </Button>
+              </div>
+              
+              <div className="space-y-3">
+                {goalData.milestones.map((milestone, index) => (
+                  <div key={index} className="flex items-center space-x-2 p-3 border rounded-lg">
+                    <div className="flex-1">
+                      <p className="font-medium">{milestone.title}</p>
+                      <p className="text-sm text-muted-foreground">Due: {milestone.dueDate}</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeMilestone(index)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="milestoneTitle">Milestone Title</Label>
+                  <Input
+                    id="milestoneTitle"
+                    placeholder="Enter milestone title"
+                    value={newMilestone.title}
+                    onChange={(e) => setNewMilestone(prev => ({ ...prev, title: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="milestoneDate">Due Date</Label>
+                  <Input
+                    id="milestoneDate"
+                    type="date"
+                    value={newMilestone.dueDate}
+                    onChange={(e) => setNewMilestone(prev => ({ ...prev, dueDate: e.target.value }))}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes</Label>
+              <Textarea
+                id="notes"
+                placeholder="Additional notes or context for this goal"
+                value={goalData.notes}
+                onChange={(e) => setGoalData(prev => ({ ...prev, notes: e.target.value }))}
+                rows={2}
+              />
+            </div>
+
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleCreateGoal}>
+                Create Goal
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </MainLayout>
   );
 }
