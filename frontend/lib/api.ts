@@ -20,8 +20,8 @@ export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-  role: string;
-  department: string;
+  role?: string; // Optional - will be assigned by admin
+  department?: string;
 }
 
 export interface ApiError {
@@ -197,6 +197,18 @@ class ApiService {
     return this.request(`/communication/conversations/${conversationId}/messages`, {
       method: 'POST',
       body: JSON.stringify(data),
+    });
+  }
+
+  // Admin methods
+  async getPendingUsers(): Promise<any[]> {
+    return this.request('/users/pending');
+  }
+
+  async assignRole(userId: string, role: string): Promise<any> {
+    return this.request(`/users/${userId}/role`, {
+      method: 'PUT',
+      body: JSON.stringify({ role }),
     });
   }
 }

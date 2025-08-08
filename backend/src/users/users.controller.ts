@@ -137,4 +137,30 @@ export class UsersController {
   ) {
     return this.usersService.deleteUser(id);
   }
+
+  @ApiOperation({ summary: 'Get pending users', description: 'Get all users with PENDING status awaiting role assignment' })
+  @ApiBearerAuth('JWT-auth')
+  @ApiResponse({ status: 200, description: 'Pending users retrieved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @Get('pending')
+  @UseGuards(JwtAuthGuard)
+  async getPendingUsers(@CurrentUser() user: User) {
+    return this.usersService.getPendingUsers();
+  }
+
+  @ApiOperation({ summary: 'Assign role to user', description: 'Assign a role to a user and activate their account' })
+  @ApiBearerAuth('JWT-auth')
+  @ApiParam({ name: 'id', description: 'User ID' })
+  @ApiResponse({ status: 200, description: 'Role assigned successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @Put(':id/role')
+  @UseGuards(JwtAuthGuard)
+  async assignRole(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Body('role', new ParseEnumPipe(UserRole)) role: UserRole,
+  ) {
+    return this.usersService.assignRole(id, role);
+  }
 }

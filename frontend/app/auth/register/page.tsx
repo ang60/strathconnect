@@ -29,50 +29,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { apiService } from "@/lib/api";
 
-const roles = [
-  {
-    id: "admin",
-    title: "Administrator",
-    description: "Manage platform operations and user access",
-    icon: Shield,
-    color: "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400"
-  },
-  {
-    id: "mentor",
-    title: "Mentor",
-    description: "Share expertise and guide mentees in their career journey",
-    icon: Users,
-    color: "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
-  },
-  {
-    id: "mentee",
-    title: "Mentee",
-    description: "Learn from experienced mentors and develop your skills",
-    icon: User,
-    color: "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400"
-  },
-  {
-    id: "coach",
-    title: "Coach",
-    description: "Provide structured coaching sessions for goal achievement",
-    icon: Target,
-    color: "bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-400"
-  },
-  {
-    id: "coachee",
-    title: "Coachee",
-    description: "Receive personalized coaching to achieve your objectives",
-    icon: BookOpen,
-    color: "bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-400"
-  },
-  {
-    id: "coordinator",
-    title: "Coordinator",
-    description: "Facilitate programs and manage mentorship relationships",
-    icon: UserCheck,
-    color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
-  }
-];
+// Roles are now assigned by administrators after registration
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +42,6 @@ export default function RegisterPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "",
     department: "",
     agreeToTerms: false,
     agreeToPrivacy: false,
@@ -122,7 +78,8 @@ export default function RegisterPage() {
         return;
       }
     }
-    setCurrentStep(currentStep + 1);
+    // Skip role selection step - go directly to final step
+    setCurrentStep(3);
   };
 
   const handlePreviousStep = () => {
@@ -131,10 +88,6 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.role) {
-      toast.error("Please select a role");
-      return;
-    }
     if (!formData.agreeToTerms || !formData.agreeToPrivacy) {
       toast.error("Please agree to the terms and privacy policy");
       return;
@@ -143,25 +96,18 @@ export default function RegisterPage() {
     setIsLoading(true);
     
     try {
-      // Register the user
+      // Register the user (role will be assigned by admin)
       const response = await apiService.register({
         name: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
         password: formData.password,
-        role: formData.role,
         department: formData.department,
       });
 
-      // Log the user in after successful registration
-      await login({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      toast.success("Account created successfully! Welcome to StrathConnect.");
+      toast.success("Account created successfully! An administrator will review and assign your role. You'll receive an email notification once your account is activated.");
       
-      // Redirect to dashboard
-      router.push("/dashboard");
+      // Redirect to login page instead of dashboard since user needs role assignment
+      router.push("/auth/login");
     } catch (error) {
       console.error("Registration error:", error);
       toast.error(error instanceof Error ? error.message : "Registration failed. Please try again.");
@@ -222,12 +168,12 @@ export default function RegisterPage() {
         <Card className="border-0 shadow-xl">
           <CardHeader className="space-y-1">
             <CardTitle className="text-xl text-center">
-              {currentStep === 1 ? "Account Information" : "Role Selection"}
+              {currentStep === 1 ? "Account Information" : "Additional Information"}
             </CardTitle>
             <CardDescription className="text-center">
               {currentStep === 1 
                 ? "Enter your basic information to get started" 
-                : "Choose your role in the platform"
+                : "Complete your profile and agree to terms"
               }
             </CardDescription>
           </CardHeader>
@@ -384,37 +330,19 @@ export default function RegisterPage() {
               </>
             ) : (
               <>
-                {/* Role Selection */}
-                <RadioGroup
-                  value={formData.role}
-                  onValueChange={(value) => handleInputChange("role", value)}
-                  className="space-y-4"
-                >
-                  {roles.map((role) => {
-                    const IconComponent = role.icon;
-                    return (
-                      <div key={role.id} className="flex items-center space-x-3">
-                        <RadioGroupItem value={role.id} id={role.id} />
-                        <Label
-                          htmlFor={role.id}
-                          className="flex-1 cursor-pointer"
-                        >
-                          <div className="flex items-center space-x-3 p-3 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${role.color}`}>
-                              <IconComponent className="w-5 h-5" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-medium">{role.title}</div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {role.description}
-                              </div>
-                            </div>
-                          </div>
-                        </Label>
-                      </div>
-                    );
-                  })}
-                </RadioGroup>
+                {/* Role Assignment Notice */}
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+                    <div>
+                      <h4 className="font-medium text-blue-900 dark:text-blue-100">Role Assignment</h4>
+                      <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                        Your role will be assigned by an administrator after your account is reviewed. 
+                        You'll receive an email notification once your role is assigned.
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Department Selection */}
                 <div className="space-y-2">

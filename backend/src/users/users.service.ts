@@ -19,6 +19,8 @@ export class UsersService {
 
     const user = await new this.userModel({
       ...data,
+      role: data.role || UserRole.MENTEE, // Default to MENTEE if no role provided
+      status: UserStatus.PENDING, // All new users start with PENDING status
       password: await hash(data.password, 10),
     }).save();
     return user.toObject();
@@ -130,5 +132,28 @@ export class UsersService {
         { department: { $regex: searchTerm, $options: 'i' } },
       ],
     }).select('-password -refreshToken');
+  }
+
+  async assignRole(userId: string, role: UserRole) {
+    const user = await this.userModel.findByIdAndUpdate(
+      userId,
+      { 
+        role,
+        status: UserStatus.ACTIVE // Activate user when role is assigned
+      },
+      { new: true }
+    ).select('-password -refreshToken');
+    
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    
+    return user.toObject();
+  }
+
+  async getPendingUsers() {
+    return this.userModel.find({ status: UserStatus.PENDING })
+      .select('-password -refreshToken')
+      .sort({ createdAt: -1 });
   }
 }

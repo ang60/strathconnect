@@ -133,6 +133,25 @@ export default function AdminPage() {
     content: "",
     category: ""
   });
+  const [pendingUsers, setPendingUsers] = useState([
+    {
+      id: "1",
+      name: "John Doe",
+      email: "john.doe@strathmore.edu",
+      department: "Computer Science",
+      createdAt: "2024-01-15T10:30:00",
+      status: "pending"
+    },
+    {
+      id: "2",
+      name: "Jane Smith",
+      email: "jane.smith@strathmore.edu",
+      department: "Business Administration",
+      createdAt: "2024-01-14T15:45:00",
+      status: "pending"
+    }
+  ]);
+  const [selectedRole, setSelectedRole] = useState("");
 
   const handleSaveUser = () => {
     if (!userForm.name || !userForm.email || !userForm.role) {
@@ -154,6 +173,12 @@ export default function AdminPage() {
 
   const handleSaveSettings = () => {
     toast.success("Program settings saved successfully");
+  };
+
+  const handleAssignRole = (userId: string, role: string) => {
+    // In a real app, this would call the API
+    setPendingUsers(prev => prev.filter(user => user.id !== userId));
+    toast.success(`Role ${role} assigned successfully`);
   };
 
   const getLogLevelColor = (level: string) => {
@@ -191,7 +216,7 @@ export default function AdminPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="users" className="flex items-center space-x-2">
             <Users className="w-4 h-4" />
             <span>User Management</span>
@@ -207,6 +232,10 @@ export default function AdminPage() {
           <TabsTrigger value="logs" className="flex items-center space-x-2">
             <Activity className="w-4 h-4" />
             <span>System Logs</span>
+          </TabsTrigger>
+          <TabsTrigger value="pending" className="flex items-center space-x-2">
+            <Clock className="w-4 h-4" />
+            <span>Pending Users</span>
           </TabsTrigger>
         </TabsList>
 
@@ -610,6 +639,83 @@ export default function AdminPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="pending" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold">Pending User Approvals</h2>
+              <p className="text-sm text-muted-foreground">
+                Review and assign roles to new users
+              </p>
+            </div>
+            <Badge variant="outline" className="flex items-center space-x-1">
+              <Clock className="w-3 h-3" />
+              <span>{pendingUsers.length} Pending</span>
+            </Badge>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Users Awaiting Role Assignment</CardTitle>
+              <CardDescription>
+                New users who have registered and are waiting for role assignment
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {pendingUsers.map((user) => (
+                  <div key={user.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                          <Users className="w-5 h-5 text-gray-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{user.name}</h4>
+                          <p className="text-sm text-muted-foreground">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Department: {user.department} • Registered: {new Date(user.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Select value={selectedRole} onValueChange={setSelectedRole}>
+                        <SelectTrigger className="w-40">
+                          <SelectValue placeholder="Select role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mentor">Mentor</SelectItem>
+                          <SelectItem value="mentee">Mentee</SelectItem>
+                          <SelectItem value="coordinator">Coordinator</SelectItem>
+                          <SelectItem value="admin">Admin</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button
+                        onClick={() => handleAssignRole(user.id, selectedRole)}
+                        disabled={!selectedRole}
+                        size="sm"
+                      >
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Assign Role
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Mail className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {pendingUsers.length === 0 && (
+                  <div className="text-center py-8">
+                    <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium">No pending users</h3>
+                    <p className="text-muted-foreground">All users have been assigned roles</p>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
