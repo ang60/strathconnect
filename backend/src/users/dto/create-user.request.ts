@@ -1,6 +1,6 @@
 import { IsEmail, IsStrongPassword, IsString, IsOptional, IsEnum, IsArray } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserRole } from '../schema/user.schema';
+import { Role } from '../../auth/rbac/roles.enum';
 
 export class CreateUserRequest {
   @ApiProperty({ description: 'User email address', example: 'john.doe@example.com' })
@@ -15,10 +15,10 @@ export class CreateUserRequest {
   @IsString()
   name: string;
 
-  @ApiPropertyOptional({ description: 'User role in the platform (assigned by admin)', enum: UserRole, example: UserRole.MENTEE })
+  @ApiPropertyOptional({ description: 'User role in the platform (assigned by admin)', enum: Role, example: Role.MENTEE })
   @IsOptional()
-  @IsEnum(UserRole)
-  role?: UserRole;
+  @IsEnum(Role)
+  role?: Role;
 
   @ApiPropertyOptional({ description: 'User department', example: 'Computer Science' })
   @IsOptional()

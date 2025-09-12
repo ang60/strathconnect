@@ -97,11 +97,15 @@ export class AuthService {
     };
   }
 
-  async logout(userId: string, response: Response) {
-    // Clear refresh token
-    await this.usersService.updateRefreshToken(userId, null);
+  async logout(userId: string | null, response: Response) {
+    // Clear refresh token if user ID is provided
+    if (userId) {
+      await this.usersService.updateRefreshToken(userId, null);
+    }
 
-    // Clear cookies
+    // Clear cookies regardless of user ID
+    response.clearCookie('Authentication');
+    response.clearCookie('Refresh');
     response.clearCookie('access_token');
     response.clearCookie('refresh_token');
 

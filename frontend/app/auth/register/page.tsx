@@ -104,10 +104,20 @@ export default function RegisterPage() {
         department: formData.department,
       });
 
+      console.log("Registration response:", response);
+
       toast.success("Account created successfully! An administrator will review and assign your role. You'll receive an email notification once your account is activated.");
       
-      // Redirect to login page instead of dashboard since user needs role assignment
-      router.push("/auth/login");
+      // Wait a moment for the toast to show, then redirect
+      setTimeout(() => {
+        try {
+          router.push("/auth/login");
+        } catch (routerError) {
+          console.error("Router push failed, using window.location:", routerError);
+          // Fallback to window.location if router.push fails
+          window.location.href = "/auth/login";
+        }
+      }, 1500);
     } catch (error) {
       console.error("Registration error:", error);
       toast.error(error instanceof Error ? error.message : "Registration failed. Please try again.");

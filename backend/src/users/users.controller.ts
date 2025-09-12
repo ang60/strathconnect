@@ -17,10 +17,12 @@ import { CreateUserRequest } from './dto/create-user.request';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
-import { User, UserRole, UserStatus } from './schema/user.schema';
+import { User, UserStatus } from './schema/user.schema';
+import { Role } from '../auth/rbac/roles.enum';
 
 @ApiTags('users')
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -35,7 +37,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Get users', description: 'Get all users with optional filtering' })
   @ApiBearerAuth('JWT-auth')
-  @ApiQuery({ name: 'role', enum: UserRole, required: false, description: 'Filter by user role' })
+  @ApiQuery({ name: 'role', enum: Role, required: false, description: 'Filter by user role' })
   @ApiQuery({ name: 'department', required: false, description: 'Filter by department' })
   @ApiQuery({ name: 'status', enum: UserStatus, required: false, description: 'Filter by user status' })
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
@@ -44,7 +46,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async getUsers(
     @CurrentUser() user: User,
-    @Query('role') role?: UserRole,
+    @Query('role') role?: Role,
     @Query('department') department?: string,
     @Query('status') status?: UserStatus,
   ) {
@@ -159,7 +161,7 @@ export class UsersController {
   async assignRole(
     @CurrentUser() user: User,
     @Param('id') id: string,
-    @Body('role', new ParseEnumPipe(UserRole)) role: UserRole,
+    @Body('role', new ParseEnumPipe(Role)) role: Role,
   ) {
     return this.usersService.assignRole(id, role);
   }

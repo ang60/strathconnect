@@ -19,7 +19,21 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get('JWT_SECRET') || 'dev-jwt-secret-change-in-production',
     });
   }
-  validate(payload: TokenPayload) {
-    return this.usersService.getUser({ _id: payload.userId });
+  async validate(payload: TokenPayload) {
+    const user = await this.usersService.getUser({ _id: payload.userId });
+    
+    if (!user) {
+      return null;
+    }
+
+    // Return user with role information for RBAC
+    return {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      department: user.department,
+      status: user.status,
+    };
   }
 }

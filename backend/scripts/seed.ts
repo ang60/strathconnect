@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 
 // Import schemas
-import { User, UserRole, UserStatus, UserSchema } from '../src/users/schema/user.schema';
+import { User, UserStatus, UserSchema } from '../src/users/schema/user.schema';
+import { Role } from '../src/auth/rbac/roles.enum';
 import { Program, ProgramStatus, ProgramType, ProgramSchema } from '../src/programs/schema/program.schema';
 import { Goal, GoalStatus, GoalPriority, GoalSchema } from '../src/goals/schema/goal.schema';
 import { Session, SessionStatus, SessionType, SessionSchema } from '../src/sessions/schema/session.schema';
@@ -51,7 +52,7 @@ async function createUsers() {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: hashedPassword,
-      role: UserRole.MENTOR,
+      role: Role.MENTOR,
       department: 'Computer Science',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
       bio: 'Senior Software Engineer with 8+ years of experience in full-stack development. Passionate about mentoring and helping others grow in their careers.',
@@ -64,7 +65,7 @@ async function createUsers() {
       name: 'Jane Smith',
       email: 'jane.smith@example.com',
       password: hashedPassword,
-      role: UserRole.MENTOR,
+      role: Role.MENTOR,
       department: 'Business Administration',
       avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
       bio: 'Business Development Manager with expertise in strategic planning and team leadership. Dedicated to helping mentees develop their leadership skills.',
@@ -77,7 +78,7 @@ async function createUsers() {
       name: 'Mike Johnson',
       email: 'mike.johnson@example.com',
       password: hashedPassword,
-      role: UserRole.MENTEE,
+      role: Role.MENTEE,
       department: 'Computer Science',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
       bio: 'Junior Developer eager to learn and grow in the software development field. Looking for guidance on career advancement and technical skills.',
@@ -90,7 +91,7 @@ async function createUsers() {
       name: 'Sarah Wilson',
       email: 'sarah.wilson@example.com',
       password: hashedPassword,
-      role: UserRole.MENTEE,
+      role: Role.MENTEE,
       department: 'Business Administration',
       avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
       bio: 'Business student with a passion for entrepreneurship and innovation. Seeking mentorship to develop leadership and business skills.',
@@ -103,7 +104,7 @@ async function createUsers() {
       name: 'Admin User',
       email: 'admin@strathconnect.com',
       password: hashedPassword,
-      role: UserRole.ADMIN,
+      role: Role.ADMIN,
       department: 'Administration',
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
       bio: 'System administrator responsible for managing the StrathConnect platform and supporting users.',

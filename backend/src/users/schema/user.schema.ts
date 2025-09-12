@@ -1,12 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  COORDINATOR = 'coordinator',
-  MENTOR = 'mentor',
-  MENTEE = 'mentee',
-}
+import { Role } from '../../auth/rbac/roles.enum';
 
 export enum UserStatus {
   ACTIVE = 'active',
@@ -29,8 +23,8 @@ export class User {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  role: UserRole;
+  @Prop({ required: true, enum: Role })
+  role: Role;
 
   @Prop()
   department: string;

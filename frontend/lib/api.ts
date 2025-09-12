@@ -38,7 +38,8 @@ class ApiService {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    isRetry = false
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     
@@ -74,6 +75,20 @@ class ApiService {
             console.error('Failed to parse error response:', textError);
           }
         }
+
+        // If we get an "Invalid or expired token" error and this isn't a retry, try to refresh the token
+        if (errorMessage.includes('Invalid or expired token') && !isRetry && endpoint !== '/auth/refresh') {
+          try {
+            console.log('Token expired, attempting to refresh...');
+            await this.refreshToken();
+            // Retry the original request
+            return this.request<T>(endpoint, options, true);
+          } catch (refreshError) {
+            console.log('Token refresh failed:', refreshError);
+            // If refresh fails, throw the original error
+          }
+        }
+
         throw new Error(errorMessage);
       }
 

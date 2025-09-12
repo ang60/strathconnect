@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserRole, UserStatus } from './schema/user.schema';
+import { User, UserStatus } from './schema/user.schema';
+import { Role } from '../auth/rbac/roles.enum';
 import { FilterQuery, Model, UpdateQuery, Types } from 'mongoose';
 import { CreateUserRequest } from './dto/create-user.request';
 import { hash } from 'bcryptjs';
@@ -19,7 +20,7 @@ export class UsersService {
 
     const user = await new this.userModel({
       ...data,
-      role: data.role || UserRole.MENTEE, // Default to MENTEE if no role provided
+      role: data.role || Role.MENTEE, // Default to MENTEE if no role provided
       status: UserStatus.PENDING, // All new users start with PENDING status
       password: await hash(data.password, 10),
     }).save();
@@ -43,7 +44,7 @@ export class UsersService {
   }
 
   async getUsers(filters?: {
-    role?: UserRole;
+    role?: Role;
     department?: string;
     status?: UserStatus;
   }) {
@@ -64,14 +65,14 @@ export class UsersService {
 
   async getMentors() {
     return this.userModel.find({ 
-      role: UserRole.MENTOR, 
+      role: Role.MENTOR, 
       status: UserStatus.ACTIVE 
     }).select('-password -refreshToken');
   }
 
   async getMentees() {
     return this.userModel.find({ 
-      role: UserRole.MENTEE, 
+      role: Role.MENTEE, 
       status: UserStatus.ACTIVE 
     }).select('-password -refreshToken');
   }
@@ -134,7 +135,7 @@ export class UsersService {
     }).select('-password -refreshToken');
   }
 
-  async assignRole(userId: string, role: UserRole) {
+  async assignRole(userId: string, role: Role) {
     const user = await this.userModel.findByIdAndUpdate(
       userId,
       { 

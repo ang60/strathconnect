@@ -21,7 +21,10 @@ import {
   User, 
   Settings, 
   LogOut, 
-  Menu
+  Menu,
+  Bell,
+  Search,
+  Zap
 } from "lucide-react";
 
 interface NavbarProps {
@@ -49,72 +52,129 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/20 backdrop-blur-xl">
+      {/* Animated Border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+      
+      <div className="container flex h-16 items-center px-6">
         <div className="flex items-center space-x-4">
           {showMenuButton && (
             <Button
               variant="ghost"
               size="sm"
               onClick={onMenuClick}
-              className="md:hidden"
+              className="md:hidden hover:bg-white/10 relative overflow-hidden group"
             >
-              <Menu className="h-5 w-5" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Menu className="h-5 w-5 relative z-10" />
             </Button>
           )}
         </div>
 
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-center">
+          {/* Search Bar */}
+          <div className="relative max-w-md w-full">
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-full blur-sm" />
+            <div className="relative flex items-center">
+              <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search anything..."
+                className="w-full pl-10 pr-4 py-2 bg-black/20 border border-white/10 rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent backdrop-blur-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          {/* Notifications */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+            <Bell className="h-5 w-5 relative z-10" />
+            <div className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse" />
+          </Button>
+
+          {/* Quick Actions */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+            <Zap className="h-5 w-5 relative z-10" />
+          </Button>
+
           {/* Theme Toggle */}
-          <ThemeToggle />
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg opacity-50" />
+            <div className="relative">
+              <ThemeToggle />
+            </div>
+          </div>
 
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-white/10 group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 border border-gradient-to-r from-red-400/30 to-red-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Avatar className="h-10 w-10 relative z-10 ring-2 ring-white/10">
                   <AvatarImage src="/avatars/default.jpg" alt={user.name} />
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold">
                     {user.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuContent className="w-64 bg-black/80 backdrop-blur-xl border border-white/10" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {user.email}
-                  </p>
-                  <div className="flex items-center space-x-2 mt-1">
-                    <Badge variant="secondary" className="text-xs">
+                <div className="flex flex-col space-y-2">
+                  <div className="flex items-center space-x-3">
+                    <Avatar className="h-10 w-10 ring-2 ring-red-400/30">
+                      <AvatarImage src="/avatars/default.jpg" alt={user.name} />
+                      <AvatarFallback className="bg-gradient-to-r from-red-500 to-red-600 text-white">
+                        {user.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium leading-none">{user.name}</p>
+                      <p className="text-xs leading-none text-muted-foreground mt-1">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="secondary" className="text-xs bg-red-500/20 text-red-300 border-red-400/30">
                       {user.role}
                     </Badge>
                     {user.department && (
-                      <Badge variant="outline" className="text-xs">
+                      <Badge variant="outline" className="text-xs border-red-400/30 text-red-300">
                         {user.department}
                       </Badge>
                     )}
                   </div>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuItem asChild className="hover:bg-white/10">
                 <Link href="/profile" className="flex items-center">
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild className="hover:bg-white/10">
                 <Link href="/admin" className="flex items-center">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem 
-                className="flex items-center text-red-600"
+                className="flex items-center text-red-400 hover:bg-red-500/10 hover:text-red-300"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />

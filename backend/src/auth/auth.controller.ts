@@ -8,12 +8,14 @@ import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CreateUserRequest } from '../users/dto/create-user.request';
+import { Public } from './rbac/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   
   @Post('register')
+  @Public()
   async register(
     @Body() createUserDto: CreateUserRequest,
     @Res({ passthrough: true }) response: Response,
@@ -22,6 +24,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @Public()
   @UseGuards(LocalAuthGuard)
   async login(
     @CurrentUser() user: User,
@@ -31,12 +34,11 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(JwtAuthGuard)
+  @Public()
   async logout(
-    @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
-    return await this.authService.logout(user._id.toString(), response);
+    return await this.authService.logout(null, response);
   }
 
   @Post('refresh')
@@ -49,10 +51,12 @@ export class AuthController {
   }
 
   @Get('google')
+  @Public()
   @UseGuards(GoogleAuthGuard)
   loginGoogle() {}
 
   @Get('google/callback')
+  @Public()
   @UseGuards(GoogleAuthGuard)
   async googleCallBack(
     @CurrentUser() user: User,

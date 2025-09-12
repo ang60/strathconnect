@@ -58,11 +58,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userData = await apiService.getCurrentUser();
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      return userData;
     } catch (error) {
       console.error('Failed to refresh user:', error);
       // If refresh fails, clear user data
       setUser(null);
       localStorage.removeItem('user');
+      throw error; // Re-throw to let caller handle it
     }
   };
 
@@ -76,11 +78,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setUser(userData);
           
           // Try to refresh the user data from the server
-          await refreshUser();
+          // If this fails (e.g., token expired), we'll gracefully fall back to stored data
+          try {
+            await refreshUser();
+          } catch (refreshError) {
+            console.log('Unable to refresh user data, keeping stored user data:', refreshError.message);
+            // Keep the stored user data and let the user continue
+            // They can logout manually if needed
+          }
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
-        localStorage.removeItem('user');
+        // Only clear localStorage if there's a critical error
+        // Don't clear on token expiration
+        if (!error.message?.includes('Invalid or expired token')) {
+          localStorage.removeItem('user');
+          setUser(null);
+        }
       } finally {
         setIsLoading(false);
       }
