@@ -104,8 +104,6 @@ export class AuthService {
     }
 
     // Clear cookies regardless of user ID
-    response.clearCookie('Authentication');
-    response.clearCookie('Refresh');
     response.clearCookie('access_token');
     response.clearCookie('refresh_token');
 

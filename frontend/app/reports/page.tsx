@@ -188,7 +188,7 @@ export default function ReportsPage() {
                 <div className="text-2xl font-bold">{userEngagementData.totalUsers.toLocaleString()}</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                   {getGrowthIndicator(userEngagementData.totalUsers, 1100).icon}
-                  <span className={getGrowthIndicator(userEngagementData.totalUsers, 1100).isPositive ? "text-green-600" : "text-red-600"}>
+                  <span className={getGrowthIndicator(userEngagementData.totalUsers, 1100).isPositive ? "text-green-600" : "text-white"}>
                     +{getGrowthIndicator(userEngagementData.totalUsers, 1100).value}%
                   </span>
                   <span>from last month</span>
@@ -205,7 +205,7 @@ export default function ReportsPage() {
                 <div className="text-2xl font-bold">{programMetrics.activePrograms}</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                   {getGrowthIndicator(programMetrics.activePrograms, 15).icon}
-                  <span className={getGrowthIndicator(programMetrics.activePrograms, 15).isPositive ? "text-green-600" : "text-red-600"}>
+                  <span className={getGrowthIndicator(programMetrics.activePrograms, 15).isPositive ? "text-green-600" : "text-white"}>
                     +{getGrowthIndicator(programMetrics.activePrograms, 15).value}%
                   </span>
                   <span>from last month</span>
@@ -222,7 +222,7 @@ export default function ReportsPage() {
                 <div className="text-2xl font-bold">{mentorshipStats.activeMentorships}</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                   {getGrowthIndicator(mentorshipStats.activeMentorships, 142).icon}
-                  <span className={getGrowthIndicator(mentorshipStats.activeMentorships, 142).isPositive ? "text-green-600" : "text-red-600"}>
+                  <span className={getGrowthIndicator(mentorshipStats.activeMentorships, 142).isPositive ? "text-green-600" : "text-white"}>
                     +{getGrowthIndicator(mentorshipStats.activeMentorships, 142).value}%
                   </span>
                   <span>from last month</span>
@@ -239,7 +239,7 @@ export default function ReportsPage() {
                 <div className="text-2xl font-bold">{mentorshipStats.avgRating}/5</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                   {getGrowthIndicator(mentorshipStats.avgRating * 100, 450).icon}
-                  <span className={getGrowthIndicator(mentorshipStats.avgRating * 100, 450).isPositive ? "text-green-600" : "text-red-600"}>
+                  <span className={getGrowthIndicator(mentorshipStats.avgRating * 100, 450).isPositive ? "text-green-600" : "text-white"}>
                     +{getGrowthIndicator(mentorshipStats.avgRating * 100, 450).value}%
                   </span>
                   <span>from last month</span>

@@ -163,11 +163,11 @@ function DashboardContent() {
                   <div key={activity.id} className="flex items-center space-x-4">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                       activity.type === 'session' ? 'bg-blue-100' :
-                      activity.type === 'goal' ? 'bg-green-100' : 'bg-purple-100'
+                      activity.type === 'goal' ? 'bg-green-100' : 'bg-blue-100'
                     }`}>
                       {activity.type === 'session' && <Calendar className="w-4 h-4 text-blue-600" />}
                       {activity.type === 'goal' && <Target className="w-4 h-4 text-green-600" />}
-                      {activity.type === 'message' && <MessageSquare className="w-4 h-4 text-purple-600" />}
+                      {activity.type === 'message' && <MessageSquare className="w-4 h-4 text-blue-600" />}
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium">{activity.title}</p>

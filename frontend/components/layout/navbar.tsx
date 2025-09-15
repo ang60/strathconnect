@@ -65,7 +65,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
               onClick={onMenuClick}
               className="md:hidden hover:bg-white/10 relative overflow-hidden group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               <Menu className="h-5 w-5 relative z-10" />
             </Button>
           )}
@@ -74,13 +74,13 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
         <div className="flex flex-1 items-center justify-center">
           {/* Search Bar */}
           <div className="relative max-w-md w-full">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-full blur-sm" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-full blur-sm" />
             <div className="relative flex items-center">
               <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search anything..."
-                className="w-full pl-10 pr-4 py-2 bg-black/20 border border-white/10 rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-10 pr-4 py-2 bg-black/20 border border-white/10 rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent backdrop-blur-sm"
               />
             </div>
           </div>
@@ -93,9 +93,9 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
             size="sm"
             className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
             <Bell className="h-5 w-5 relative z-10" />
-            <div className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse" />
+            <div className="absolute -top-1 -right-1 h-3 w-3 bg-blue-500 rounded-full animate-pulse" />
           </Button>
 
           {/* Quick Actions */}
@@ -104,13 +104,13 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
             size="sm"
             className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
             <Zap className="h-5 w-5 relative z-10" />
           </Button>
 
           {/* Theme Toggle */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg opacity-50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-lg opacity-50" />
             <div className="relative">
               <ThemeToggle />
             </div>
@@ -120,11 +120,11 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-white/10 group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-0 border border-gradient-to-r from-red-400/30 to-red-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 border border-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Avatar className="h-10 w-10 relative z-10 ring-2 ring-white/10">
                   <AvatarImage src="/avatars/default.jpg" alt={user.name} />
-                  <AvatarFallback className="bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold">
+                  <AvatarFallback className="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold">
                     {user.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
@@ -134,9 +134,9 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-center space-x-3">
-                    <Avatar className="h-10 w-10 ring-2 ring-red-400/30">
+                    <Avatar className="h-10 w-10 ring-2 ring-blue-400/30">
                       <AvatarImage src="/avatars/default.jpg" alt={user.name} />
-                      <AvatarFallback className="bg-gradient-to-r from-red-500 to-red-600 text-white">
+                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
                         {user.name.split(' ').map(n => n[0]).join('')}
                       </AvatarFallback>
                     </Avatar>
@@ -148,11 +148,11 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Badge variant="secondary" className="text-xs bg-red-500/20 text-red-300 border-red-400/30">
+                    <Badge variant="secondary" className="text-xs bg-blue-500/20 text-blue-300 border-blue-400/30">
                       {user.role}
                     </Badge>
                     {user.department && (
-                      <Badge variant="outline" className="text-xs border-red-400/30 text-red-300">
+                      <Badge variant="outline" className="text-xs border-blue-400/30 text-blue-300">
                         {user.department}
                       </Badge>
                     )}
@@ -174,7 +174,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem 
-                className="flex items-center text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                className="flex items-center text-white hover:bg-blue-500/10 hover:text-blue-300"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />

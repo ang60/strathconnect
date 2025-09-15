@@ -178,7 +178,7 @@ export default function CommunicationPage() {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "high":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
+        return "bg-white text-gray-800 dark:bg-gray-900/20 dark:text-white";
       case "medium":
         return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
       case "low":

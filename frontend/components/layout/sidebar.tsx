@@ -203,27 +203,27 @@ export function Sidebar({
           {!collapsed && (
             <Link href="/" className="flex items-center space-x-2 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity" />
-                {/* <div className="relative bg-gradient-to-r from-red-500 to-red-600 p-2 rounded-lg">
-                  <Sparkles className="h-6 w-6 text-white" />
-                </div> */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity" />
+                <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-2 rounded-lg">
+                  <Heart className="h-6 w-6 text-white" />
+                </div>
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-lg bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                <span className="font-bold text-lg bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
                   StrathConnect
                 </span>
-                {/* <span className="text-xs text-muted-foreground font-mono">
+                <span className="text-xs text-muted-foreground font-mono">
                   STRATHMORE BUSINESS SCHOOL
-                </span> */}
+                </span>
               </div>
             </Link>
           )}
           {collapsed && (
             <Link href="/" className="flex items-center justify-center w-full group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity" />
-                <div className="relative bg-gradient-to-r from-red-500 to-red-600 p-2 rounded-lg">
-                  <Sparkles className="h-6 w-6 text-white" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition-opacity" />
+                <div className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-2 rounded-lg">
+                  <Heart className="h-6 w-6 text-white" />
                 </div>
               </div>
             </Link>
@@ -246,7 +246,7 @@ export function Sidebar({
               <div key={group.title} className="space-y-2">
                 {!collapsed && (
                   <div className="flex items-center space-x-2">
-                    <div className="w-1 h-4 bg-gradient-to-b from-red-500 to-red-600 rounded-full" />
+                    <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
                     <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
                       {group.title}
                     </h4>
@@ -269,21 +269,21 @@ export function Sidebar({
                           className={cn(
                             "w-full justify-start transition-all duration-300 ease-out group relative overflow-hidden",
                             collapsed ? "px-2 h-10" : "px-3 h-11",
-                            isActive && "bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-400/30 shadow-lg shadow-red-500/10"
+                            isActive && "bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-400/30 shadow-lg shadow-blue-500/10"
                           )}
                         >
                           {/* Hover Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           
                           {/* Active Indicator */}
                           {isActive && (
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-red-500 to-red-600 rounded-r-full" />
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-r-full" />
                           )}
                           
                           <div className="relative flex items-center space-x-2 z-10">
                             <div className={cn(
                               "transition-all duration-300",
-                              isActive ? "text-red-400 drop-shadow-lg" : "text-muted-foreground group-hover:text-red-300"
+                              isActive ? "text-blue-400 drop-shadow-lg" : "text-muted-foreground group-hover:text-blue-300"
                             )}>
                               {item.icon}
                             </div>
@@ -295,9 +295,9 @@ export function Sidebar({
                                 )}>
                                   {item.title}
                                 </div>
-                                {/* <div className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                <div className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
                                   {item.label}
-                                </div> */}
+                                </div>
                               </div>
                             )}
                           </div>
@@ -322,13 +322,13 @@ export function Sidebar({
               onClick={handleCollapseToggle}
               className="w-full hover:bg-white/10 group relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex items-center justify-center space-x-2 z-10">
                 {collapsed ? (
-                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-red-300 transition-colors" />
+                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-blue-300 transition-colors" />
                 ) : (
                   <>
-                    <ChevronLeft className="h-4 w-4 text-muted-foreground group-hover:text-red-300 transition-colors" />
+                    <ChevronLeft className="h-4 w-4 text-muted-foreground group-hover:text-blue-300 transition-colors" />
                     <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">Collapse</span>
                   </>
                 )}

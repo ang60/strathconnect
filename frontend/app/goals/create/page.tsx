@@ -234,7 +234,7 @@ export default function CreateGoalPage() {
                       <span>{tag}</span>
                       <button
                         onClick={() => removeTag(tag)}
-                        className="ml-1 hover:text-red-500"
+                        className="ml-1 hover:text-white"
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -395,7 +395,7 @@ export default function CreateGoalPage() {
                       <span className="flex-1">{metric}</span>
                       <button
                         onClick={() => removeMetric(metric)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-white hover:text-gray-300"
                       >
                         <X className="w-4 h-4" />
                       </button>

@@ -31,15 +31,15 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
               <Heart className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
               StrathConnect
             </span>
           </div>
@@ -95,7 +95,7 @@ export default function Home() {
             <Star className="w-3 h-3 mr-1" />
             Strathmore Business School
           </Badge>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
             Mentorship & Coaching Platform
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
@@ -122,7 +122,7 @@ export default function Home() {
               <div className="text-sm text-gray-600 dark:text-gray-400">Active Mentors</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">2,000+</div>
+              <div className="text-3xl font-bold text-blue-600 mb-2">2,000+</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Students Helped</div>
             </div>
             <div className="text-center">
@@ -174,8 +174,8 @@ export default function Home() {
 
             <Card className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
               <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
-                  <Calendar className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
+                  <Calendar className="w-6 h-6 text-blue-600" />
                 </div>
                 <CardTitle>Flexible Scheduling</CardTitle>
                 <CardDescription>
@@ -258,8 +258,8 @@ export default function Home() {
 
             <Card className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
               <CardHeader>
-                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
-                  <BarChart3 className="w-6 h-6 text-red-600" />
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
+                  <BarChart3 className="w-6 h-6 text-blue-600" />
                 </div>
                 <CardTitle>Analytics & Insights</CardTitle>
                 <CardDescription>
@@ -361,7 +361,7 @@ export default function Home() {
             <Card className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Building2 className="w-5 h-5 mr-2 text-purple-600" />
+                  <Building2 className="w-5 h-5 mr-2 text-blue-600" />
                   Career Transition
                 </CardTitle>
                 <CardDescription>
@@ -452,8 +452,8 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-4 h-4 text-purple-600" />
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Global Reach</h3>
@@ -463,7 +463,7 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
                 <p className="text-lg mb-6">
                   To empower the next generation of business leaders through meaningful mentorship relationships and innovative learning experiences.
@@ -546,8 +546,8 @@ export default function Home() {
             <Card className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
               <CardContent className="pt-6">
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mr-3">
-                    <span className="font-semibold text-purple-600">GW</span>
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mr-3">
+                    <span className="font-semibold text-blue-600">GW</span>
                   </div>
                   <div>
                     <div className="font-semibold">Grace Wanjiku</div>
@@ -571,7 +571,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Your Journey?</h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
@@ -599,7 +599,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                   <Heart className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold">StrathConnect</span>

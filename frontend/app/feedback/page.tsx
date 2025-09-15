@@ -137,7 +137,7 @@ export default function FeedbackPage() {
   const getNPSColor = (score: number) => {
     if (score >= 8) return "text-green-600";
     if (score >= 6) return "text-yellow-600";
-    return "text-red-600";
+    return "text-white";
   };
 
   const calculateNPS = () => {

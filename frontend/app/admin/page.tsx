@@ -28,7 +28,13 @@ import {
   CheckCircle,
   Clock,
   Search,
-  Plus
+  Plus,
+  BarChart3,
+  Target,
+  Calendar,
+  MessageSquare,
+  Award,
+  UserCheck
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -183,7 +189,7 @@ export default function AdminPage() {
 
   const getLogLevelColor = (level: string) => {
     switch (level) {
-      case "error": return "bg-red-100 text-red-800";
+      case "error": return "bg-white text-gray-800";
       case "warning": return "bg-yellow-100 text-yellow-800";
       case "info": return "bg-blue-100 text-blue-800";
       default: return "bg-gray-100 text-gray-800";
@@ -204,40 +210,218 @@ export default function AdminPage() {
       <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Admin Configuration</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Admin Oversight Dashboard</h1>
           <p className="text-muted-foreground">
-            Manage users, roles, settings, and system configuration
+            Monitor platform statistics, user engagement, and system health
           </p>
         </div>
         <Badge variant="outline" className="flex items-center space-x-1">
           <Shield className="w-3 h-3" />
-          <span>Admin Access</span>
+          <span>Admin Oversight</span>
         </Badge>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="analytics" className="flex items-center space-x-2">
+            <BarChart3 className="w-4 h-4" />
+            <span>Platform Analytics</span>
+          </TabsTrigger>
           <TabsTrigger value="users" className="flex items-center space-x-2">
             <Users className="w-4 h-4" />
-            <span>User Management</span>
+            <span>User Oversight</span>
           </TabsTrigger>
-          <TabsTrigger value="roles" className="flex items-center space-x-2">
-            <Shield className="w-4 h-4" />
-            <span>Role Management</span>
+          <TabsTrigger value="system" className="flex items-center space-x-2">
+            <Activity className="w-4 h-4" />
+            <span>System Health</span>
           </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center space-x-2">
             <Settings className="w-4 h-4" />
-            <span>Program Settings</span>
+            <span>Configuration</span>
           </TabsTrigger>
-          <TabsTrigger value="logs" className="flex items-center space-x-2">
-            <Activity className="w-4 h-4" />
-            <span>System Logs</span>
-          </TabsTrigger>
-          <TabsTrigger value="pending" className="flex items-center space-x-2">
-            <Clock className="w-4 h-4" />
-            <span>Pending Users</span>
+          <TabsTrigger value="reports" className="flex items-center space-x-2">
+            <FileText className="w-4 h-4" />
+            <span>Reports</span>
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="analytics" className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Matching Statistics */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Users className="w-5 h-5" />
+                  <span>Matching Outcomes</span>
+                </CardTitle>
+                <CardDescription>Mentor-mentee matching statistics</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Success Rate</span>
+                  <span className="font-semibold text-green-600">87%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Pending Matches</span>
+                  <span className="font-semibold text-yellow-600">23</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Rejected Matches</span>
+                  <span className="font-semibold text-white">5</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Active Matches</span>
+                  <span className="font-semibold text-blue-600">156</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Goal Statistics */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Target className="w-5 h-5" />
+                  <span>Goal Statistics</span>
+                </CardTitle>
+                <CardDescription>Goal creation and progress tracking</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Goals Created</span>
+                  <span className="font-semibold">342</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">In Progress</span>
+                  <span className="font-semibold text-blue-600">198</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Completed</span>
+                  <span className="font-semibold text-green-600">89</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Avg. Progress</span>
+                  <span className="font-semibold">68%</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Session Analytics */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Calendar className="w-5 h-5" />
+                  <span>Session Analytics</span>
+                </CardTitle>
+                <CardDescription>Session attendance and frequency</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Attendance Rate</span>
+                  <span className="font-semibold text-green-600">92%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Avg. Sessions/Week</span>
+                  <span className="font-semibold">3.2</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Cancellations</span>
+                  <span className="font-semibold text-white">12</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">No Shows</span>
+                  <span className="font-semibold text-orange-600">8</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Messaging Stats */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <MessageSquare className="w-5 h-5" />
+                  <span>Messaging Stats</span>
+                </CardTitle>
+                <CardDescription>Communication engagement metrics</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Active Users</span>
+                  <span className="font-semibold text-green-600">234</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Avg. Response Time</span>
+                  <span className="font-semibold">2.3h</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Messages/Day</span>
+                  <span className="font-semibold">156</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Engagement Rate</span>
+                  <span className="font-semibold text-blue-600">78%</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Program Statistics */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Award className="w-5 h-5" />
+                  <span>Program Statistics</span>
+                </CardTitle>
+                <CardDescription>Program performance and satisfaction</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Active Programs</span>
+                  <span className="font-semibold text-green-600">12</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Completion Rate</span>
+                  <span className="font-semibold text-blue-600">84%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Satisfaction Score</span>
+                  <span className="font-semibold text-green-600">4.6/5</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Total Participants</span>
+                  <span className="font-semibold">456</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Participation Levels */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <UserCheck className="w-5 h-5" />
+                  <span>Participation Levels</span>
+                </CardTitle>
+                <CardDescription>User engagement by role</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Active Mentors</span>
+                  <span className="font-semibold text-blue-600">45</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Active Mentees</span>
+                  <span className="font-semibold text-green-600">123</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Faculty Members</span>
+                  <span className="font-semibold text-purple-600">28</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Total Active</span>
+                  <span className="font-semibold">196</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
 
         <TabsContent value="users" className="space-y-6">
           <div className="flex items-center justify-between">
@@ -252,80 +436,23 @@ export default function AdminPage() {
                 />
               </div>
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button>
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  Add User
+            <div className="flex items-center space-x-2">
+              <Button variant="outline">
+                <FileText className="w-4 h-4 mr-2" />
+                Export Users
                 </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add New User</DialogTitle>
-                  <DialogDescription>
-                    Create a new user account with appropriate permissions
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input
-                      id="name"
-                      value={userForm.name}
-                      onChange={(e) => setUserForm(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Enter full name"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={userForm.email}
-                      onChange={(e) => setUserForm(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="Enter email address"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="role">Role</Label>
-                    <Select value={userForm.role} onValueChange={(value) => setUserForm(prev => ({ ...prev, role: value }))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Admin">Admin</SelectItem>
-                        <SelectItem value="Coordinator">Coordinator</SelectItem>
-                        <SelectItem value="Mentor">Mentor</SelectItem>
-                        <SelectItem value="Mentee">Mentee</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="department">Department</Label>
-                    <Input
-                      id="department"
-                      value={userForm.department}
-                      onChange={(e) => setUserForm(prev => ({ ...prev, department: e.target.value }))}
-                      placeholder="Enter department"
-                    />
-                  </div>
-                  <div className="flex justify-end space-x-2">
-                    <Button variant="outline">Cancel</Button>
-                    <Button onClick={handleSaveUser}>
-                      <Save className="w-4 h-4 mr-2" />
-                      Save User
+              <Button variant="outline">
+                <Activity className="w-4 h-4 mr-2" />
+                Engagement Report
                     </Button>
                   </div>
-                </div>
-              </DialogContent>
-            </Dialog>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Users ({filteredUsers.length})</CardTitle>
+              <CardTitle>User Overview ({filteredUsers.length})</CardTitle>
               <CardDescription>
-                Manage user accounts and permissions
+                Monitor user engagement and account status
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -346,11 +473,23 @@ export default function AdminPage() {
                       <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
                         <span>{user.department}</span>
                         <span>Last login: {new Date(user.lastLogin).toLocaleDateString()}</span>
+                        <span className="text-green-600">Engagement: High</span>
                       </div>
                     </div>
-                    <Button variant="ghost" size="sm">
-                      <Edit className="w-4 h-4" />
+                    <div className="flex items-center space-x-2">
+                      <Button variant="ghost" size="sm" title="View Details">
+                        <Activity className="w-4 h-4" />
+                      </Button>
+                      {user.status === "active" ? (
+                        <Button variant="ghost" size="sm" title="Suspend Account">
+                          <AlertTriangle className="w-4 h-4 text-orange-500" />
+                        </Button>
+                      ) : (
+                        <Button variant="ghost" size="sm" title="Reactivate Account">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
                     </Button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -358,56 +497,123 @@ export default function AdminPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="roles" className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Role Management</h2>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Role
-            </Button>
-          </div>
-
+        <TabsContent value="system" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
-            {roles.map((role) => (
-              <Card key={role.name}>
+            {/* System Health */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Activity className="w-5 h-5" />
+                  <span>System Health</span>
+                </CardTitle>
+                <CardDescription>Monitor system performance and status</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Server Status</span>
+                  <Badge variant="default" className="bg-green-100 text-green-800">Healthy</Badge>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Database Status</span>
+                  <Badge variant="default" className="bg-green-100 text-green-800">Connected</Badge>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">API Response Time</span>
+                  <span className="font-semibold text-green-600">45ms</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Uptime</span>
+                  <span className="font-semibold">99.9%</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Usage Statistics */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <BarChart3 className="w-5 h-5" />
+                  <span>Usage Statistics</span>
+                </CardTitle>
+                <CardDescription>Platform usage and engagement metrics</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Daily Active Users</span>
+                  <span className="font-semibold text-blue-600">234</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Weekly Active Users</span>
+                  <span className="font-semibold text-green-600">1,456</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Monthly Active Users</span>
+                  <span className="font-semibold text-purple-600">3,892</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Total Registered</span>
+                  <span className="font-semibold">4,567</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Error Logs */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <AlertTriangle className="w-5 h-5" />
+                  <span>Recent Errors</span>
+                </CardTitle>
+                <CardDescription>System errors and failed operations</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Failed Logins (24h)</span>
+                  <span className="font-semibold text-white">12</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">API Errors (24h)</span>
+                  <span className="font-semibold text-orange-600">3</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Database Errors</span>
+                  <span className="font-semibold text-green-600">0</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Suspicious Activity</span>
+                  <span className="font-semibold text-green-600">0</span>
+          </div>
+              </CardContent>
+            </Card>
+
+            {/* Security Status */}
+            <Card>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
                       <CardTitle className="flex items-center space-x-2">
                         <Shield className="w-5 h-5" />
-                        <span>{role.name}</span>
+                  <span>Security Status</span>
                       </CardTitle>
-                      <CardDescription>{role.description}</CardDescription>
-                    </div>
-                    <Badge variant="outline">{role.userCount} users</Badge>
-                  </div>
+                <CardDescription>Security monitoring and compliance</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div>
-                      <Label className="text-sm font-medium">Permissions</Label>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {role.permissions.map((permission) => (
-                          <Badge key={permission} variant="secondary" className="text-xs">
-                            {permission.replace('_', ' ')}
-                          </Badge>
-                        ))}
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">SSL Certificate</span>
+                  <Badge variant="default" className="bg-green-100 text-green-800">Valid</Badge>
                       </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Password Policy</span>
+                  <Badge variant="default" className="bg-green-100 text-green-800">Enforced</Badge>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Users className="w-4 h-4 mr-2" />
-                        View Users
-                      </Button>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">2FA Adoption</span>
+                  <span className="font-semibold text-blue-600">78%</span>
                     </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-muted-foreground">Last Security Scan</span>
+                  <span className="font-semibold">2 hours ago</span>
                   </div>
                 </CardContent>
               </Card>
-            ))}
           </div>
         </TabsContent>
 
@@ -415,310 +621,252 @@ export default function AdminPage() {
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Program Settings</CardTitle>
+                <CardTitle>System Configuration</CardTitle>
                 <CardDescription>
-                  Configure program behavior and limits
+                  Configure authentication and system settings
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="maxParticipants">Max Participants</Label>
-                    <Input
-                      id="maxParticipants"
-                      type="number"
-                      value={settings.maxParticipants}
-                      onChange={(e) => setSettings(prev => ({ ...prev, maxParticipants: parseInt(e.target.value) }))}
+                      <Label>Google OAuth</Label>
+                      <p className="text-sm text-muted-foreground">Enable Google authentication</p>
+                  </div>
+                    <Switch
+                      checked={true}
+                      onCheckedChange={() => {}}
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="sessionDuration">Session Duration (min)</Label>
-                    <Input
-                      id="sessionDuration"
-                      type="number"
-                      value={settings.sessionDuration}
-                      onChange={(e) => setSettings(prev => ({ ...prev, sessionDuration: parseInt(e.target.value) }))}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Password Policy</Label>
+                      <p className="text-sm text-muted-foreground">Enforce strong passwords</p>
+                    </div>
+                    <Switch
+                      checked={true}
+                      onCheckedChange={() => {}}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Two-Factor Authentication</Label>
+                      <p className="text-sm text-muted-foreground">Require 2FA for admin accounts</p>
+                    </div>
+                    <Switch
+                      checked={true}
+                      onCheckedChange={() => {}}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Account Lockout</Label>
+                      <p className="text-sm text-muted-foreground">Lock accounts after failed attempts</p>
+                    </div>
+                    <Switch
+                      checked={true}
+                      onCheckedChange={() => {}}
                     />
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Auto-approval</Label>
-                      <p className="text-sm text-muted-foreground">Automatically approve new users</p>
-                    </div>
-                    <Switch
-                      checked={settings.autoApproval}
-                      onCheckedChange={(checked) => setSettings(prev => ({ ...prev, autoApproval: checked }))}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="sessionTimeout">Session Timeout (minutes)</Label>
+                    <Input
+                      id="sessionTimeout"
+                      type="number"
+                      value={30}
+                      readOnly
                     />
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Require feedback</Label>
-                      <p className="text-sm text-muted-foreground">Mandatory session feedback</p>
-                    </div>
-                    <Switch
-                      checked={settings.requireFeedback}
-                      onCheckedChange={(checked) => setSettings(prev => ({ ...prev, requireFeedback: checked }))}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Allow rescheduling</Label>
-                      <p className="text-sm text-muted-foreground">Users can reschedule sessions</p>
-                    </div>
-                    <Switch
-                      checked={settings.allowRescheduling}
-                      onCheckedChange={(checked) => setSettings(prev => ({ ...prev, allowRescheduling: checked }))}
+                  <div>
+                    <Label htmlFor="maxLoginAttempts">Max Login Attempts</Label>
+                    <Input
+                      id="maxLoginAttempts"
+                      type="number"
+                      value={5}
+                      readOnly
                     />
                   </div>
                 </div>
                 <Button onClick={handleSaveSettings} className="w-full">
                   <Save className="w-4 h-4 mr-2" />
-                  Save Settings
+                  Save Configuration
                 </Button>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Email Templates</CardTitle>
+                <CardTitle>Departments & Categories</CardTitle>
                 <CardDescription>
-                  Manage email templates for notifications
+                  Manage departments and system categories
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {emailTemplates.map((template) => (
-                    <div key={template.id} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3">
-                          <Mail className="w-5 h-5 text-muted-foreground" />
-                          <div>
-                            <h3 className="font-semibold">{template.name}</h3>
-                            <p className="text-sm text-muted-foreground">{template.subject}</p>
+                  <div className="space-y-3">
+                    <h4 className="font-medium">Departments</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Business Administration</span>
+                        <Badge variant="outline">45 users</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Computer Science</span>
+                        <Badge variant="outline">32 users</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Finance</span>
+                        <Badge variant="outline">28 users</Badge>
                           </div>
-                          <Badge variant="outline">{template.category}</Badge>
-                          <Badge variant={template.isActive ? "default" : "secondary"}>
-                            {template.isActive ? "Active" : "Inactive"}
-                          </Badge>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Marketing</span>
+                        <Badge variant="outline">19 users</Badge>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm">
-                        <Edit className="w-4 h-4" />
-                      </Button>
                     </div>
-                  ))}
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Create New Template
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl">
-                      <DialogHeader>
-                        <DialogTitle>Create Email Template</DialogTitle>
-                        <DialogDescription>
-                          Create a new email template with rich text editor
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div>
-                          <Label htmlFor="templateName">Template Name</Label>
-                          <Input
-                            id="templateName"
-                            value={templateForm.name}
-                            onChange={(e) => setTemplateForm(prev => ({ ...prev, name: e.target.value }))}
-                            placeholder="Enter template name"
-                          />
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3">
+                    <h4 className="font-medium">Program Categories</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Career Development</span>
+                        <Badge variant="outline">8 programs</Badge>
                         </div>
-                        <div>
-                          <Label htmlFor="templateSubject">Subject Line</Label>
-                          <Input
-                            id="templateSubject"
-                            value={templateForm.subject}
-                            onChange={(e) => setTemplateForm(prev => ({ ...prev, subject: e.target.value }))}
-                            placeholder="Enter email subject"
-                          />
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Leadership</span>
+                        <Badge variant="outline">5 programs</Badge>
                         </div>
-                        <div>
-                          <Label htmlFor="templateContent">Email Content</Label>
-                          <div className="border rounded-lg p-4 mt-2">
-                            <div className="flex items-center space-x-2 mb-4 border-b pb-2">
-                              <Button variant="ghost" size="sm">
-                                <strong>B</strong>
-                              </Button>
-                              <Button variant="ghost" size="sm">
-                                <em>I</em>
-                              </Button>
-                              <Button variant="ghost" size="sm">
-                                <u>U</u>
-                              </Button>
-                              <Separator orientation="vertical" className="h-6" />
-                              <Button variant="ghost" size="sm">Link</Button>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Technical Skills</span>
+                        <Badge variant="outline">6 programs</Badge>
                             </div>
-                            <Textarea
-                              id="templateContent"
-                              value={templateForm.content}
-                              onChange={(e) => setTemplateForm(prev => ({ ...prev, content: e.target.value }))}
-                              placeholder="Enter email content with HTML support..."
-                              rows={8}
-                              className="border-0 p-0 resize-none"
-                            />
-                          </div>
-                                                     <p className="text-sm text-muted-foreground mt-2">
-                             Use HTML tags for formatting. Available variables: {"{user_name}"}, {"{program_name}"}
-                           </p>
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm">Personal Growth</span>
+                        <Badge variant="outline">4 programs</Badge>
                         </div>
-                        <div className="flex justify-end space-x-2">
-                          <Button variant="outline">Cancel</Button>
-                          <Button onClick={handleSaveTemplate}>
-                            <Save className="w-4 h-4 mr-2" />
-                            Save Template
-                          </Button>
                         </div>
                       </div>
-                    </DialogContent>
-                  </Dialog>
+                  
+                  <Button variant="outline" className="w-full">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Department/Category
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
-        <TabsContent value="logs" className="space-y-6">
-          <div className="flex items-center justify-between">
-            <Select value={logLevel} onValueChange={setLogLevel}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="All levels" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All levels</SelectItem>
-                <SelectItem value="error">Error</SelectItem>
-                <SelectItem value="warning">Warning</SelectItem>
-                <SelectItem value="info">Info</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline">
-              Export Logs
-            </Button>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>System Logs</CardTitle>
-              <CardDescription>
-                Monitor system activity and user actions
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {filteredLogs.map((log) => (
-                  <div key={log.id} className="flex items-start space-x-4 p-4 border rounded-lg">
-                    <div className="flex-shrink-0">
-                      {log.level === "error" && <AlertTriangle className="w-5 h-5 text-red-500" />}
-                      {log.level === "warning" && <AlertTriangle className="w-5 h-5 text-yellow-500" />}
-                      {log.level === "info" && <CheckCircle className="w-5 h-5 text-blue-500" />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2">
-                        <Badge className={getLogLevelColor(log.level)}>
-                          {log.level.toUpperCase()}
-                        </Badge>
-                        <span className="font-medium">{log.action}</span>
-                        <span className="text-sm text-muted-foreground">by {log.user}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-1">{log.details}</p>
-                      <div className="flex items-center space-x-4 mt-2 text-xs text-muted-foreground">
-                        <span className="flex items-center space-x-1">
-                          <Clock className="w-3 h-3" />
-                          <span>{new Date(log.timestamp).toLocaleString()}</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="pending" className="space-y-6">
+        <TabsContent value="reports" className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold">Pending User Approvals</h2>
+              <h2 className="text-lg font-semibold">Platform Reports</h2>
               <p className="text-sm text-muted-foreground">
-                Review and assign roles to new users
+                Generate and export comprehensive platform reports
               </p>
             </div>
-            <Badge variant="outline" className="flex items-center space-x-1">
-              <Clock className="w-3 h-3" />
-              <span>{pendingUsers.length} Pending</span>
-            </Badge>
+            <div className="flex items-center space-x-2">
+            <Button variant="outline">
+                <FileText className="w-4 h-4 mr-2" />
+                Export All Data
+              </Button>
+              <Button>
+                <BarChart3 className="w-4 h-4 mr-2" />
+                Generate Report
+            </Button>
+            </div>
           </div>
 
+          <div className="grid gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Users Awaiting Role Assignment</CardTitle>
-              <CardDescription>
-                New users who have registered and are waiting for role assignment
-              </CardDescription>
+                <CardTitle>Available Reports</CardTitle>
+                <CardDescription>Select a report type to generate</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {pendingUsers.map((user) => (
-                  <div key={user.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                          <Users className="w-5 h-5 text-gray-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium">{user.name}</h4>
-                          <p className="text-sm text-muted-foreground">{user.email}</p>
-                          <p className="text-xs text-muted-foreground">
-                            Department: {user.department} • Registered: {new Date(user.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <h4 className="font-medium">User Engagement Report</h4>
+                      <p className="text-sm text-muted-foreground">Active users, login frequency, session participation</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <h4 className="font-medium">Matching Success Report</h4>
+                      <p className="text-sm text-muted-foreground">Mentor-mentee matching outcomes and success rates</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <h4 className="font-medium">Program Performance Report</h4>
+                      <p className="text-sm text-muted-foreground">Program completion rates, satisfaction scores</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
                       </div>
+                  <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <h4 className="font-medium">Goal Achievement Report</h4>
+                      <p className="text-sm text-muted-foreground">Goal completion rates, progress tracking</p>
+                      </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Select value={selectedRole} onValueChange={setSelectedRole}>
-                        <SelectTrigger className="w-40">
-                          <SelectValue placeholder="Select role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="mentor">Mentor</SelectItem>
-                          <SelectItem value="mentee">Mentee</SelectItem>
-                          <SelectItem value="coordinator">Coordinator</SelectItem>
-                          <SelectItem value="admin">Admin</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        onClick={() => handleAssignRole(user.id, selectedRole)}
-                        disabled={!selectedRole}
-                        size="sm"
-                      >
-                        <CheckCircle className="w-4 h-4 mr-2" />
-                        Assign Role
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Mail className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                {pendingUsers.length === 0 && (
-                  <div className="text-center py-8">
-                    <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium">No pending users</h3>
-                    <p className="text-muted-foreground">All users have been assigned roles</p>
-                  </div>
-                )}
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+                <CardTitle>Report History</CardTitle>
+                <CardDescription>Previously generated reports</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div>
+                      <h4 className="font-medium">Monthly Engagement Report</h4>
+                      <p className="text-sm text-muted-foreground">Generated on Jan 15, 2024</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
+                        </div>
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div>
+                      <h4 className="font-medium">Q4 Program Performance</h4>
+                      <p className="text-sm text-muted-foreground">Generated on Jan 10, 2024</p>
+                        </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
+                      </div>
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div>
+                      <h4 className="font-medium">User Activity Summary</h4>
+                      <p className="text-sm text-muted-foreground">Generated on Jan 5, 2024</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <FileText className="w-4 h-4" />
+                      </Button>
+                    </div>
+              </div>
+            </CardContent>
+          </Card>
+          </div>
         </TabsContent>
       </Tabs>
       </div>

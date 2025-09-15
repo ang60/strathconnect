@@ -147,7 +147,7 @@ export default function SessionsPage() {
       case "completed":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
       case "cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
+        return "bg-white text-gray-800 dark:bg-gray-900/20 dark:text-white";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400";
     }
@@ -353,7 +353,7 @@ export default function SessionsPage() {
                         <Button variant="outline" size="sm">
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                        <Button variant="outline" size="sm" className="text-white hover:text-gray-300">
                           <X className="w-4 h-4" />
                         </Button>
                       </div>

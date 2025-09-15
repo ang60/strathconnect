@@ -69,6 +69,36 @@ export enum Permission {
   UPDATE_FEEDBACK = 'update_feedback',
   MANAGE_GAMIFICATION = 'manage_gamification',
   AWARD_BADGES = 'award_badges',
+  
+  // Enhanced Admin Permissions
+  SUSPEND_USER = 'suspend_user',
+  REACTIVATE_USER = 'reactivate_user',
+  VIEW_ALL_CONVERSATIONS = 'view_all_conversations',
+  MODERATE_CONTENT = 'moderate_content',
+  RESOLVE_DISPUTES = 'resolve_disputes',
+  MANAGE_DEPARTMENTS = 'manage_departments',
+  MANAGE_CATEGORIES = 'manage_categories',
+  CONFIGURE_OAUTH = 'configure_oauth',
+  MANAGE_API_KEYS = 'manage_api_keys',
+  ENFORCE_SECURITY_POLICIES = 'enforce_security_policies',
+  VIEW_SYSTEM_HEALTH = 'view_system_health',
+  MANAGE_LANDING_CONTENT = 'manage_landing_content',
+  MANAGE_ANNOUNCEMENTS = 'manage_announcements',
+  EXPORT_USER_DATA = 'export_user_data',
+  BULK_USER_OPERATIONS = 'bulk_user_operations',
+  
+  // Enhanced User Permissions
+  REQUEST_MENTORSHIP = 'request_mentorship',
+  APPROVE_MENTORSHIP_REQUESTS = 'approve_mentorship_requests',
+  REJECT_MENTORSHIP_REQUESTS = 'reject_mentorship_requests',
+  BOOK_SESSIONS = 'book_sessions',
+  CONFIRM_SESSIONS = 'confirm_sessions',
+  PROVIDE_MENTOR_FEEDBACK = 'provide_mentor_feedback',
+  PROVIDE_MENTEE_FEEDBACK = 'provide_mentee_feedback',
+  TRACK_MENTEE_PROGRESS = 'track_mentee_progress',
+  VIEW_PERSONAL_ANALYTICS = 'view_personal_analytics',
+  MANAGE_PERSONAL_GOALS = 'manage_personal_goals',
+  JOIN_ELIGIBLE_PROGRAMS = 'join_eligible_programs',
 }
 
 // Role hierarchy - higher roles inherit permissions from lower roles
@@ -87,45 +117,47 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   [Role.SUPER_ADMIN]: Object.values(Permission),
 
   [Role.ADMIN]: [
-    Permission.CREATE_USER,
+    // User Oversight (Read-only + Policy Enforcement)
     Permission.READ_USER,
-    Permission.UPDATE_USER,
-    Permission.DELETE_USER,
-    Permission.MANAGE_USER_ROLES,
-    Permission.CREATE_PROGRAM,
+    Permission.SUSPEND_USER,
+    Permission.REACTIVATE_USER,
+    Permission.EXPORT_USER_DATA,
+    
+    // Program Oversight (Read-only)
     Permission.READ_PROGRAM,
-    Permission.UPDATE_PROGRAM,
-    Permission.DELETE_PROGRAM,
-    Permission.MANAGE_PROGRAM_PARTICIPANTS,
-    Permission.CREATE_SESSION,
+    
+    // Session Oversight (Read-only)
     Permission.READ_SESSION,
-    Permission.UPDATE_SESSION,
-    Permission.DELETE_SESSION,
-    Permission.MANAGE_SESSION_ATTENDEES,
-    Permission.CREATE_GOAL,
+    
+    // Goal Oversight (Read-only)
     Permission.READ_GOAL,
-    Permission.UPDATE_GOAL,
-    Permission.DELETE_GOAL,
-    Permission.MANAGE_GOAL_PROGRESS,
-    Permission.SEND_MESSAGE,
+    
+    // Communication Oversight (Read-only + Moderation)
     Permission.READ_MESSAGE,
-    Permission.DELETE_MESSAGE,
-    Permission.MANAGE_CONVERSATIONS,
+    Permission.VIEW_ALL_CONVERSATIONS,
+    Permission.MODERATE_CONTENT,
+    
+    // Reports & Analytics (Full Access)
     Permission.VIEW_REPORTS,
     Permission.EXPORT_REPORTS,
     Permission.VIEW_ANALYTICS,
+    
+    // System Administration (Configuration Only)
     Permission.MANAGE_SYSTEM_SETTINGS,
     Permission.VIEW_AUDIT_LOGS,
-    Permission.CREATE_MATCH,
+    Permission.MANAGE_DEPARTMENTS,
+    Permission.MANAGE_CATEGORIES,
+    Permission.CONFIGURE_OAUTH,
+    Permission.ENFORCE_SECURITY_POLICIES,
+    Permission.VIEW_SYSTEM_HEALTH,
+    Permission.MANAGE_LANDING_CONTENT,
+    Permission.MANAGE_ANNOUNCEMENTS,
+    
+    // Matching System Oversight (Read-only)
     Permission.READ_MATCH,
-    Permission.UPDATE_MATCH,
-    Permission.DELETE_MATCH,
-    Permission.MANAGE_MATCHING_ALGORITHM,
-    Permission.CREATE_FEEDBACK,
+    
+    // Feedback Oversight (Read-only)
     Permission.READ_FEEDBACK,
-    Permission.UPDATE_FEEDBACK,
-    Permission.MANAGE_GAMIFICATION,
-    Permission.AWARD_BADGES,
   ],
 
   [Role.COORDINATOR]: [

@@ -158,7 +158,7 @@ export default function GoalsPage() {
     if (progress >= 80) return "bg-green-500";
     if (progress >= 60) return "bg-blue-500";
     if (progress >= 40) return "bg-yellow-500";
-    return "bg-red-500";
+    return "bg-white";
   };
 
   const addMilestone = () => {
@@ -650,7 +650,7 @@ export default function GoalsPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => removeMilestone(index)}
-                      className="text-red-600 hover:text-red-700"
+                      className="text-white hover:text-gray-300"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

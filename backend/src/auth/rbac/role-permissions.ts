@@ -8,62 +8,47 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   ],
 
   [Role.ADMIN]: [
-    // User Management
-    Permission.CREATE_USER,
+    // User Oversight (Read-only + Policy Enforcement)
     Permission.READ_USER,
-    Permission.UPDATE_USER,
-    Permission.DELETE_USER,
-    Permission.MANAGE_USER_ROLES,
+    Permission.SUSPEND_USER,
+    Permission.REACTIVATE_USER,
+    Permission.EXPORT_USER_DATA,
     
-    // Program Management
-    Permission.CREATE_PROGRAM,
+    // Program Oversight (Read-only)
     Permission.READ_PROGRAM,
-    Permission.UPDATE_PROGRAM,
-    Permission.DELETE_PROGRAM,
-    Permission.MANAGE_PROGRAM_PARTICIPANTS,
     
-    // Session Management
-    Permission.CREATE_SESSION,
+    // Session Oversight (Read-only)
     Permission.READ_SESSION,
-    Permission.UPDATE_SESSION,
-    Permission.DELETE_SESSION,
-    Permission.MANAGE_SESSION_ATTENDEES,
     
-    // Goal Management
-    Permission.CREATE_GOAL,
+    // Goal Oversight (Read-only)
     Permission.READ_GOAL,
-    Permission.UPDATE_GOAL,
-    Permission.DELETE_GOAL,
-    Permission.MANAGE_GOAL_PROGRESS,
     
-    // Communication
-    Permission.SEND_MESSAGE,
+    // Communication Oversight (Read-only + Moderation)
     Permission.READ_MESSAGE,
-    Permission.DELETE_MESSAGE,
-    Permission.MANAGE_CONVERSATIONS,
+    Permission.VIEW_ALL_CONVERSATIONS,
+    Permission.MODERATE_CONTENT,
     
-    // Reports & Analytics
+    // Reports & Analytics (Full Access)
     Permission.VIEW_REPORTS,
     Permission.EXPORT_REPORTS,
     Permission.VIEW_ANALYTICS,
     
-    // System Administration
+    // System Administration (Configuration Only)
     Permission.MANAGE_SYSTEM_SETTINGS,
     Permission.VIEW_AUDIT_LOGS,
+    Permission.MANAGE_DEPARTMENTS,
+    Permission.MANAGE_CATEGORIES,
+    Permission.CONFIGURE_OAUTH,
+    Permission.ENFORCE_SECURITY_POLICIES,
+    Permission.VIEW_SYSTEM_HEALTH,
+    Permission.MANAGE_LANDING_CONTENT,
+    Permission.MANAGE_ANNOUNCEMENTS,
     
-    // Matching System
-    Permission.CREATE_MATCH,
+    // Matching System Oversight (Read-only)
     Permission.READ_MATCH,
-    Permission.UPDATE_MATCH,
-    Permission.DELETE_MATCH,
-    Permission.MANAGE_MATCHING_ALGORITHM,
     
-    // Feedback & Gamification
-    Permission.CREATE_FEEDBACK,
+    // Feedback Oversight (Read-only)
     Permission.READ_FEEDBACK,
-    Permission.UPDATE_FEEDBACK,
-    Permission.MANAGE_GAMIFICATION,
-    Permission.AWARD_BADGES,
   ],
 
   [Role.COORDINATOR]: [
@@ -148,31 +133,41 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     // User Management (read only)
     Permission.READ_USER,
     
-    // Program Management (read only)
+    // Program Management (limited)
     Permission.READ_PROGRAM,
+    Permission.JOIN_ELIGIBLE_PROGRAMS,
     
-    // Session Management (limited)
+    // Session Management
     Permission.CREATE_SESSION,
     Permission.READ_SESSION,
     Permission.UPDATE_SESSION,
+    Permission.CONFIRM_SESSIONS,
     
     // Goal Management
     Permission.READ_GOAL,
     Permission.UPDATE_GOAL,
     Permission.MANAGE_GOAL_PROGRESS,
+    Permission.TRACK_MENTEE_PROGRESS,
     
     // Communication
     Permission.SEND_MESSAGE,
     Permission.READ_MESSAGE,
     
+    // Reports & Analytics (mentee progress only)
+    Permission.VIEW_REPORTS,
+    Permission.VIEW_PERSONAL_ANALYTICS,
+    
     // Matching System
     Permission.READ_MATCH,
     Permission.UPDATE_MATCH,
+    Permission.APPROVE_MENTORSHIP_REQUESTS,
+    Permission.REJECT_MENTORSHIP_REQUESTS,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,
     Permission.READ_FEEDBACK,
     Permission.UPDATE_FEEDBACK,
+    Permission.PROVIDE_MENTOR_FEEDBACK,
   ],
 
   [Role.MENTEE]: [
@@ -180,27 +175,36 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.READ_USER,
     Permission.UPDATE_USER,
     
-    // Program Management (read only)
+    // Program Management (limited)
     Permission.READ_PROGRAM,
+    Permission.JOIN_ELIGIBLE_PROGRAMS,
     
-    // Session Management (read only)
+    // Session Management (limited)
     Permission.READ_SESSION,
+    Permission.BOOK_SESSIONS,
     
     // Goal Management (own goals only)
     Permission.CREATE_GOAL,
     Permission.READ_GOAL,
     Permission.UPDATE_GOAL,
+    Permission.MANAGE_PERSONAL_GOALS,
     
     // Communication
     Permission.SEND_MESSAGE,
     Permission.READ_MESSAGE,
     
-    // Matching System (read only)
+    // Reports & Analytics (personal only)
+    Permission.VIEW_REPORTS,
+    Permission.VIEW_PERSONAL_ANALYTICS,
+    
+    // Matching System
     Permission.READ_MATCH,
+    Permission.REQUEST_MENTORSHIP,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,
     Permission.READ_FEEDBACK,
+    Permission.PROVIDE_MENTEE_FEEDBACK,
   ],
 
   [Role.STUDENT]: [
@@ -208,23 +212,31 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.READ_USER,
     Permission.UPDATE_USER,
     
-    // Program Management (read only)
+    // Program Management (limited)
     Permission.READ_PROGRAM,
+    Permission.JOIN_ELIGIBLE_PROGRAMS,
     
-    // Session Management (read only)
+    // Session Management (limited)
     Permission.READ_SESSION,
+    Permission.BOOK_SESSIONS,
     
     // Goal Management (own goals only)
     Permission.CREATE_GOAL,
     Permission.READ_GOAL,
     Permission.UPDATE_GOAL,
+    Permission.MANAGE_PERSONAL_GOALS,
     
     // Communication
     Permission.SEND_MESSAGE,
     Permission.READ_MESSAGE,
     
-    // Matching System (read only)
+    // Reports & Analytics (personal only)
+    Permission.VIEW_REPORTS,
+    Permission.VIEW_PERSONAL_ANALYTICS,
+    
+    // Matching System
     Permission.READ_MATCH,
+    Permission.REQUEST_MENTORSHIP,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,

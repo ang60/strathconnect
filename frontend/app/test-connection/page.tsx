@@ -44,9 +44,9 @@ export default function TestConnectionPage() {
           </Button>
 
           {error && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-md">
-              <h3 className="font-medium text-red-800">Error:</h3>
-              <p className="text-red-600 mt-1">{error}</p>
+            <div className="p-4 bg-white border border-gray-200 rounded-md">
+              <h3 className="font-medium text-gray-800">Error:</h3>
+              <p className="text-gray-600 mt-1">{error}</p>
             </div>
           )}
 
