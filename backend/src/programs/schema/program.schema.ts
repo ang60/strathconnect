@@ -77,7 +77,7 @@ export class Program {
   maxParticipants: number;
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
-  mentors: Types.ObjectId[];
+  coaches: Types.ObjectId[];
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
   participants: Types.ObjectId[];
@@ -98,7 +98,7 @@ export class Program {
   settings: {
     allowSelfEnrollment?: boolean;
     requireApproval?: boolean;
-    maxMenteesPerMentor?: number;
+    maxCoacheesPerCoach?: number;
     sessionFrequency?: string;
     sessionDuration?: number;
   };
@@ -108,7 +108,7 @@ export class Program {
     completionRate?: number;
     satisfactionScore?: number;
     totalSessions?: number;
-    activeMentorships?: number;
+    activeCoachingRelationships?: number;
   };
 
   @Prop({ type: [String] })

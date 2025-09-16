@@ -152,7 +152,7 @@ export default function RegisterPage() {
             Create your account
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Join our mentorship and coaching platform
+            Join our coaching and mentorship platform
           </p>
         </div>
 

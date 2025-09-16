@@ -44,7 +44,7 @@ const conversations = [
     timestamp: "2 min ago",
     unread: 2,
     online: true,
-    role: "Mentee"
+    role: "Coachee"
   },
   {
     id: "2",
@@ -54,7 +54,7 @@ const conversations = [
     timestamp: "1 hour ago",
     unread: 0,
     online: false,
-    role: "Mentor"
+    role: "Coach"
   },
   {
     id: "3",
@@ -64,7 +64,7 @@ const conversations = [
     timestamp: "3 hours ago",
     unread: 1,
     online: true,
-    role: "Mentee"
+    role: "Coachee"
   }
 ];
 
@@ -196,7 +196,7 @@ export default function CommunicationPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Communication & Notifications</h1>
             <p className="text-muted-foreground">
-              Stay connected with mentors, mentees, and stay updated with notifications
+              Stay connected with coaches, coachees, and stay updated with notifications
             </p>
           </div>
           <div className="flex items-center space-x-2">

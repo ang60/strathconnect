@@ -21,7 +21,7 @@ export class CreateProgramPhaseRequest {
   @IsDateString()
   endDate: string;
 
-  @ApiPropertyOptional({ description: 'Phase objectives', example: ['Learn basic concepts', 'Meet mentors'] })
+  @ApiPropertyOptional({ description: 'Phase objectives', example: ['Learn basic concepts', 'Meet coaches'] })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
@@ -40,11 +40,11 @@ export class CreateProgramPhaseRequest {
 }
 
 export class CreateProgramRequest {
-  @ApiProperty({ description: 'Program name', example: 'Software Engineering Mentorship Program' })
+  @ApiProperty({ description: 'Program name', example: 'Software Engineering Coaching Program' })
   @IsString()
   name: string;
 
-  @ApiPropertyOptional({ description: 'Program description', example: 'A comprehensive mentorship program for software engineering students' })
+  @ApiPropertyOptional({ description: 'Program description', example: 'A comprehensive coaching program for software engineering students' })
   @IsOptional()
   @IsString()
   description?: string;
@@ -92,11 +92,11 @@ export class CreateProgramRequest {
   @IsNumber()
   maxParticipants?: number;
 
-  @ApiPropertyOptional({ description: 'Mentor user IDs', example: ['507f1f77bcf86cd799439011'] })
+  @ApiPropertyOptional({ description: 'Coach user IDs', example: ['507f1f77bcf86cd799439011'] })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  mentors?: string[];
+  coaches?: string[];
 
   @ApiPropertyOptional({ description: 'Coordinator user IDs', example: ['507f1f77bcf86cd799439012'] })
   @IsOptional()
@@ -120,7 +120,7 @@ export class CreateProgramRequest {
   settings?: {
     allowSelfEnrollment?: boolean;
     requireApproval?: boolean;
-    maxMenteesPerMentor?: number;
+    maxCoacheesPerCoach?: number;
     sessionFrequency?: string;
     sessionDuration?: number;
   };

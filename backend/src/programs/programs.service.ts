@@ -19,7 +19,7 @@ export class ProgramsService {
         completionRate: 0,
         satisfactionScore: 0,
         totalSessions: 0,
-        activeMentorships: 0,
+        activeCoachingRelationships: 0,
       },
     }).save();
     return program.toObject();
@@ -42,12 +42,12 @@ export class ProgramsService {
       query.departments = filters.department;
     }
 
-    return this.programModel.find(query).populate('mentors coordinators', 'name email avatar');
+    return this.programModel.find(query).populate('coaches coordinators', 'name email avatar');
   }
 
   async findById(id: string) {
     const program = await this.programModel.findById(id)
-      .populate('mentors coordinators participants', 'name email avatar role department');
+      .populate('coaches coordinators participants', 'name email avatar role department');
     
     if (!program) {
       throw new NotFoundException('Program not found');
@@ -65,15 +65,15 @@ export class ProgramsService {
     if (data.participants) {
       updateData.participants = data.participants.map(id => new Types.ObjectId(id));
     }
-    if (data.mentors) {
-      updateData.mentors = data.mentors.map(id => new Types.ObjectId(id));
+    if (data.coaches) {
+      updateData.coaches = data.coaches.map(id => new Types.ObjectId(id));
     }
 
     const program = await this.programModel.findByIdAndUpdate(
       id,
       updateData,
       { new: true }
-    ).populate('mentors coordinators participants', 'name email avatar role department');
+    ).populate('coaches coordinators participants', 'name email avatar role department');
     
     if (!program) {
       throw new NotFoundException('Program not found');
@@ -129,40 +129,40 @@ export class ProgramsService {
     return await program.save();
   }
 
-  async addMentor(programId: string, userId: string) {
+  async addCoach(programId: string, userId: string) {
     const program = await this.programModel.findById(programId);
     if (!program) {
       throw new NotFoundException('Program not found');
     }
 
     const userIdObjectId = new Types.ObjectId(userId);
-    if (program.mentors.includes(userIdObjectId)) {
-      throw new ConflictException('User is already a mentor');
+    if (program.coaches.includes(userIdObjectId)) {
+      throw new ConflictException('User is already a coach');
     }
 
-    program.mentors.push(userIdObjectId);
+    program.coaches.push(userIdObjectId);
     return await program.save();
   }
 
-  async removeMentor(programId: string, userId: string) {
+  async removeCoach(programId: string, userId: string) {
     const program = await this.programModel.findById(programId);
     if (!program) {
       throw new NotFoundException('Program not found');
     }
 
     const userIdObjectId = new Types.ObjectId(userId);
-    const mentorIndex = program.mentors.indexOf(userIdObjectId);
-    if (mentorIndex === -1) {
-      throw new NotFoundException('User is not a mentor in this program');
+    const coachIndex = program.coaches.indexOf(userIdObjectId);
+    if (coachIndex === -1) {
+      throw new NotFoundException('User is not a coach in this program');
     }
 
-    program.mentors.splice(mentorIndex, 1);
+    program.coaches.splice(coachIndex, 1);
     return await program.save();
   }
 
   async getActivePrograms() {
     return this.programModel.find({ status: ProgramStatus.ACTIVE })
-      .populate('mentors coordinators', 'name email avatar');
+      .populate('coaches coordinators', 'name email avatar');
   }
 
   async getProgramsByType(type: ProgramType) {

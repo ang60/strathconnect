@@ -129,7 +129,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.UPDATE_FEEDBACK,
   ],
 
-  [Role.MENTOR]: [
+  [Role.COACH]: [
     // User Management (read only)
     Permission.READ_USER,
     
@@ -147,30 +147,30 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.READ_GOAL,
     Permission.UPDATE_GOAL,
     Permission.MANAGE_GOAL_PROGRESS,
-    Permission.TRACK_MENTEE_PROGRESS,
+    Permission.TRACK_COACHEE_PROGRESS,
     
     // Communication
     Permission.SEND_MESSAGE,
     Permission.READ_MESSAGE,
     
-    // Reports & Analytics (mentee progress only)
+    // Reports & Analytics (coachee progress only)
     Permission.VIEW_REPORTS,
     Permission.VIEW_PERSONAL_ANALYTICS,
     
     // Matching System
     Permission.READ_MATCH,
     Permission.UPDATE_MATCH,
-    Permission.APPROVE_MENTORSHIP_REQUESTS,
-    Permission.REJECT_MENTORSHIP_REQUESTS,
+    Permission.APPROVE_COACHING_REQUESTS,
+    Permission.REJECT_COACHING_REQUESTS,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,
     Permission.READ_FEEDBACK,
     Permission.UPDATE_FEEDBACK,
-    Permission.PROVIDE_MENTOR_FEEDBACK,
+    Permission.PROVIDE_COACH_FEEDBACK,
   ],
 
-  [Role.MENTEE]: [
+  [Role.COACHEE]: [
     // User Management (own profile only)
     Permission.READ_USER,
     Permission.UPDATE_USER,
@@ -199,12 +199,12 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     
     // Matching System
     Permission.READ_MATCH,
-    Permission.REQUEST_MENTORSHIP,
+    Permission.REQUEST_COACHING,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,
     Permission.READ_FEEDBACK,
-    Permission.PROVIDE_MENTEE_FEEDBACK,
+    Permission.PROVIDE_COACHEE_FEEDBACK,
   ],
 
   [Role.STUDENT]: [
@@ -236,7 +236,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     
     // Matching System
     Permission.READ_MATCH,
-    Permission.REQUEST_MENTORSHIP,
+    Permission.REQUEST_COACHING,
     
     // Feedback & Gamification
     Permission.CREATE_FEEDBACK,

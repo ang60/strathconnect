@@ -15,7 +15,7 @@ export class CreateUserRequest {
   @IsString()
   name: string;
 
-  @ApiPropertyOptional({ description: 'User role in the platform (assigned by admin)', enum: Role, example: Role.MENTEE })
+  @ApiPropertyOptional({ description: 'User role in the platform (assigned by admin)', enum: Role, example: Role.COACHEE })
   @IsOptional()
   @IsEnum(Role)
   role?: Role;

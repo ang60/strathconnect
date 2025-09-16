@@ -12,7 +12,7 @@ export class UpdateSessionRequest {
 
   @IsOptional()
   @IsString()
-  mentee?: string; // Will be converted to ObjectId
+  coachee?: string; // Will be converted to ObjectId
 
   @IsOptional()
   @IsString()
@@ -53,8 +53,8 @@ export class UpdateSessionRequest {
   @IsOptional()
   @IsObject()
   feedback?: {
-    mentee?: string;
-    mentor?: string;
+    coachee?: string;
+    coach?: string;
     rating?: number;
     comments?: string;
   };

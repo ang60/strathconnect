@@ -4,8 +4,8 @@ export enum Role {
   SUPER_ADMIN = 'super_admin',
   ADMIN = 'admin',
   COORDINATOR = 'coordinator',
-  MENTOR = 'mentor',
-  MENTEE = 'mentee',
+  COACH = 'coach',
+  COACHEE = 'coachee',
   FACULTY = 'faculty',
   STUDENT = 'student',
 }
@@ -88,14 +88,14 @@ export enum Permission {
   BULK_USER_OPERATIONS = 'bulk_user_operations',
   
   // Enhanced User Permissions
-  REQUEST_MENTORSHIP = 'request_mentorship',
-  APPROVE_MENTORSHIP_REQUESTS = 'approve_mentorship_requests',
-  REJECT_MENTORSHIP_REQUESTS = 'reject_mentorship_requests',
+  REQUEST_COACHING = 'request_coaching',
+  APPROVE_COACHING_REQUESTS = 'approve_coaching_requests',
+  REJECT_COACHING_REQUESTS = 'reject_coaching_requests',
   BOOK_SESSIONS = 'book_sessions',
   CONFIRM_SESSIONS = 'confirm_sessions',
-  PROVIDE_MENTOR_FEEDBACK = 'provide_mentor_feedback',
-  PROVIDE_MENTEE_FEEDBACK = 'provide_mentee_feedback',
-  TRACK_MENTEE_PROGRESS = 'track_mentee_progress',
+  PROVIDE_COACH_FEEDBACK = 'provide_coach_feedback',
+  PROVIDE_COACHEE_FEEDBACK = 'provide_coachee_feedback',
+  TRACK_COACHEE_PROGRESS = 'track_coachee_progress',
   VIEW_PERSONAL_ANALYTICS = 'view_personal_analytics',
   MANAGE_PERSONAL_GOALS = 'manage_personal_goals',
   JOIN_ELIGIBLE_PROGRAMS = 'join_eligible_programs',
@@ -107,8 +107,8 @@ export const ROLE_HIERARCHY: Record<Role, number> = {
   [Role.ADMIN]: 90,
   [Role.COORDINATOR]: 80,
   [Role.FACULTY]: 70,
-  [Role.MENTOR]: 60,
-  [Role.MENTEE]: 50,
+  [Role.COACH]: 60,
+  [Role.COACHEE]: 50,
   [Role.STUDENT]: 40,
 };
 
@@ -208,7 +208,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.UPDATE_FEEDBACK,
   ],
 
-  [Role.MENTOR]: [
+  [Role.COACH]: [
     Permission.READ_USER,
     Permission.READ_PROGRAM,
     Permission.CREATE_SESSION,
@@ -226,7 +226,7 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     Permission.UPDATE_FEEDBACK,
   ],
 
-  [Role.MENTEE]: [
+  [Role.COACHEE]: [
     Permission.READ_USER,
     Permission.UPDATE_USER,
     Permission.READ_PROGRAM,

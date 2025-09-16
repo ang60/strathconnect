@@ -26,7 +26,7 @@ import {
 const dashboardData = {
   stats: {
     totalSessions: 45,
-    activeMentees: 8,
+    activeCoachees: 8,
     completedGoals: 24,
     messages: 156
   },
@@ -56,7 +56,7 @@ const dashboardData = {
   upcomingSessions: [
     {
       id: "1",
-      mentee: "Grace Wanjiku",
+      coachee: "Grace Wanjiku",
       topic: "Career Planning",
       date: "2024-01-20T10:00:00",
       duration: 60
@@ -81,7 +81,7 @@ function DashboardContent() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {user?.name}! Here's what's happening with your mentorship programs.
+              Welcome back, {user?.name}! Here's what's happening with your coaching programs.
             </p>
           </div>
           <Badge variant="outline" className="flex items-center space-x-1">
@@ -107,11 +107,11 @@ function DashboardContent() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Mentees</CardTitle>
+              <CardTitle className="text-sm font-medium">Active Coachees</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{dashboardData.stats.activeMentees}</div>
+              <div className="text-2xl font-bold">{dashboardData.stats.activeCoachees}</div>
               <p className="text-xs text-muted-foreground">
                 +1 new this week
               </p>
@@ -154,7 +154,7 @@ function DashboardContent() {
                 <span>Recent Activity</span>
               </CardTitle>
               <CardDescription>
-                Your latest mentorship activities
+                Your latest coaching activities
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -189,7 +189,7 @@ function DashboardContent() {
                 <span>Upcoming Sessions</span>
               </CardTitle>
               <CardDescription>
-                Your scheduled mentorship sessions
+                Your scheduled coaching sessions
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -198,11 +198,11 @@ function DashboardContent() {
                   <div key={session.id} className="flex items-center space-x-4 p-3 border rounded-lg">
                     <Avatar className="w-10 h-10">
                       <AvatarFallback>
-                        {session.mentee.split(' ').map(n => n[0]).join('')}
+                        {session.coachee.split(' ').map(n => n[0]).join('')}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{session.mentee}</p>
+                      <p className="text-sm font-medium">{session.coachee}</p>
                       <p className="text-xs text-muted-foreground">{session.topic}</p>
                       <p className="text-xs text-muted-foreground">
                         {new Date(session.date).toLocaleDateString()} • {session.duration}min

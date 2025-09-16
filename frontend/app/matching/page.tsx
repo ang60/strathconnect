@@ -42,7 +42,7 @@ const suggestedMatches = [
     location: "Nairobi, Kenya",
     experience: "5 years",
     availability: "Weekends",
-    bio: "Passionate software engineer looking to mentor junior developers and share industry insights."
+    bio: "Passionate software engineer looking to coach junior developers and share industry insights."
   },
   {
     id: "2",
@@ -52,7 +52,7 @@ const suggestedMatches = [
     avatar: "/avatars/david.jpg",
     matchScore: 88,
     skills: ["Product Strategy", "Agile", "User Research", "Team Leadership"],
-    goals: ["Product leadership", "Startup mentoring"],
+    goals: ["Product leadership", "Startup coaching"],
     location: "Nairobi, Kenya",
     experience: "7 years",
     availability: "Evenings",
@@ -74,7 +74,7 @@ const suggestedMatches = [
   }
 ];
 
-const availableMentors = [
+const availableCoaches = [
   {
     id: "1",
     name: "John Kamau",
@@ -88,7 +88,7 @@ const availableMentors = [
     location: "Nairobi, Kenya",
     availability: "Flexible",
     hourlyRate: "$50",
-    bio: "Senior software engineer with expertise in machine learning and system architecture. Passionate about mentoring."
+    bio: "Senior software engineer with expertise in machine learning and system architecture. Passionate about coaching."
   },
   {
     id: "2",
@@ -500,7 +500,7 @@ export default function MatchingPage() {
                           Send Message
                         </Button>
                         {request.status === 'pending' && (
-                          <Button variant="outline" size="sm" className="text-white hover:text-gray-300">
+                          <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
                             <X className="w-4 h-4 mr-2" />
                             Cancel Request
                           </Button>

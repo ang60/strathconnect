@@ -24,7 +24,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       email: profile.emails[0]?.value,
       password: '',
       name: profile.displayName || profile.name?.givenName + ' ' + profile.name?.familyName || 'Google User',
-      role: Role.MENTEE, // Default role for Google OAuth users
+      role: Role.COACHEE, // Default role for Google OAuth users
     });
   }
 }

@@ -20,7 +20,7 @@ export class UsersService {
 
     const user = await new this.userModel({
       ...data,
-      role: data.role || Role.MENTEE, // Default to MENTEE if no role provided
+      role: data.role || Role.COACHEE, // Default to COACHEE if no role provided
       status: UserStatus.PENDING, // All new users start with PENDING status
       password: await hash(data.password, 10),
     }).save();
@@ -63,16 +63,16 @@ export class UsersService {
     return this.userModel.find(query).select('-password -refreshToken');
   }
 
-  async getMentors() {
+  async getCoaches() {
     return this.userModel.find({ 
-      role: Role.MENTOR, 
+      role: Role.COACH, 
       status: UserStatus.ACTIVE 
     }).select('-password -refreshToken');
   }
 
-  async getMentees() {
+  async getCoachees() {
     return this.userModel.find({ 
-      role: Role.MENTEE, 
+      role: Role.COACHEE, 
       status: UserStatus.ACTIVE 
     }).select('-password -refreshToken');
   }

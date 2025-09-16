@@ -2,7 +2,7 @@
 
 ## Overview
 
-The StrathConnect backend is a comprehensive NestJS API that provides all the functionality needed for a mentorship platform. It includes authentication, user management, program management, goal tracking, session scheduling, and communication features.
+The StrathConnect backend is a comprehensive NestJS API that provides all the functionality needed for a coaching platform. It includes authentication, user management, program management, goal tracking, session scheduling, and communication features.
 
 ## 🏗️ Architecture
 
@@ -38,21 +38,21 @@ backend/
 ### 1. Authentication & Authorization
 - **JWT-based authentication** with access and refresh tokens
 - **Google OAuth integration** for social login
-- **Role-based access control** (Mentor, Mentee, Admin)
+- **Role-based access control** (Coach, Coachee, Admin)
 - **Secure password hashing** with bcrypt
 - **Token refresh mechanism** for seamless user experience
 
 ### 2. User Management
 - **User registration and profiles**
-- **Role assignment** (Mentor, Mentee, Admin)
+- **Role assignment** (Coach, Coachee, Admin)
 - **Department and skill management**
 - **User search and filtering**
 - **Profile updates and avatar support**
 
 ### 3. Program Management
-- **Create and manage mentorship programs**
+- **Create and manage coaching programs**
 - **Program phases and milestones**
-- **Participant and mentor assignment**
+- **Participant and coach assignment**
 - **Program metrics and analytics**
 - **Resource management and settings**
 
@@ -60,7 +60,7 @@ backend/
 - **Goal creation and management**
 - **Milestone tracking with progress**
 - **Goal status and priority management**
-- **Feedback system for mentors and mentees**
+- **Feedback system for coaches and coachees**
 - **Progress metrics and time tracking**
 
 ### 5. Session Management
@@ -158,8 +158,8 @@ Access Swagger UI at: `http://localhost:3000/api`
 #### Users
 - `POST /users` - Create user
 - `GET /users` - Get users (with filters)
-- `GET /users/mentors` - Get mentors
-- `GET /users/mentees` - Get mentees
+- `GET /users/coaches` - Get coaches
+- `GET /users/coachees` - Get coachees
 - `GET /users/profile` - Get current user
 - `PUT /users/profile` - Update profile
 
@@ -206,8 +206,8 @@ npm run test:cov
 
 ### Test Data
 The seeding script creates test users:
-- **Mentors**: john.doe@example.com, jane.smith@example.com
-- **Mentees**: mike.johnson@example.com, sarah.wilson@example.com
+- **Coaches**: john.doe@example.com, jane.smith@example.com
+- **Coachees**: mike.johnson@example.com, sarah.wilson@example.com
 - **Admin**: admin@strathconnect.com
 - **Password**: password123
 
@@ -222,7 +222,7 @@ The seeding script creates test users:
   name: string,
   email: string,
   password: string (hashed),
-  role: 'mentor' | 'mentee' | 'admin',
+  role: 'coach' | 'coachee' | 'admin',
   department: string,
   avatar: string,
   bio: string,
@@ -250,7 +250,7 @@ The seeding script creates test users:
   duration: number,
   maxParticipants: number,
   currentParticipants: number,
-  mentors: ObjectId[],
+  coaches: ObjectId[],
   coordinators: ObjectId[],
   participants: ObjectId[],
   phases: ProgramPhase[],
@@ -269,8 +269,8 @@ The seeding script creates test users:
   priority: 'low' | 'medium' | 'high' | 'urgent',
   status: 'pending' | 'in_progress' | 'completed' | 'cancelled',
   progress: number,
-  mentee: ObjectId,
-  mentor: ObjectId,
+  coachee: ObjectId,
+  coach: ObjectId,
   program: ObjectId,
   deadline: Date,
   milestones: Milestone[],
@@ -292,8 +292,8 @@ The seeding script creates test users:
   description: string,
   status: 'scheduled' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show',
   type: 'virtual' | 'in_person' | 'hybrid',
-  mentor: ObjectId,
-  mentee: ObjectId,
+  coach: ObjectId,
+  coachee: ObjectId,
   program: ObjectId,
   goal: ObjectId,
   startTime: Date,
@@ -524,6 +524,6 @@ The backend is designed to work seamlessly with the StrathConnect frontend:
 
 ## 🎉 Conclusion
 
-The StrathConnect backend provides a complete, production-ready API for the mentorship platform. It includes all necessary features for user management, program coordination, goal tracking, session scheduling, and communication. The codebase is well-structured, thoroughly tested, and ready for deployment.
+The StrathConnect backend provides a complete, production-ready API for the coaching platform. It includes all necessary features for user management, program coordination, goal tracking, session scheduling, and communication. The codebase is well-structured, thoroughly tested, and ready for deployment.
 
 With comprehensive documentation, automated setup scripts, and extensive test coverage, developers can quickly get started and build upon this solid foundation.

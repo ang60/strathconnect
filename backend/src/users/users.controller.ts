@@ -53,16 +53,16 @@ export class UsersController {
     return this.usersService.getUsers({ role, department, status });
   }
 
-  @Get('mentors')
+  @Get('coaches')
   @UseGuards(JwtAuthGuard)
-  async getMentors(@CurrentUser() user: User) {
-    return this.usersService.getMentors();
+  async getCoaches(@CurrentUser() user: User) {
+    return this.usersService.getCoaches();
   }
 
-  @Get('mentees')
+  @Get('coachees')
   @UseGuards(JwtAuthGuard)
-  async getMentees(@CurrentUser() user: User) {
-    return this.usersService.getMentees();
+  async getCoachees(@CurrentUser() user: User) {
+    return this.usersService.getCoachees();
   }
 
   @Get('search')

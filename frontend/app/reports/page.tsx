@@ -54,11 +54,11 @@ const programMetrics = {
   totalParticipants: 892
 };
 
-const mentorshipStats = {
-  totalMentors: 89,
-  totalMentees: 234,
-  activeMentorships: 156,
-  avgMentorshipDuration: 6.2,
+const coachingStats = {
+  totalCoaches: 89,
+  totalCoachees: 234,
+  activeCoachingRelationships: 156,
+  avgCoachingDuration: 6.2,
   successRate: 92,
   avgRating: 4.7
 };
@@ -73,8 +73,8 @@ const monthlyData = [
 ];
 
 const roleDistribution = [
-  { role: "Mentees", count: 234, percentage: 45 },
-  { role: "Mentors", count: 89, percentage: 17 },
+  { role: "Coachees", count: 234, percentage: 45 },
+  { role: "Coaches", count: 89, percentage: 17 },
   { role: "Coaches", count: 67, percentage: 13 },
   { role: "Coachees", count: 98, percentage: 19 },
   { role: "Coordinators", count: 23, percentage: 4 },
@@ -215,15 +215,15 @@ export default function ReportsPage() {
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Mentorships</CardTitle>
+                <CardTitle className="text-sm font-medium">Active Coaching Relationships</CardTitle>
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mentorshipStats.activeMentorships}</div>
+                <div className="text-2xl font-bold">{coachingStats.activeCoachingRelationships}</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                  {getGrowthIndicator(mentorshipStats.activeMentorships, 142).icon}
+                  {getGrowthIndicator(coachingStats.activeCoachingRelationships, 142).icon}
                   <span className={getGrowthIndicator(mentorshipStats.activeMentorships, 142).isPositive ? "text-green-600" : "text-white"}>
-                    +{getGrowthIndicator(mentorshipStats.activeMentorships, 142).value}%
+                    +{getGrowthIndicator(coachingStats.activeCoachingRelationships, 142).value}%
                   </span>
                   <span>from last month</span>
                 </div>
@@ -236,11 +236,11 @@ export default function ReportsPage() {
                 <Star className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mentorshipStats.avgRating}/5</div>
+                <div className="text-2xl font-bold">{coachingStats.avgRating}/5</div>
                 <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                  {getGrowthIndicator(mentorshipStats.avgRating * 100, 450).icon}
+                  {getGrowthIndicator(coachingStats.avgRating * 100, 450).icon}
                   <span className={getGrowthIndicator(mentorshipStats.avgRating * 100, 450).isPositive ? "text-green-600" : "text-white"}>
-                    +{getGrowthIndicator(mentorshipStats.avgRating * 100, 450).value}%
+                    +{getGrowthIndicator(coachingStats.avgRating * 100, 450).value}%
                   </span>
                   <span>from last month</span>
                 </div>
@@ -473,13 +473,13 @@ export default function ReportsPage() {
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Mentorship Success</CardTitle>
+                <CardTitle className="text-sm font-medium">Coaching Success</CardTitle>
                 <Award className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mentorshipStats.successRate}%</div>
+                <div className="text-2xl font-bold">{coachingStats.successRate}%</div>
                 <p className="text-xs text-muted-foreground">
-                  Successful mentorships
+                  Successful coaching relationships
                 </p>
               </CardContent>
             </Card>
@@ -490,9 +490,9 @@ export default function ReportsPage() {
                 <Clock className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mentorshipStats.avgMentorshipDuration} months</div>
+                <div className="text-2xl font-bold">{coachingStats.avgCoachingDuration} months</div>
                 <p className="text-xs text-muted-foreground">
-                  Per mentorship
+                  Per coaching relationship
                 </p>
               </CardContent>
             </Card>
@@ -538,7 +538,7 @@ export default function ReportsPage() {
                       <SelectContent>
                         <SelectItem value="user-engagement">User Engagement</SelectItem>
                         <SelectItem value="program-performance">Program Performance</SelectItem>
-                        <SelectItem value="mentorship-analytics">Mentorship Analytics</SelectItem>
+                        <SelectItem value="coaching-analytics">Coaching Analytics</SelectItem>
                         <SelectItem value="department-stats">Department Statistics</SelectItem>
                         <SelectItem value="satisfaction-survey">Satisfaction Survey Results</SelectItem>
                       </SelectContent>
@@ -584,7 +584,7 @@ export default function ReportsPage() {
                   <div>
                     <Label>User Roles</Label>
                     <div className="mt-2 space-y-2">
-                      {["Mentees", "Mentors", "Coaches", "Coachees", "Coordinators", "Admins"].map((role) => (
+                      {["Coachees", "Coaches", "Mentors", "Mentees", "Coordinators", "Admins"].map((role) => (
                         <div key={role} className="flex items-center space-x-2">
                           <Checkbox
                             id={role}
@@ -640,7 +640,7 @@ export default function ReportsPage() {
                 </Button>
                 <Button variant="outline" className="w-full justify-start" onClick={() => handleExport("excel")}>
                   <MessageSquare className="w-4 h-4 mr-2" />
-                  Mentorship Success Report
+                  Coaching Success Report
                 </Button>
                 <Button variant="outline" className="w-full justify-start" onClick={() => handleExport("excel")}>
                   <Star className="w-4 h-4 mr-2" />

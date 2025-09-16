@@ -57,10 +57,10 @@ export class Goal {
   tags: string[];
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
-  mentee: Types.ObjectId;
+  coachee: Types.ObjectId;
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
-  mentor: Types.ObjectId;
+  coach: Types.ObjectId;
 
   @Prop({ type: [Types.ObjectId], ref: 'Program' })
   program: Types.ObjectId;
@@ -102,8 +102,8 @@ export class Goal {
 
   @Prop({ type: Object })
   feedback: {
-    mentor?: string;
-    mentee?: string;
+    coach?: string;
+    coachee?: string;
     rating?: number;
   };
 

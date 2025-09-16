@@ -47,10 +47,10 @@ export class CreateGoalRequest {
   @IsString({ each: true })
   tags?: string[];
 
-  @ApiPropertyOptional({ description: 'Mentor user ID', example: '507f1f77bcf86cd799439011' })
+  @ApiPropertyOptional({ description: 'Coach user ID', example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsString()
-  mentor?: string;
+  coach?: string;
 
   @ApiPropertyOptional({ description: 'Program ID', example: '507f1f77bcf86cd799439012' })
   @IsOptional()

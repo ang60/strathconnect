@@ -45,10 +45,10 @@ export class GoalsController {
   ) {
     const filters: any = {};
     
-    if (user.role === 'mentee') {
-      filters.menteeId = user._id.toString();
-    } else if (user.role === 'mentor') {
-      filters.mentorId = user._id.toString();
+    if (user.role === 'coachee') {
+      filters.coacheeId = user._id.toString();
+    } else if (user.role === 'coach') {
+      filters.coachId = user._id.toString();
     }
     
     if (status) filters.status = status;
@@ -60,10 +60,10 @@ export class GoalsController {
 
   @Get('my-goals')
   async getMyGoals(@CurrentUser() user: User) {
-    if (user.role === 'mentee') {
-      return await this.goalsService.getGoalsByMentee(user._id.toString());
-    } else if (user.role === 'mentor') {
-      return await this.goalsService.getGoalsByMentor(user._id.toString());
+    if (user.role === 'coachee') {
+      return await this.goalsService.getGoalsByCoachee(user._id.toString());
+    } else if (user.role === 'coach') {
+      return await this.goalsService.getGoalsByCoach(user._id.toString());
     }
     return [];
   }

@@ -24,7 +24,7 @@ import { SessionStatus, SessionType } from './schema/session.schema';
 export class SessionsController {
   constructor(private readonly sessionsService: SessionsService) {}
 
-  @ApiOperation({ summary: 'Create session', description: 'Create a new mentorship session' })
+  @ApiOperation({ summary: 'Create session', description: 'Create a new coaching session' })
   @ApiBearerAuth('JWT-auth')
   @ApiResponse({ status: 201, description: 'Session created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -41,21 +41,21 @@ export class SessionsController {
     @CurrentUser() user: User,
     @Query('status') status?: SessionStatus,
     @Query('type') type?: SessionType,
-    @Query('menteeId') menteeId?: string,
+    @Query('coacheeId') coacheeId?: string,
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
   ) {
     const filters: any = {};
     
-    if (user.role === 'mentor') {
-      filters.mentorId = user._id.toString();
-    } else if (user.role === 'mentee') {
-      filters.menteeId = user._id.toString();
+    if (user.role === 'coach') {
+      filters.coachId = user._id.toString();
+    } else if (user.role === 'coachee') {
+      filters.coacheeId = user._id.toString();
     }
     
     if (status) filters.status = status;
     if (type) filters.type = type;
-    if (menteeId) filters.menteeId = menteeId;
+    if (coacheeId) filters.coacheeId = coacheeId;
     if (startDate) filters.startDate = new Date(startDate);
     if (endDate) filters.endDate = new Date(endDate);
 

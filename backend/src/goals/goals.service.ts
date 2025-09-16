@@ -11,10 +11,10 @@ export class GoalsService {
     @InjectModel(Goal.name) private readonly goalModel: Model<Goal>,
   ) {}
 
-  async create(data: CreateGoalRequest, menteeId: string) {
+  async create(data: CreateGoalRequest, coacheeId: string) {
     const goal = await new this.goalModel({
       ...data,
-      mentee: menteeId,
+      coachee: coacheeId,
       metrics: {
         timeSpent: 0,
         sessionsCompleted: 0,
@@ -26,18 +26,18 @@ export class GoalsService {
   }
 
   async findAll(filters?: {
-    menteeId?: string;
-    mentorId?: string;
+    coacheeId?: string;
+    coachId?: string;
     status?: GoalStatus;
     priority?: GoalPriority;
   }) {
     const query: FilterQuery<Goal> = {};
     
-    if (filters?.menteeId) {
-      query.mentee = filters.menteeId;
+    if (filters?.coacheeId) {
+      query.coachee = filters.coacheeId;
     }
-    if (filters?.mentorId) {
-      query.mentor = filters.mentorId;
+    if (filters?.coachId) {
+      query.coach = filters.coachId;
     }
     if (filters?.status) {
       query.status = filters.status;
@@ -47,12 +47,12 @@ export class GoalsService {
     }
 
     return this.goalModel.find(query)
-      .populate('mentee mentor program', 'name email avatar role department');
+      .populate('coachee coach program', 'name email avatar role department');
   }
 
   async findById(id: string) {
     const goal = await this.goalModel.findById(id)
-      .populate('mentee mentor program', 'name email avatar role department');
+      .populate('coachee coach program', 'name email avatar role department');
     
     if (!goal) {
       throw new NotFoundException('Goal not found');
@@ -64,8 +64,8 @@ export class GoalsService {
   async update(id: string, data: UpdateGoalRequest) {
     // Convert string IDs to ObjectId
     const updateData: any = { ...data };
-    if (data.mentor) {
-      updateData.mentor = new Types.ObjectId(data.mentor);
+    if (data.coach) {
+      updateData.coach = new Types.ObjectId(data.coach);
     }
     if (data.program) {
       updateData.program = new Types.ObjectId(data.program);
@@ -75,7 +75,7 @@ export class GoalsService {
       id,
       updateData,
       { new: true }
-    ).populate('mentee mentor program', 'name email avatar role department');
+    ).populate('coachee coach program', 'name email avatar role department');
     
     if (!goal) {
       throw new NotFoundException('Goal not found');
@@ -136,19 +136,19 @@ export class GoalsService {
     return await goal.save();
   }
 
-  async getGoalsByMentee(menteeId: string) {
-    return this.goalModel.find({ mentee: menteeId })
-      .populate('mentor program', 'name email avatar role department');
+  async getGoalsByCoachee(coacheeId: string) {
+    return this.goalModel.find({ coachee: coacheeId })
+      .populate('coach program', 'name email avatar role department');
   }
 
-  async getGoalsByMentor(mentorId: string) {
-    return this.goalModel.find({ mentor: mentorId })
-      .populate('mentee program', 'name email avatar role department');
+  async getGoalsByCoach(coachId: string) {
+    return this.goalModel.find({ coach: coachId })
+      .populate('coachee program', 'name email avatar role department');
   }
 
   async getGoalsByStatus(status: GoalStatus) {
     return this.goalModel.find({ status })
-      .populate('mentee mentor program', 'name email avatar role department');
+      .populate('coachee coach program', 'name email avatar role department');
   }
 
   async searchGoals(searchTerm: string) {
@@ -158,10 +158,10 @@ export class GoalsService {
         { description: { $regex: searchTerm, $options: 'i' } },
         { tags: { $in: [new RegExp(searchTerm, 'i')] } },
       ],
-    }).populate('mentee mentor program', 'name email avatar role department');
+    }).populate('coachee coach program', 'name email avatar role department');
   }
 
-  async addFeedback(goalId: string, feedback: { mentor?: string; mentee?: string; rating?: number }) {
+  async addFeedback(goalId: string, feedback: { coach?: string; coachee?: string; rating?: number }) {
     const goal = await this.goalModel.findById(goalId);
     if (!goal) {
       throw new NotFoundException('Goal not found');

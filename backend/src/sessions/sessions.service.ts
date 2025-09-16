@@ -11,17 +11,17 @@ export class SessionsService {
     @InjectModel(Session.name) private readonly sessionModel: Model<Session>,
   ) {}
 
-  async create(data: CreateSessionRequest, mentorId: string) {
+  async create(data: CreateSessionRequest, coachId: string) {
     const session = await new this.sessionModel({
       ...data,
-      mentor: mentorId,
+      coach: coachId,
     }).save();
     return session.toObject();
   }
 
   async findAll(filters?: {
-    mentorId?: string;
-    menteeId?: string;
+    coachId?: string;
+    coacheeId?: string;
     status?: SessionStatus;
     type?: SessionType;
     startDate?: Date;
@@ -29,11 +29,11 @@ export class SessionsService {
   }) {
     const query: FilterQuery<Session> = {};
     
-    if (filters?.mentorId) {
-      query.mentor = filters.mentorId;
+    if (filters?.coachId) {
+      query.coach = filters.coachId;
     }
-    if (filters?.menteeId) {
-      query.mentee = filters.menteeId;
+    if (filters?.coacheeId) {
+      query.coachee = filters.coacheeId;
     }
     if (filters?.status) {
       query.status = filters.status;
@@ -52,12 +52,12 @@ export class SessionsService {
     }
 
     return this.sessionModel.find(query)
-      .populate('mentor mentee program goal', 'name email avatar role department title');
+      .populate('coach coachee program goal', 'name email avatar role department title');
   }
 
   async findById(id: string) {
     const session = await this.sessionModel.findById(id)
-      .populate('mentor mentee program goal', 'name email avatar role department title');
+      .populate('coach coachee program goal', 'name email avatar role department title');
     
     if (!session) {
       throw new NotFoundException('Session not found');
@@ -69,8 +69,8 @@ export class SessionsService {
   async update(id: string, data: UpdateSessionRequest) {
     // Convert string IDs to ObjectId
     const updateData: any = { ...data };
-    if (data.mentee) {
-      updateData.mentee = new Types.ObjectId(data.mentee);
+    if (data.coachee) {
+      updateData.coachee = new Types.ObjectId(data.coachee);
     }
     if (data.program) {
       updateData.program = new Types.ObjectId(data.program);
@@ -133,7 +133,7 @@ export class SessionsService {
     }
 
     return this.sessionModel.find(query)
-      .populate('mentor mentee program goal', 'name email avatar role department title')
+      .populate('coach coachee program goal', 'name email avatar role department title')
       .sort({ startTime: 1 });
   }
 
@@ -150,7 +150,7 @@ export class SessionsService {
     }
 
     return this.sessionModel.find(query)
-      .populate('mentor mentee program goal', 'name email avatar role department title')
+      .populate('coach coachee program goal', 'name email avatar role department title')
       .sort({ startTime: -1 });
   }
 
@@ -168,7 +168,7 @@ export class SessionsService {
     }
 
     return this.sessionModel.find(query)
-      .populate('mentor mentee program goal', 'name email avatar role department title')
+      .populate('coach coachee program goal', 'name email avatar role department title')
       .sort({ startTime: 1 });
   }
 
@@ -178,10 +178,10 @@ export class SessionsService {
       throw new NotFoundException('Session not found');
     }
 
-    if (userRole === 'mentor') {
-      session.feedback.mentor = feedback;
-    } else if (userRole === 'mentee') {
-      session.feedback.mentee = feedback;
+    if (userRole === 'coach') {
+      session.feedback.coach = feedback;
+    } else if (userRole === 'coachee') {
+      session.feedback.coachee = feedback;
     }
 
     return await session.save();

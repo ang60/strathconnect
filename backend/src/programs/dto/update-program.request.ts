@@ -70,7 +70,7 @@ export class UpdateProgramRequest {
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  mentors?: string[]; // Will be converted to ObjectId[]
+  coaches?: string[]; // Will be converted to ObjectId[]
 
   @IsOptional()
   @IsArray()

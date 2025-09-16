@@ -34,10 +34,10 @@ export class Session {
   type: SessionType;
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
-  mentor: Types.ObjectId;
+  coach: Types.ObjectId;
 
   @Prop({ type: [Types.ObjectId], ref: 'User' })
-  mentee: Types.ObjectId;
+  coachee: Types.ObjectId;
 
   @Prop({ type: [Types.ObjectId], ref: 'Program' })
   program: Types.ObjectId;
@@ -74,16 +74,16 @@ export class Session {
 
   @Prop({ type: Object })
   feedback: {
-    mentor?: {
+    coach?: {
       rating?: number;
       comments?: string;
-      menteeEngagement?: number;
+      coacheeEngagement?: number;
       goalProgress?: number;
     };
-    mentee?: {
+    coachee?: {
       rating?: number;
       comments?: string;
-      mentorEffectiveness?: number;
+      coachEffectiveness?: number;
       sessionValue?: number;
     };
   };

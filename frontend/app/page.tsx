@@ -96,10 +96,10 @@ export default function Home() {
             Strathmore Business School
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
-            Mentorship & Coaching Platform
+            Coaching & Mentorship Platform
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Connect with experienced mentors, coaches, and peers. Accelerate your growth and achieve your professional goals with personalized guidance.
+            Connect with experienced coaches, mentors, and peers. Accelerate your growth and achieve your professional goals with personalized guidance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/auth/register">
@@ -119,7 +119,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Active Mentors</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Active Coaches</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600 mb-2">2,000+</div>
@@ -139,7 +139,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Why Choose StrathConnect?</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Our comprehensive platform provides everything you need for successful mentorship and coaching relationships.
+              Our comprehensive platform provides everything you need for successful coaching and mentorship relationships.
             </p>
           </div>
           
@@ -151,7 +151,7 @@ export default function Home() {
                 </div>
                 <CardTitle>Smart Matching</CardTitle>
                 <CardDescription>
-                  AI-powered algorithm matches you with the perfect mentor based on your goals, skills, and preferences.
+                  AI-powered algorithm matches you with the perfect coach based on your goals, skills, and preferences.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -166,7 +166,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                    Multiple mentor options
+                    Multiple coach options
                   </li>
                 </ul>
               </CardContent>
@@ -321,7 +321,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Our Programs</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Choose from our diverse range of mentorship and coaching programs designed for different career stages and goals.
+              Choose from our diverse range of coaching and mentorship programs designed for different career stages and goals.
             </p>
           </div>
           
@@ -345,7 +345,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-center text-sm">
                     <Users className="w-4 h-4 mr-2 text-gray-500" />
-                    <span>1:1 mentoring</span>
+                    <span>1:1 coaching</span>
                   </div>
                   <div className="flex items-center text-sm">
                     <CheckCircle className="w-4 h-4 mr-2 text-gray-500" />
@@ -396,7 +396,7 @@ export default function Home() {
                   Entrepreneurship
                 </CardTitle>
                 <CardDescription>
-                  Launch and scale your business with experienced entrepreneur mentors.
+                  Launch and scale your business with experienced entrepreneur coaches.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -430,7 +430,7 @@ export default function Home() {
             <div>
               <h2 className="text-4xl font-bold mb-6">About StrathConnect</h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                StrathConnect is Strathmore Business School's premier mentorship and coaching platform, designed to bridge the gap between academic excellence and real-world success.
+                StrathConnect is Strathmore Business School's premier coaching and mentorship platform, designed to bridge the gap between academic excellence and real-world success.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
@@ -439,7 +439,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Innovation</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Cutting-edge technology meets proven mentorship methodologies.</p>
+                    <p className="text-gray-600 dark:text-gray-400">Cutting-edge technology meets proven coaching methodologies.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -457,7 +457,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Global Reach</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Connect with mentors and mentees from around the world.</p>
+                    <p className="text-gray-600 dark:text-gray-400">Connect with coaches and coachees from around the world.</p>
                   </div>
                 </div>
               </div>
@@ -466,7 +466,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
                 <p className="text-lg mb-6">
-                  To empower the next generation of business leaders through meaningful mentorship relationships and innovative learning experiences.
+                  To empower the next generation of business leaders through meaningful coaching relationships and innovative learning experiences.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
@@ -507,7 +507,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  "StrathConnect helped me transition from academia to tech. My mentor provided invaluable guidance on industry best practices and career development."
+                  "StrathConnect helped me transition from academia to tech. My coach provided invaluable guidance on industry best practices and career development."
                 </p>
                 <div className="flex items-center">
                   <Star className="w-4 h-4 text-yellow-400 fill-current" />
@@ -531,7 +531,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  "The entrepreneurship program gave me the confidence and skills to launch my startup. The mentor network is incredible!"
+                  "The entrepreneurship program gave me the confidence and skills to launch my startup. The coach network is incredible!"
                 </p>
                 <div className="flex items-center">
                   <Star className="w-4 h-4 text-yellow-400 fill-current" />
@@ -605,7 +605,7 @@ export default function Home() {
                 <span className="text-xl font-bold">StrathConnect</span>
               </div>
               <p className="text-gray-400 mb-4">
-                Empowering the next generation of business leaders through meaningful mentorship relationships.
+                Empowering the next generation of business leaders through meaningful coaching relationships.
               </p>
               <div className="flex space-x-4">
                 <Link href="#" className="text-gray-400 hover:text-white transition-colors">

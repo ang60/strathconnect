@@ -41,8 +41,8 @@ const upcomingSessions = [
   {
     id: "1",
     title: "Leadership Development Session",
-    mentor: "Sarah Muthoni",
-    mentee: "David Kimani",
+    coach: "Sarah Muthoni",
+    coachee: "David Kimani",
     date: "2024-01-20T10:00:00",
     duration: 60,
     type: "virtual",
@@ -53,8 +53,8 @@ const upcomingSessions = [
   {
     id: "2",
     title: "Career Planning Discussion",
-    mentor: "Grace Wanjiku",
-    mentee: "John Kamau",
+    coach: "Grace Wanjiku",
+    coachee: "John Kamau",
     date: "2024-01-22T14:00:00",
     duration: 45,
     type: "in-person",
@@ -68,8 +68,8 @@ const completedSessions = [
   {
     id: "3",
     title: "Technical Skills Review",
-    mentor: "Alice Wilson",
-    mentee: "Mary Njeri",
+    coach: "Alice Wilson",
+    coachee: "Mary Njeri",
     date: "2024-01-15T09:00:00",
     duration: 90,
     type: "virtual",
@@ -82,8 +82,8 @@ const completedSessions = [
   {
     id: "4",
     title: "Business Strategy Session",
-    mentor: "Robert Ochieng",
-    mentee: "Peter Mwangi",
+    coach: "Robert Ochieng",
+    coachee: "Peter Mwangi",
     date: "2024-01-12T11:00:00",
     duration: 60,
     type: "in-person",

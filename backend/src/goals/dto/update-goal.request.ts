@@ -12,7 +12,7 @@ export class UpdateGoalRequest {
 
   @IsOptional()
   @IsString()
-  mentor?: string; // Will be converted to ObjectId
+  coach?: string; // Will be converted to ObjectId
 
   @IsOptional()
   @IsString()
@@ -53,8 +53,8 @@ export class UpdateGoalRequest {
   @IsOptional()
   @IsObject()
   feedback?: {
-    mentor?: string;
-    mentee?: string;
+    coach?: string;
+    coachee?: string;
     rating?: number;
   };
 

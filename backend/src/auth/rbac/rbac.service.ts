@@ -93,15 +93,15 @@ export class RbacService {
       return true;
     }
 
-    // Coordinators can assign mentor and mentee roles
+    // Coordinators can assign coach and coachee roles
     if (assignerRole === Role.COORDINATOR && 
-        [Role.MENTOR, Role.MENTEE, Role.STUDENT].includes(targetRole)) {
+        [Role.COACH, Role.COACHEE, Role.STUDENT].includes(targetRole)) {
       return true;
     }
 
-    // Faculty can assign mentee and student roles
+    // Faculty can assign coachee and student roles
     if (assignerRole === Role.FACULTY && 
-        [Role.MENTEE, Role.STUDENT].includes(targetRole)) {
+        [Role.COACHEE, Role.STUDENT].includes(targetRole)) {
       return true;
     }
 
@@ -118,9 +118,9 @@ export class RbacService {
       case Role.ADMIN:
         return Object.values(Role).filter(role => role !== Role.SUPER_ADMIN);
       case Role.COORDINATOR:
-        return [Role.MENTOR, Role.MENTEE, Role.STUDENT];
+        return [Role.COACH, Role.COACHEE, Role.STUDENT];
       case Role.FACULTY:
-        return [Role.MENTEE, Role.STUDENT];
+        return [Role.COACHEE, Role.STUDENT];
       default:
         return [];
     }

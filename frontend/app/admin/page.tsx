@@ -254,7 +254,7 @@ export default function AdminPage() {
                   <Users className="w-5 h-5" />
                   <span>Matching Outcomes</span>
                 </CardTitle>
-                <CardDescription>Mentor-mentee matching statistics</CardDescription>
+                <CardDescription>Coach-coachee matching statistics</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
@@ -403,11 +403,11 @@ export default function AdminPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">Active Mentors</span>
+                  <span className="text-sm text-muted-foreground">Active Coaches</span>
                   <span className="font-semibold text-blue-600">45</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">Active Mentees</span>
+                  <span className="text-sm text-muted-foreground">Active Coachees</span>
                   <span className="font-semibold text-green-600">123</span>
                 </div>
                 <div className="flex justify-between">
@@ -801,7 +801,7 @@ export default function AdminPage() {
                   <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
                     <div>
                       <h4 className="font-medium">Matching Success Report</h4>
-                      <p className="text-sm text-muted-foreground">Mentor-mentee matching outcomes and success rates</p>
+                      <p className="text-sm text-muted-foreground">Coach-coachee matching outcomes and success rates</p>
                     </div>
                     <Button variant="ghost" size="sm">
                       <FileText className="w-4 h-4" />

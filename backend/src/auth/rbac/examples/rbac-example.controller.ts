@@ -109,9 +109,9 @@ export class RbacExampleController {
     };
   }
 
-  // Mentor and mentee can access their sessions
+  // Coach and coachee can access their sessions
   @Get('sessions')
-  @Roles(Role.MENTOR, Role.MENTEE, Role.FACULTY, Role.ADMIN)
+  @Roles(Role.COACH, Role.COACHEE, Role.FACULTY, Role.ADMIN)
   @RequirePermissions(Permission.READ_SESSION)
   getSessions(@CurrentUser() user: any) {
     return {

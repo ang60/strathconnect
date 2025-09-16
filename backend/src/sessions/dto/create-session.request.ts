@@ -20,10 +20,10 @@ export class CreateSessionRequest {
   @IsEnum(SessionType)
   type: SessionType;
 
-  @ApiPropertyOptional({ description: 'Mentee user ID', example: '507f1f77bcf86cd799439011' })
+  @ApiPropertyOptional({ description: 'Coachee user ID', example: '507f1f77bcf86cd799439011' })
   @IsOptional()
   @IsString()
-  mentee?: string;
+  coachee?: string;
 
   @ApiPropertyOptional({ description: 'Program ID', example: '507f1f77bcf86cd799439012' })
   @IsOptional()
