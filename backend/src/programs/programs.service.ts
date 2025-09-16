@@ -160,6 +160,7 @@ export class ProgramsService {
     return await program.save();
   }
 
+
   async getActivePrograms() {
     return this.programModel.find({ status: ProgramStatus.ACTIVE })
       .populate('coaches coordinators', 'name email avatar');
@@ -167,7 +168,7 @@ export class ProgramsService {
 
   async getProgramsByType(type: ProgramType) {
     return this.programModel.find({ type })
-      .populate('mentors coordinators', 'name email avatar');
+      .populate('coaches coordinators', 'name email avatar');
   }
 
   async searchPrograms(searchTerm: string) {
@@ -177,7 +178,7 @@ export class ProgramsService {
         { description: { $regex: searchTerm, $options: 'i' } },
         { tags: { $in: [new RegExp(searchTerm, 'i')] } },
       ],
-    }).populate('mentors coordinators', 'name email avatar');
+    }).populate('coaches coordinators', 'name email avatar');
   }
 
   async updateMetrics(programId: string, metrics: Partial<Program['metrics']>) {

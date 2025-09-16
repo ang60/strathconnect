@@ -117,21 +117,21 @@ export class ProgramsController {
     return await this.programsService.removeParticipant(programId, userId);
   }
 
-  @Post(':id/mentors')
-  async addMentor(
+  @Post(':id/coaches')
+  async addCoach(
     @CurrentUser() user: User,
     @Param('id') programId: string,
     @Body('userId') userId: string,
   ) {
-    return await this.programsService.addMentor(programId, userId);
+    return await this.programsService.addCoach(programId, userId);
   }
 
-  @Delete(':id/mentors/:userId')
-  async removeMentor(
+  @Delete(':id/coaches/:userId')
+  async removeCoach(
     @CurrentUser() user: User,
     @Param('id') programId: string,
     @Param('userId') userId: string,
   ) {
-    return await this.programsService.removeMentor(programId, userId);
+    return await this.programsService.removeCoach(programId, userId);
   }
 }

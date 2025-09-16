@@ -63,7 +63,7 @@ const dashboardData = {
     },
     {
       id: "2",
-      mentee: "John Kamau",
+      coachee: "John Kamau",
       topic: "Leadership Development",
       date: "2024-01-22T14:00:00",
       duration: 45
@@ -81,7 +81,7 @@ function DashboardContent() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {user?.name}! Here's what's happening with your coaching programs.
+              Welcome back, {user?.name}! Here&apos;s what&apos;s happening with your coaching programs.
             </p>
           </div>
           <Badge variant="outline" className="flex items-center space-x-1">

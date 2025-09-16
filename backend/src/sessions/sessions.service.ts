@@ -83,7 +83,7 @@ export class SessionsService {
       id,
       updateData,
       { new: true }
-    ).populate('mentor mentee program goal', 'name email avatar role department title');
+    ).populate('coach coachee program goal', 'name email avatar role department title');
     
     if (!session) {
       throw new NotFoundException('Session not found');
@@ -126,10 +126,10 @@ export class SessionsService {
       status: { $in: [SessionStatus.SCHEDULED, SessionStatus.CONFIRMED] },
     };
 
-    if (role === 'mentor') {
-      query.mentor = userId;
-    } else if (role === 'mentee') {
-      query.mentee = userId;
+    if (role === 'coach') {
+      query.coach = userId;
+    } else if (role === 'coachee') {
+      query.coachee = userId;
     }
 
     return this.sessionModel.find(query)
@@ -143,10 +143,10 @@ export class SessionsService {
       status: { $in: [SessionStatus.COMPLETED, SessionStatus.CANCELLED, SessionStatus.NO_SHOW] },
     };
 
-    if (role === 'mentor') {
-      query.mentor = userId;
-    } else if (role === 'mentee') {
-      query.mentee = userId;
+    if (role === 'coach') {
+      query.coach = userId;
+    } else if (role === 'coachee') {
+      query.coachee = userId;
     }
 
     return this.sessionModel.find(query)
@@ -204,16 +204,16 @@ export class SessionsService {
         { description: { $regex: searchTerm, $options: 'i' } },
         { topics: { $in: [new RegExp(searchTerm, 'i')] } },
       ],
-    }).populate('mentor mentee program goal', 'name email avatar role department title');
+    }).populate('coach coachee program goal', 'name email avatar role department title');
   }
 
   async getSessionStats(userId: string, role: string) {
     const query: FilterQuery<Session> = {};
     
-    if (role === 'mentor') {
-      query.mentor = userId;
-    } else if (role === 'mentee') {
-      query.mentee = userId;
+    if (role === 'coach') {
+      query.coach = userId;
+    } else if (role === 'coachee') {
+      query.coachee = userId;
     }
 
     const [total, completed, upcoming, cancelled] = await Promise.all([

@@ -45,11 +45,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await apiService.logout();
       setUser(null);
       localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
     } catch (error) {
       console.error('Logout error:', error);
       // Even if the API call fails, clear local state
       setUser(null);
       localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
     }
   };
 
@@ -61,9 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return userData;
     } catch (error) {
       console.error('Failed to refresh user:', error);
-      // If refresh fails, clear user data
+      // If refresh fails, clear user data and token
       setUser(null);
       localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
       throw error; // Re-throw to let caller handle it
     }
   };
@@ -93,6 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Don't clear on token expiration
         if (!error.message?.includes('Invalid or expired token')) {
           localStorage.removeItem('user');
+          localStorage.removeItem('accessToken');
           setUser(null);
         }
       } finally {

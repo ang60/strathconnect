@@ -110,14 +110,14 @@ const availableCoaches = [
 const myRequests = [
   {
     id: "1",
-    mentorName: "Sarah Muthoni",
+    coachName: "Sarah Muthoni",
     status: "pending",
     requestDate: "2024-01-15",
     message: "I'm interested in learning more about software engineering best practices and career development."
   },
   {
     id: "2",
-    mentorName: "David Kimani",
+    coachName: "David Kimani",
     status: "accepted",
     requestDate: "2024-01-10",
     message: "Looking forward to learning about product management and leadership skills."
@@ -225,9 +225,9 @@ export default function MatchingPage() {
               <Heart className="w-4 h-4" />
               <span>Suggested Matches</span>
             </TabsTrigger>
-            <TabsTrigger value="mentors" className="flex items-center space-x-2">
+            <TabsTrigger value="coaches" className="flex items-center space-x-2">
               <Users className="w-4 h-4" />
-              <span>Available Mentors</span>
+              <span>Available Coaches</span>
             </TabsTrigger>
             <TabsTrigger value="requests" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
@@ -377,29 +377,29 @@ export default function MatchingPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="mentors" className="space-y-6">
+          <TabsContent value="coaches" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {availableMentors.map((mentor) => (
-                <Card key={mentor.id} className="hover:shadow-lg transition-all duration-300">
+              {availableCoaches.map((coach) => (
+                <Card key={coach.id} className="hover:shadow-lg transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <Avatar className="w-12 h-12">
-                          <AvatarImage src={mentor.avatar} alt={mentor.name} />
+                          <AvatarImage src={coach.avatar} alt={coach.name} />
                           <AvatarFallback>
-                            {mentor.name.split(' ').map(n => n[0]).join('')}
+                            {coach.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <CardTitle className="text-lg">{mentor.name}</CardTitle>
-                          <CardDescription>{mentor.role} at {mentor.company}</CardDescription>
+                          <CardTitle className="text-lg">{coach.name}</CardTitle>
+                          <CardDescription>{coach.role} at {coach.company}</CardDescription>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center space-x-1 mb-1">
-                          {renderStars(mentor.rating * 20)}
+                          {renderStars(coach.rating * 20)}
                         </div>
-                        <p className="text-sm text-muted-foreground">{mentor.rating} ({mentor.reviews} reviews)</p>
+                        <p className="text-sm text-muted-foreground">{coach.rating} ({coach.reviews} reviews)</p>
                       </div>
                     </div>
                   </CardHeader>
@@ -407,40 +407,40 @@ export default function MatchingPage() {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Experience:</span>
-                        <span className="font-medium">{mentor.experience}</span>
+                        <span className="font-medium">{coach.experience}</span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Location:</span>
-                        <span className="font-medium">{mentor.location}</span>
+                        <span className="font-medium">{coach.location}</span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Rate:</span>
-                        <span className="font-medium">{mentor.hourlyRate}/hr</span>
+                        <span className="font-medium">{coach.hourlyRate}/hr</span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Availability:</span>
-                        <span className="font-medium">{mentor.availability}</span>
+                        <span className="font-medium">{coach.availability}</span>
                       </div>
                     </div>
 
                     <div>
                       <p className="text-sm font-medium mb-2">Expertise</p>
                       <div className="flex flex-wrap gap-1">
-                        {mentor.skills.slice(0, 3).map((skill, index) => (
+                        {coach.skills.slice(0, 3).map((skill, index) => (
                           <Badge key={index} variant="secondary" className="text-xs">
                             {skill}
                           </Badge>
                         ))}
-                        {mentor.skills.length > 3 && (
+                        {coach.skills.length > 3 && (
                           <Badge variant="outline" className="text-xs">
-                            +{mentor.skills.length - 3} more
+                            +{coach.skills.length - 3} more
                           </Badge>
                         )}
                       </div>
                     </div>
 
                     <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                      {mentor.bio}
+                      {coach.bio}
                     </p>
 
                     <div className="flex space-x-2">

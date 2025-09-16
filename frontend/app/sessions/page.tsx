@@ -127,8 +127,8 @@ export default function SessionsPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [sessionData, setSessionData] = useState({
     title: "",
-    mentor: "",
-    mentee: "",
+    coach: "",
+    coachee: "",
     date: "",
     time: "",
     duration: "",
@@ -177,8 +177,8 @@ export default function SessionsPage() {
     // Reset form
     setSessionData({
       title: "",
-      mentor: "",
-      mentee: "",
+      coach: "",
+      coachee: "",
       date: "",
       time: "",
       duration: "",
@@ -574,10 +574,10 @@ export default function SessionsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="mentor">Mentor</Label>
-                <Select value={sessionData.mentor} onValueChange={(value) => setSessionData(prev => ({ ...prev, mentor: value }))}>
+                <Label htmlFor="coach">Coach</Label>
+                <Select value={sessionData.coach} onValueChange={(value) => setSessionData(prev => ({ ...prev, coach: value }))}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select mentor" />
+                    <SelectValue placeholder="Select coach" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="sarah-muthoni">Sarah Muthoni</SelectItem>
@@ -588,10 +588,10 @@ export default function SessionsPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="mentee">Mentee</Label>
-                <Select value={sessionData.mentee} onValueChange={(value) => setSessionData(prev => ({ ...prev, mentee: value }))}>
+                <Label htmlFor="coachee">Coachee</Label>
+                <Select value={sessionData.coachee} onValueChange={(value) => setSessionData(prev => ({ ...prev, coachee: value }))}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select mentee" />
+                    <SelectValue placeholder="Select coachee" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="david-kimani">David Kimani</SelectItem>

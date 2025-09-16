@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
+import * as bcrypt from 'bcryptjs';
+import * as dotenv from 'dotenv';
 
 // Import schemas
 import { User, UserStatus, UserSchema } from '../src/users/schema/user.schema';
@@ -197,7 +197,7 @@ async function createPrograms(users: any) {
       duration: 8,
       maxParticipants: 20,
       currentParticipants: 1,
-      mentors: [users.find(u => u.email === 'jane.smith@example.com')?._id],
+      coaches: [users.find(u => u.email === 'jane.smith@example.com')?._id],
       coordinators: [users.find(u => u.email === 'admin@strathconnect.com')?._id],
       participants: [users.find(u => u.email === 'sarah.wilson@example.com')?._id],
       startDate: new Date('2024-02-01'),
@@ -323,8 +323,8 @@ async function createGoals(users: any, programs: any) {
       priority: GoalPriority.HIGH,
       status: GoalStatus.IN_PROGRESS,
       progress: 40,
-      mentee: users.find(u => u.email === 'sarah.wilson@example.com')?._id,
-      mentor: users.find(u => u.email === 'jane.smith@example.com')?._id,
+      coachee: users.find(u => u.email === 'sarah.wilson@example.com')?._id,
+      coach: users.find(u => u.email === 'jane.smith@example.com')?._id,
       program: programs.leadership._id,
       startDate: new Date('2024-02-01'),
       targetDate: new Date('2024-04-01'),
@@ -366,8 +366,8 @@ async function createGoals(users: any, programs: any) {
         totalTasks: 4,
       },
       feedback: {
-        mentor: 'Sarah shows great potential for leadership. Her communication skills have improved significantly.',
-        mentee: 'I\'ve learned so much about effective leadership and team management.',
+        coach: 'Sarah shows great potential for leadership. Her communication skills have improved significantly.',
+        coachee: 'I\'ve learned so much about effective leadership and team management.',
         rating: 4,
       },
     },
@@ -429,8 +429,8 @@ async function createSessions(users: any, programs: any, goals: any) {
       description: 'Interactive workshop on effective communication skills for leaders. We\'ll practice different communication techniques and receive feedback.',
       status: SessionStatus.SCHEDULED,
       type: SessionType.VIRTUAL,
-      mentor: users.find(u => u.email === 'jane.smith@example.com')?._id,
-      mentee: users.find(u => u.email === 'sarah.wilson@example.com')?._id,
+      coach: users.find(u => u.email === 'jane.smith@example.com')?._id,
+      coachee: users.find(u => u.email === 'sarah.wilson@example.com')?._id,
       program: programs.leadership._id,
       goal: goals.find(g => g.title === 'Develop Leadership Skills')?._id,
       startTime: new Date('2024-03-05T14:00:00Z'),

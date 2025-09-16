@@ -31,9 +31,9 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/80 via-white to-blue-50/80 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm dark:bg-gray-900/80 sticky top-0 z-50">
+      <header className="border-b border-gray-200/50 dark:border-gray-700/50 bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
@@ -47,19 +47,19 @@ export default function Home() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <div className="flex items-center space-x-6">
-              <Link href="#features" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="#features" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Features
               </Link>
-              <Link href="#programs" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="#programs" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Programs
               </Link>
-              <Link href="#about" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="#about" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 About
               </Link>
-              <Link href="#testimonials" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="#testimonials" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Success Stories
               </Link>
-              <Link href="#contact" className="text-sm font-medium hover:text-blue-600 transition-colors">
+              <Link href="#contact" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Contact
               </Link>
             </div>
@@ -96,10 +96,10 @@ export default function Home() {
             Strathmore Business School
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
-            Coaching & Mentorship Platform
+            Coaching & Development Platform
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Connect with experienced coaches, mentors, and peers. Accelerate your growth and achieve your professional goals with personalized guidance.
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            Connect with experienced coaches and peers. Accelerate your growth and achieve your professional goals with personalized guidance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/auth/register">

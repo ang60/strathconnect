@@ -36,6 +36,18 @@ class ApiService {
     this.baseURL = API_BASE_URL;
   }
 
+  private getAuthToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
+  private setAuthToken(token: string): void {
+    localStorage.setItem('accessToken', token);
+  }
+
+  private clearAuthToken(): void {
+    localStorage.removeItem('accessToken');
+  }
+
   private async request<T>(
     endpoint: string,
     options: RequestInit = {},
@@ -43,11 +55,20 @@ class ApiService {
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     
+    // Get auth token for protected endpoints
+    const token = this.getAuthToken();
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+    
+    // Add authorization header if token exists and it's not a login/register endpoint
+    if (token && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/register')) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
     const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
+      headers,
       credentials: 'include', // Include cookies for authentication
       ...options,
     };
@@ -114,22 +135,41 @@ class ApiService {
 
   // Authentication methods
   async login(data: LoginRequest): Promise<LoginResponse> {
-    return this.request<LoginResponse>('/auth/login', {
+    const response = await this.request<LoginResponse>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
     });
+    
+    // Store the access token
+    if (response.accessToken) {
+      this.setAuthToken(response.accessToken);
+    }
+    
+    return response;
   }
 
   async logout(): Promise<{ message: string }> {
-    return this.request<{ message: string }>('/auth/logout', {
+    const response = await this.request<{ message: string }>('/auth/logout', {
       method: 'POST',
     });
+    
+    // Clear the access token
+    this.clearAuthToken();
+    
+    return response;
   }
 
   async refreshToken(): Promise<LoginResponse> {
-    return this.request<LoginResponse>('/auth/refresh', {
+    const response = await this.request<LoginResponse>('/auth/refresh', {
       method: 'POST',
     });
+    
+    // Update the stored access token
+    if (response.accessToken) {
+      this.setAuthToken(response.accessToken);
+    }
+    
+    return response;
   }
 
   async register(data: RegisterRequest): Promise<LoginResponse> {

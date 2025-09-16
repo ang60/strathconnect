@@ -52,19 +52,19 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/20 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-white/10 bg-white/80 dark:bg-black/20 backdrop-blur-xl">
       {/* Animated Border */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
       
       <div className="container flex h-16 items-center px-6">
         <div className="flex items-center space-x-4">
           {showMenuButton && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onMenuClick}
-              className="md:hidden hover:bg-white/10 relative overflow-hidden group"
-            >
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onMenuClick}
+            className="md:hidden hover:bg-gray-100/50 dark:hover:bg-white/10 relative overflow-hidden group"
+          >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               <Menu className="h-5 w-5 relative z-10" />
             </Button>
@@ -80,7 +80,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
               <input
                 type="text"
                 placeholder="Search anything..."
-                className="w-full pl-10 pr-4 py-2 bg-black/20 border border-white/10 rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent backdrop-blur-sm"
+                className="w-full pl-10 pr-4 py-2 bg-gray-100/80 dark:bg-black/20 border border-gray-300/50 dark:border-white/10 rounded-full text-sm placeholder:text-gray-500 dark:placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent backdrop-blur-sm text-gray-900 dark:text-white"
               />
             </div>
           </div>
@@ -91,7 +91,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
+            className="relative h-10 w-10 rounded-full hover:bg-gray-100/50 dark:hover:bg-white/10 group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
             <Bell className="h-5 w-5 relative z-10" />
@@ -102,7 +102,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="relative h-10 w-10 rounded-full hover:bg-white/10 group"
+            className="relative h-10 w-10 rounded-full hover:bg-gray-100/50 dark:hover:bg-white/10 group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
             <Zap className="h-5 w-5 relative z-10" />
@@ -119,7 +119,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-white/10 group overflow-hidden">
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-gray-100/50 dark:hover:bg-white/10 group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 border border-gradient-to-r from-blue-400/30 to-blue-500/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Avatar className="h-10 w-10 relative z-10 ring-2 ring-white/10">
@@ -130,7 +130,7 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-64 bg-black/80 backdrop-blur-xl border border-white/10" align="end" forceMount>
+            <DropdownMenuContent className="w-64 bg-white/95 dark:bg-black/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-center space-x-3">
@@ -159,22 +159,22 @@ export function Navbar({ onMenuClick, showMenuButton = false }: NavbarProps) {
                   </div>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem asChild className="hover:bg-white/10">
+              <DropdownMenuSeparator className="bg-gray-200/50 dark:bg-white/10" />
+              <DropdownMenuItem asChild className="hover:bg-gray-100/50 dark:hover:bg-white/10">
                 <Link href="/profile" className="flex items-center">
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="hover:bg-white/10">
+              <DropdownMenuItem asChild className="hover:bg-gray-100/50 dark:hover:bg-white/10">
                 <Link href="/admin" className="flex items-center">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuSeparator className="bg-gray-200/50 dark:bg-white/10" />
               <DropdownMenuItem 
-                className="flex items-center text-white hover:bg-blue-500/10 hover:text-blue-300"
+                className="flex items-center text-gray-900 dark:text-white hover:bg-blue-100/50 dark:hover:bg-blue-500/10 hover:text-blue-700 dark:hover:text-blue-300"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2 h-4 w-4" />

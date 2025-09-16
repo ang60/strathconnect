@@ -40,13 +40,13 @@ const getNavigationConfig = (userRole: string) => {
           title: "Dashboard",
           href: "/dashboard",
           iconName: "Brain",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         },
         {
           title: "Profile",
           href: "/profile",
           iconName: "User",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         }
       ]
     },
@@ -57,25 +57,25 @@ const getNavigationConfig = (userRole: string) => {
           title: "Matching",
           href: "/matching",
           iconName: "Zap",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         },
         {
           title: "Programs",
           href: "/programs",
           iconName: "Rocket",
-          roles: ["admin", "coordinator", "mentor", "faculty"]
+          roles: ["admin", "coordinator", "coach", "faculty"]
         },
         {
           title: "Sessions",
           href: "/sessions",
           iconName: "Calendar",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         },
         {
           title: "Communication",
           href: "/communication",
           iconName: "MessageSquare",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         }
       ]
     },
@@ -86,19 +86,19 @@ const getNavigationConfig = (userRole: string) => {
           title: "Goals",
           href: "/goals",
           iconName: "Target",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         },
         {
           title: "Feedback",
           href: "/feedback",
           iconName: "Star",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         },
         {
           title: "Gamification",
           href: "/gamification",
           iconName: "Trophy",
-          roles: ["admin", "coordinator", "mentor", "mentee", "faculty", "student"]
+          roles: ["admin", "coordinator", "coach", "coachee", "faculty", "student"]
         }
       ]
     },
@@ -185,21 +185,20 @@ export function Sidebar({
   };
 
   return (
-    <div className={cn("flex h-full", className)}>
+    <div className={cn("flex h-full w-full", className)}>
       <div className={cn(
-        "flex flex-col transition-all duration-500 ease-in-out relative overflow-hidden",
+        "flex flex-col h-full transition-all duration-500 ease-in-out relative overflow-hidden",
         collapsed ? "w-16" : "w-72"
       )}>
-        {/* Blue Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-cyan-900/20 to-slate-900/20 backdrop-blur-xl" />
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-cyan-500/5" />
+        {/* Background - Light theme */}
+        <div className="absolute inset-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 shadow-xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-transparent to-cyan-50/60 dark:from-blue-900/40 dark:via-transparent dark:to-cyan-900/40" />
         
         {/* Animated Border */}
-        <div className="absolute inset-0 border border-gradient-to-r from-blue-500/30 via-cyan-500/30 to-blue-600/30 rounded-r-2xl" />
         <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 animate-pulse" />
         
         {/* Header */}
-        <div className="relative flex h-14 items-center px-3 border-b border-white/10">
+        <div className="relative flex h-14 items-center px-3 border-b border-gray-200/50 dark:border-white/10">
           {!collapsed && (
             <Link href="/" className="flex items-center space-x-2 group">
               <div className="relative">
@@ -247,7 +246,7 @@ export function Sidebar({
                 {!collapsed && (
                   <div className="flex items-center space-x-2">
                     <div className="w-1 h-4 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
-                    <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                    <h4 className="text-xs font-bold text-gray-700 dark:text-muted-foreground uppercase tracking-widest">
                       {group.title}
                     </h4>
                   </div>
@@ -283,7 +282,7 @@ export function Sidebar({
                           <div className="relative flex items-center space-x-2 z-10">
                             <div className={cn(
                               "transition-all duration-300",
-                              isActive ? "text-blue-400 drop-shadow-lg" : "text-muted-foreground group-hover:text-blue-300"
+                              isActive ? "text-blue-600 dark:text-blue-400 drop-shadow-lg" : "text-gray-700 dark:text-muted-foreground group-hover:text-blue-500 dark:group-hover:text-blue-300"
                             )}>
                               {item.icon}
                             </div>
@@ -291,11 +290,11 @@ export function Sidebar({
                               <div className="flex-1 text-left">
                                 <div className={cn(
                                   "text-sm font-medium transition-colors",
-                                  isActive ? "text-white" : "text-foreground group-hover:text-white"
+                                  isActive ? "text-blue-900 dark:text-white" : "text-gray-800 dark:text-foreground group-hover:text-blue-800 dark:group-hover:text-white"
                                 )}>
                                   {item.title}
                                 </div>
-                                <div className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                <div className="text-xs text-gray-600 dark:text-muted-foreground group-hover:text-gray-700 dark:group-hover:text-muted-foreground/80 transition-colors">
                                   {item.label}
                                 </div>
                               </div>
@@ -315,21 +314,21 @@ export function Sidebar({
         </ScrollArea>
         
         {!isMobile && (
-          <div className="relative border-t border-white/10 p-2">
+          <div className="relative border-t border-gray-200/50 dark:border-white/10 p-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleCollapseToggle}
-              className="w-full hover:bg-white/10 group relative overflow-hidden"
+              className="w-full hover:bg-gray-100/50 dark:hover:bg-white/10 group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex items-center justify-center space-x-2 z-10">
                 {collapsed ? (
-                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-blue-300 transition-colors" />
+                  <ChevronRight className="h-4 w-4 text-gray-700 dark:text-muted-foreground group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors" />
                 ) : (
                   <>
-                    <ChevronLeft className="h-4 w-4 text-muted-foreground group-hover:text-blue-300 transition-colors" />
-                    <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">Collapse</span>
+                    <ChevronLeft className="h-4 w-4 text-gray-700 dark:text-muted-foreground group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors" />
+                    <span className="text-sm text-gray-700 dark:text-muted-foreground group-hover:text-blue-800 dark:group-hover:text-white transition-colors">Collapse</span>
                   </>
                 )}
               </div>
