@@ -101,21 +101,21 @@ const programSurveys = [
   }
 ];
 
-const npsData = {
-  score: 8.2,
-  totalResponses: 156,
-  breakdown: {
-    promoters: 89,
-    passives: 45,
-    detractors: 22
-  },
-  comments: [
-    "Excellent platform for professional development",
-    "Great mentorship opportunities",
-    "Could improve the mobile experience",
-    "Very helpful for career growth"
-  ]
-};
+// const npsData = {
+//   score: 8.2,
+//   totalResponses: 156,
+//   breakdown: {
+//     promoters: 89,
+//     passives: 45,
+//     detractors: 22
+//   },
+//   comments: [
+//     "Excellent platform for professional development",
+//     "Great mentorship opportunities",
+//     "Could improve the mobile experience",
+//     "Very helpful for career growth"
+//   ]
+// };
 
 export default function FeedbackPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -134,16 +134,16 @@ export default function FeedbackPage() {
     return stars;
   };
 
-  const getNPSColor = (score: number) => {
-    if (score >= 8) return "text-green-600";
-    if (score >= 6) return "text-yellow-600";
-    return "text-white";
-  };
+  // const getNPSColor = (score: number) => {
+  //   if (score >= 8) return "text-green-600";
+  //   if (score >= 6) return "text-yellow-600";
+  //   return "text-white";
+  // };
 
-  const calculateNPS = () => {
-    const { promoters, detractors, totalResponses } = npsData.breakdown;
-    return Math.round(((promoters - detractors) / totalResponses) * 100);
-  };
+  // const calculateNPS = () => {
+  //   const { promoters, detractors, totalResponses } = npsData.breakdown;
+  //   return Math.round(((promoters - detractors) / totalResponses) * 100);
+  // };
 
   return (
     <MainLayout showSidebar={true}>
@@ -165,7 +165,7 @@ export default function FeedbackPage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2">
@@ -195,19 +195,6 @@ export default function FeedbackPage() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-purple-600" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">NPS Score</p>
-                  <p className="text-2xl font-bold">+43</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center">
                   <Users className="w-4 h-4 text-orange-600" />
                 </div>
@@ -221,7 +208,7 @@ export default function FeedbackPage() {
         </div>
 
         <Tabs defaultValue="session" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="session" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
               <span>Session Feedback</span>
@@ -229,10 +216,6 @@ export default function FeedbackPage() {
             <TabsTrigger value="surveys" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
               <span>Program Surveys</span>
-            </TabsTrigger>
-            <TabsTrigger value="nps" className="flex items-center space-x-2">
-              <TrendingUp className="w-4 h-4" />
-              <span>NPS Score</span>
             </TabsTrigger>
             <TabsTrigger value="analytics" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
@@ -428,80 +411,6 @@ export default function FeedbackPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="nps" className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2">
-              {/* NPS Overview */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>NPS Overview</CardTitle>
-                  <CardDescription>
-                    Net Promoter Score and breakdown
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="text-center">
-                    <div className={`text-4xl font-bold ${getNPSColor(npsData.score)}`}>
-                      {npsData.score}
-                    </div>
-                    <p className="text-sm text-muted-foreground">Average Score</p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Promoters (9-10)</span>
-                      <div className="flex items-center space-x-2">
-                        <Progress value={(npsData.breakdown.promoters / npsData.totalResponses) * 100} className="w-20" />
-                        <span className="text-sm font-medium">{npsData.breakdown.promoters}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Passives (7-8)</span>
-                      <div className="flex items-center space-x-2">
-                        <Progress value={(npsData.breakdown.passives / npsData.totalResponses) * 100} className="w-20" />
-                        <span className="text-sm font-medium">{npsData.breakdown.passives}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Detractors (0-6)</span>
-                      <div className="flex items-center space-x-2">
-                        <Progress value={(npsData.breakdown.detractors / npsData.totalResponses) * 100} className="w-20" />
-                        <span className="text-sm font-medium">{npsData.breakdown.detractors}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center p-4 border rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">+{calculateNPS()}</div>
-                    <p className="text-sm text-muted-foreground">Net Promoter Score</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* NPS Comments */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Comments</CardTitle>
-                  <CardDescription>
-                    What users are saying about the platform
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {npsData.comments.map((comment, index) => (
-                      <div key={index} className="p-3 border rounded-lg">
-                        <div className="flex items-start space-x-2">
-                          <div className="flex items-center space-x-1">
-                            <ThumbsUp className="w-4 h-4 text-green-500" />
-                          </div>
-                          <p className="text-sm">{comment}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
 
           <TabsContent value="analytics" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

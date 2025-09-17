@@ -55,17 +55,10 @@ class ApiService {
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     
-    // Get auth token for protected endpoints
-    const token = this.getAuthToken();
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       ...options.headers,
     };
-    
-    // Add authorization header if token exists and it's not a login/register endpoint
-    if (token && !endpoint.includes('/auth/login') && !endpoint.includes('/auth/register')) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
     
     const config: RequestInit = {
       headers,
@@ -106,7 +99,9 @@ class ApiService {
             return this.request<T>(endpoint, options, true);
           } catch (refreshError) {
             console.log('Token refresh failed:', refreshError);
-            // If refresh fails, throw the original error
+            // If refresh fails, clear any stored tokens and throw the original error
+            this.clearAuthToken();
+            localStorage.removeItem('user');
           }
         }
 
@@ -140,7 +135,8 @@ class ApiService {
       body: JSON.stringify(data),
     });
     
-    // Store the access token
+    // Store the access token in localStorage for frontend use
+    // The backend will set HTTP-only cookies automatically
     if (response.accessToken) {
       this.setAuthToken(response.accessToken);
     }
@@ -164,7 +160,8 @@ class ApiService {
       method: 'POST',
     });
     
-    // Update the stored access token
+    // Update the stored access token in localStorage
+    // The backend will update HTTP-only cookies automatically
     if (response.accessToken) {
       this.setAuthToken(response.accessToken);
     }

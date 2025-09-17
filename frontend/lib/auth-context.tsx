@@ -89,12 +89,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             // Keep the stored user data and let the user continue
             // They can logout manually if needed
           }
+        } else {
+          // No stored user data, don't try to refresh
+          // User needs to login first
+          console.log('No stored user data, user needs to login');
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
         // Only clear localStorage if there's a critical error
-        // Don't clear on token expiration
-        if (!error.message?.includes('Invalid or expired token')) {
+        // Don't clear on authentication-related errors
+        if (!error.message?.includes('Invalid or expired token') && 
+            !error.message?.includes('Unauthorized') &&
+            !error.message?.includes('Failed to refresh user')) {
           localStorage.removeItem('user');
           localStorage.removeItem('accessToken');
           setUser(null);

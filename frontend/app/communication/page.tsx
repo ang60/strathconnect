@@ -138,22 +138,22 @@ const notifications = [
   }
 ];
 
-const broadcasts = [
-  {
-    id: "1",
-    title: "System Maintenance",
-    message: "Scheduled maintenance on Sunday, 2-4 AM. Services may be temporarily unavailable.",
-    timestamp: "2 hours ago",
-    priority: "medium"
-  },
-  {
-    id: "2",
-    title: "New Feature Launch",
-    message: "Video calling feature is now available for all premium users!",
-    timestamp: "1 day ago",
-    priority: "high"
-  }
-];
+// const broadcasts = [
+//   {
+//     id: "1",
+//     title: "System Maintenance",
+//     message: "Scheduled maintenance on Sunday, 2-4 AM. Services may be temporarily unavailable.",
+//     timestamp: "2 hours ago",
+//     priority: "medium"
+//   },
+//   {
+//     id: "2",
+//     title: "New Feature Launch",
+//     message: "Video calling feature is now available for all premium users!",
+//     timestamp: "1 day ago",
+//     priority: "high"
+//   }
+// ];
 
 export default function CommunicationPage() {
   const [selectedConversation, setSelectedConversation] = useState("1");
@@ -208,7 +208,7 @@ export default function CommunicationPage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center space-x-2">
@@ -248,23 +248,10 @@ export default function CommunicationPage() {
               </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center">
-                  <Clock className="w-4 h-4 text-orange-600" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Response Time</p>
-                  <p className="text-2xl font-bold">2.3h</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         <Tabs defaultValue="messages" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="messages" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
               <span>Messages</span>
@@ -273,10 +260,10 @@ export default function CommunicationPage() {
               <Bell className="w-4 h-4" />
               <span>Notifications</span>
             </TabsTrigger>
-            <TabsTrigger value="broadcasts" className="flex items-center space-x-2">
+            {/* <TabsTrigger value="broadcasts" className="flex items-center space-x-2">
               <Volume2 className="w-4 h-4" />
               <span>Broadcasts</span>
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           <TabsContent value="messages" className="space-y-6">
@@ -492,7 +479,7 @@ export default function CommunicationPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="broadcasts" className="space-y-6">
+          {/* <TabsContent value="broadcasts" className="space-y-6">
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -529,7 +516,7 @@ export default function CommunicationPage() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </div>
     </MainLayout>
